@@ -18,14 +18,16 @@ use Illuminate\Http\Request;
 // });
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('signup', 'AuthController@signup');
+    Route::post('login', 'Api\AuthController@login');
+    Route::post('signup', 'Api\AuthController@signup');
   
     Route::group(['middleware' => 'auth:api'], function() {
-        Route::get('logout', 'AuthController@logout');
-        Route::get('user', 'AuthController@user');
+        Route::get('logout', 'Api\AuthController@logout');
+        Route::get('user', 'Api\AuthController@user');
     });
 });
 
 
-Route::get('getroles','ApiController@getRoles');
+Route::get('getroles','Api\ApiController@getRoles');
+Route::get('vehicle','Api\ApiController@vehicleAll');
+Route::post('setting','Api\ApiController@settingAll');

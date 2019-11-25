@@ -47,10 +47,11 @@
 </style>
 <div class="col-md-12">
         <div class="panel panel-default">
-			<div class="panel-heading">  
-            <h3 class="panel-title">
-                <strong>All Users</strong>
-            </h3>
+			<div class="modal-header">
+				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
+				
+				<a href="{{ url('/admin/users/create') }}"><button type="submit" class="btn btn-primary">Add user</button></a>
+			</div>
             <!-- ul class="panel-controls">
                 <div class="col-sm-12 col-xs-12">
                     <form action="orderfilter" method="post">
@@ -63,12 +64,11 @@
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
-            </ul -->                                
-        </div>
+            </ul -->   
 		
             <div class="panel-body">
             <div id="example_wrapper" class="dataTables_wrapper no-footer">
-					<table id="example" class="table table-hover table-striped" style="width: 1084px;">
+					<table id="example" class="table table-hover table-striped">
 						<thead>
 							<tr role="row">
 								<!-- th>Sr No.</th -->
@@ -79,7 +79,7 @@
 								<th>Action</th>
 							</tr>
 						</thead>
-						<tbody>
+						<!--tbody>
 						  @foreach ($users as $user)
 							<tr role="row">
 								<td>{{ $user->name }}</td>
@@ -87,12 +87,12 @@
 								<td>{{ $user->phone_no }}</td>
 								<td><img src="{{ url('/public/assets/userimages/'.$user->image) }}" class="user_img img-circle" alt="Cinque Terre"></td>
 								<td>
-									<a href="users/{{$user->_id}}" class="edit-user" data-id="{{ $user->_id }}"><span class="xn-text">Edit</span></a>
-									/ <a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $user->_id }}"><span class="xn-text">Delete</span></a>
+									<a href="users/{{$user->_id}}" class="edit-user" data-id="{{ $user->_id }}">edit</a>
+									/ <a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $user->_id }}">delete</a>
 								</td>
 							</tr>
 						  @endforeach
-						</tbody>
+						</tbody -->
 					</table>
 					
 			</div>
@@ -108,7 +108,7 @@
 	<script>
 	
 		jQuery(document).ready(function () {
-			$('.delete-user').click(function(){
+				$(document).on('click', '.delete-user', function(){
 				if(confirm('Are you sure to delete this user ..?'))
 				{
 					$(this).parents('tr').remove();
@@ -152,39 +152,43 @@
 					// {"data": "action", "searchable": false, "orderable": false}
 				// ]
 			 // });
-			// jQuery('#example').DataTable({
-				// dom: 'lifrtp',
+			jQuery('#example').DataTable({
+				dom: 'lifrtp',
+				"scrollX": true,
 				// language: {
 					// "infoFiltered": "",
 					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
 				// },
-				// "processing": true,
-				// "serverSide": true,
-				// "pageLength": 50,
-				// lengthMenu: [
-					// [50, 100, 250, 500, 999999],
-					// ['50', '100', '250', '500', 'Show all']
-				// ],
-				// "ajax": {
-					// "url": "{{ url('/admin/user-table') }}",
-					// "dataType": "json",
-					// "type": "POST",
-					// "data": {"_token": "{{ csrf_token() }}"}
-				// },
-				// "columns": [
-					// {"targets": "0", "data": null, "sortable": false, "searchable": false},
-					// {"data": "_id"},
-					// {"data": "name"},
-					// {"data": "email"},
-					// {"data": "phone_no"},
-					// {"data": "image", "searchable": false, "orderable": false},
-					// {"data": "action", "searchable": false, "orderable": false}
-				// ]
-			// });
-			
-			$('#example').DataTable();
+				"processing": true,
+				"serverSide": true,
+				"bInfo" : false,
+				"pageLength": 50,
+				lengthMenu: [
+					[50, 100, 250, 500, 999999],
+					['50', '100', '250', '500', 'Show all']
+				],
+				"ajax": {
+					"url": "{{ url('/admin/user-table') }}",
+					"dataType": "json",
+					"type": "POST",
+					"data": {"_token": "{{ csrf_token() }}"}
+				},
+				"columns": [
+					{"data": "name"},
+					{"data": "email"},
+					{"data": "phone_no"},
+					{"data": "image", "searchable": false, "orderable": false, "render": function(data_image,type,full,meta){
+							return '<img src="../public/assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
+					}},
+					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+							return '<a href="users/'+data+'">Edit</a> / <a href="javascript::void(0)" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}">Delete</a>';
+					}},
+				]
+			});
 		});			
 	</script>		
+	
+		
 	
 @endsection
 

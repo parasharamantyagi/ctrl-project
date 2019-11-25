@@ -33,50 +33,55 @@
 		<form method="POST" action="{{ url($formaction) }}" id="Updateuser" enctype="multipart/form-data">
 			{{ csrf_field() }}
 		  <div class="modal-header">
-			<h5 class="modal-title" id="Subscription">Add Profile</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">×</span>
-			</button>
+			<h5>{{ $page_info['page_title'] }}</h5>
 		  </div>
 			<input type="hidden" name="id" value="{{$userForm->id}}" id="id">
 			<div class="modal-body">
-				<div class="form-group">
-					<div class="col-sm-6 col-xs-12">
+			<div class="row">
+
+				<div class="col-sm-6 col-xs-12">
+					<div class="form-group">
 						<label for="">Name</label>
 						<input type="text" class="form-control" name="name" value="{{$userForm->name}}" id="name" required="">
 					</div>
-					<div class="col-sm-6 col-xs-12">
+					
+					<div class="form-group">
+						<label for="">Role</label>
+						<select class="form-control" name="role_id" id="role_id">
+						  <option value="3">Select roll</option>
+						  <option value="1" <?php if($userForm->role_id == 1) { echo 'selected'; } ?>>Admin</option>
+						  <option value="2" <?php if($userForm->role_id == 2) { echo 'selected'; } ?>>Manufacturer</option>
+						  <option value="3" <?php if($userForm->role_id == 3) { echo 'selected'; } ?>>Users</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="">Phone no</label>
+						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
+					</div>
+				</div>
+		
+					
+				<div class="col-sm-6 col-xs-12">
+	
+					<div class="form-group">
 						<label for="">Email</label>
 						<input type="email" class="form-control email" name="email" value="{{$userForm->email}}" id="email" required="">
 						<div id="publisherEmailValidation"></div>
 					</div>
-				</div>
-			 	<div class="form-group">
-					<div class="col-sm-6 col-xs-12 author_img upload_img">
+
+					<div class="form-group">
 						<label style="width:100%;">Upload Image</label>
 						<input type="file" accept="image/*" onchange="loadFile(event)" id="upload_image_button" name="userimage" style="display: none;">
 						<img src="{{ url($userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
 					<p>Click on image for change this</p>
 					</div>
 					
-					<div class="col-sm-6 col-xs-12">
-						<label for="">Role</label>
-						<select class="form-control" name="role_id" id="role_id">
-						  <option value="3">Select roll</option>
-						  <option value="1">Admin</option>
-						  <option value="2">Manufacturer</option>
-						  <option value="3">Users</option>
-						</select>
-					</div>
 				</div>
 			  
-			    <div class="form-group">
-					<div class="col-sm-6 col-xs-12">
-						<label for="">Phone no</label>
-						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
-						<div id="publisherEmailValidation"></div>
-					</div>
-			    </div>
+			    
+			
+			</div>
 			</div>
 			
 			<div class="modal-footer">
@@ -116,7 +121,7 @@
 									// location.reload(true);
 									// alert('Success...!');
 									$.toaster({ priority : 'success', title : 'Success', message : result.message });
-									if(this.action === "{{ url('/admin/users') }}")
+									if(result.action === "storeUser")
 									{
 										$("#Updateuser").trigger("reset");
 									}
@@ -126,6 +131,11 @@
 						event.preventDefault();
 					});
 				});
+				
+				function form_return()
+				{
+					window.history.back();
+				}
 			  //danger  success info warning
 	</script>
 	

@@ -28,58 +28,175 @@
                     <!-- START ALERT BLOCKS -->
 
 	
-	<div class="modal-header">
-			<h5 class="modal-title" id="Subscription">Add Profile</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">×</span>
-			</button>
-	</div>
+	
                         
 <!-- END ALERT BLOCKS -->                    	
 		<form method="POST" action="{{ url($formaction) }}" id="Updateuser" enctype="multipart/form-data">
 			{{ csrf_field() }}
-		  
-			<input type="hidden" name="id" value="{{$userForm->id}}" id="id">
-			<div class="modal-body">
-				<div class="form-group">
-					<div class="col-sm-6 col-xs-12">
-						<label for="">Name</label>
-						<input type="text" class="form-control" name="name" value="{{$userForm->name}}" id="name" required="">
-					</div>
-					<div class="col-sm-6 col-xs-12">
-						<label for="">Email</label>
-						<input type="email" class="form-control email" name="email" value="{{$userForm->email}}" id="email" required="">
-						<div id="publisherEmailValidation"></div>
-					</div>
-				</div>
-			 	<div class="form-group">
-					<div class="col-sm-6 col-xs-12 author_img upload_img">
-						<label style="width:100%;">Upload Image</label>
-						<input type="file" accept="image/*" onchange="loadFile(event)" id="upload_image_button" name="userimage" style="display: none;">
-						<img src="{{ url($userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
-					<p>Click on image for change this</p>
-					</div>
-					
-					<div class="col-sm-6 col-xs-12">
-						<label for="">Role</label>
-						<select class="form-control" name="role_id" id="role_id">
-						  <option value="3">Select roll</option>
-						  <option value="1">Admin</option>
-						  <option value="2">Manufacturer</option>
-						  <option value="3">Users</option>
-						</select>
-					</div>
-				</div>
-			  
-			    <div class="form-group">
-					<div class="col-sm-6 col-xs-12">
-						<label for="">Phone no</label>
-						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
-						<div id="publisherEmailValidation"></div>
-					</div>
-			    </div>
+			<div class="modal-header">
+				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{$page_info['page_title']}}</div></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">×</span>
+				</button>
 			</div>
 			
+		  
+			<input type="hidden" name="id" value="" id="id">
+			<div class="modal-body">
+			
+			
+				<div class="row">
+				
+				<div class="form-group">
+						<div class="col-sm-12 col-xs-12">
+							<label for="">Select car</label>
+							
+							<select class="form-control" name="vehicle_id" id="vehicle_id" required="">
+							  <option value="2019">Select vehicle</option>
+							  @foreach($vichle_name as $vichle_name)
+								  <option value="{{$vichle_name->_id}}">{{$vichle_name->brand .' ('.$vichle_name->model.')'}}</option>
+							  @endForeach;
+							</select>
+						</div>
+				</div>
+				
+				  <div class="col-md-6">
+					<div class="form-group">
+						<label for="">Background color</label>
+						<input type="text" class="form-control" name="background_color" value="" id="background_color" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Pad background color</label>
+						<input type="text" class="form-control" name="pad_background_color" value="" id="pad_background_color" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Daylight auto ON (if any)</label>
+						<input type="text" class="form-control email" name="daylight_auto_on" value="" id="daylight_auto_on" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Motor off</label>
+						<input type="text" class="form-control" name="motor_off" value="" id="motor_off" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Asset folder(custom images)</label>
+						<input type="text" class="form-control" name="asset_folder" value="" id="asset_folder" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Front motor</label>
+						<input type="text" class="form-control" name="front_motor" value="" id="front_motor" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Gearbox amount of gears</label>
+						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="" id="gearbox_amount_of_gears" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Speed curve</label>
+						<input type="text" class="form-control" name="speed_curve" value="" id="speed_curve" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Idle rpm</label>
+						<input type="text" class="form-control" name="idle_rpm" value="" id="idle_rpm" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Lower gear shift value</label>
+						<input type="text" class="form-control" name="lower_gear_shift_value" value="" id="lower_gear_shift_value" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Gear retio</label>
+						<input type="text" class="form-control" name="gear_retio" value="" id="gear_retio" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">LED configuration for each button</label>
+						<input type="text" class="form-control" name="led_configuration" value="" id="led_configuration" required="">
+					</div>
+					
+					
+				  </div>
+				  
+				  
+				  
+					<!--       two way contant    -->
+					
+					
+				  
+				  <div class="col-md-6">
+					<div class="form-group">
+						<label for="">Pad line color</label>
+						<input type="text" class="form-control" name="pad_line_color" value="" id="pad_line_color" required="">
+					</div>	
+					
+					<div class="form-group">
+						<label for="">Button style</label>
+						<input type="text" class="form-control" name="button_style" value="" id="button_style" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Reverse speed motor</label>
+						<input type="text" class="form-control" name="reverse_speed_motor" value="" id="reverse_speed_motor" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Steering control point</label>
+						<input type="text" class="form-control" name="steering_control_point" value="" id="steering_control_point" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Firmware (updated from car)</label>
+						<input type="text" class="form-control" name="firmware" value="" id="firmware" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Rear motor</label>
+						<input type="text" class="form-control" name="rear_motor" value="" id="rear_motor" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Max speed per gears</label>
+						<input type="text" class="form-control" name="max_speed_per_gears" value="" id="max_speed_per_gears" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Max rpm</label>
+						<input type="text" class="form-control" name="max_rpm" value="" id="max_rpm" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Upper gear shift value</label>
+						<input type="text" class="form-control" name="upper_gear_shift_value" value="" id="upper_gear_shift_value" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Cell value steer pad</label>
+						<input type="text" class="form-control" name="cell_value_steer_pad" value="" id="cell_value_steer_pad" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Max steering angle</label>
+						<input type="text" class="form-control" name="max_steering_angle" value="" id="max_steering_angle" required="">
+					</div>
+					
+					<div class="form-group">
+						<label for="">Button config for each menu</label>
+						<input type="text" class="form-control" name="button_config_for_each_menu" value="" id="button_config_for_each_menu" required="">
+					</div>
+				  </div>
+				  
+				</div>
+
+
+
+			</div>
 			<div class="modal-footer">
 			<input type="button" class="btn btn-secondary" onclick="form_return()" value="Back">
 			<input type="submit" class="btn btn-primary" value="Save changes">
@@ -88,7 +205,7 @@
 		
 		
                     
-                </div>
+    </div>
 
 
 @endsection
@@ -97,34 +214,73 @@
 @section('script')
 
 	<script>
-				// $(document).ready(function(){
-					// $('#Updateuser').submit(function(event){
+				$(document).ready(function(){
+					$('#Updateuser').submit(function(event){
 						// $('#publisherEmailValidation').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
-						 // $.ajax({
-						   // type:this.method,
-						   // url: this.action,
-						   // contentType: false, 
-						   // processData:false,   
-						   // data: new FormData(this),
-						   // success:function(response)
-						   // {
-								// var result = JSON.parse(response);
-								// if(result.status === false)
-								// {
-									// $('#publisherEmailValidation').html('<font color="red">this email already exists!</font>');
-								// }else{
-									// $('#publisherEmailValidation').html('');
-									// $.toaster({ priority : 'success', title : 'Success', message : result.message });
-									// if(this.action === "{{ url('/admin/users') }}")
-									// {
-										// $("#Updateuser").trigger("reset");
-									// }
-								// }
-						   // }
-						// });
-						// event.preventDefault();
-					// });
-				// });
+						 $.ajax({
+						   type:this.method,
+						   url: this.action,
+						   contentType: false, 
+						   processData:false,   
+						   data: new FormData(this),
+						   success:function(response)
+						   {
+								var result = JSON.parse(response);
+								$.toaster({ priority : 'success', title : 'Success', message : result.message });
+								if(result.action === 'add_form')
+									$("#Updateuser").trigger("reset");
+						   }
+						});
+						event.preventDefault();
+					});
+					
+					$('select[name="vehicle_id"]').change(function(){
+						$.ajax({
+							type: 'GET',
+							dataType : 'json',
+							url: 'settings/'+$(this).val(),
+							success: function (response) {
+								// $('#subscription_label').val('Update Setting');
+								if(response.data) {
+									$('input[name="id"]').val(response.data._id);
+									$('input[name="background_color"]').val(response.data.background_color);
+									$('input[name="pad_line_color"]').val(response.data.pad_line_color);
+									$('input[name="pad_background_color"]').val(response.data.pad_background_color);
+									$('input[name="button_style"]').val(response.data.button_style);
+									
+									$('input[name="daylight_auto_on"]').val(response.data.daylight_auto_on);
+									$('input[name="reverse_speed_motor"]').val(response.data.reverse_speed_motor);
+									$('input[name="reverse_steer_motor"]').val(response.data.reverse_steer_motor);
+									
+									$('input[name="motor_off"]').val(response.data.motor_off);
+									$('input[name="steering_control_point"]').val(response.data.steering_control_point);
+									$('input[name="asset_folder"]').val(response.data.asset_folder);
+									
+									$('input[name="firmware"]').val(response.data.firmware);
+									$('input[name="front_motor"]').val(response.data.front_motor);
+									$('input[name="rear_motor"]').val(response.data.rear_motor);
+									$('input[name="gearbox_amount_of_gears"]').val(response.data.gearbox_amount_of_gears);
+									$('input[name="max_speed_per_gears"]').val(response.data.max_speed_per_gears);
+									
+									$('input[name="speed_curve"]').val(response.data.speed_curve);
+									$('input[name="max_rpm"]').val(response.data.max_rpm);
+									$('input[name="idle_rpm"]').val(response.data.idle_rpm);
+									$('input[name="upper_gear_shift_value"]').val(response.data.upper_gear_shift_value);
+									
+									$('input[name="lower_gear_shift_value"]').val(response.data.lower_gear_shift_value);
+									$('input[name="cell_value_steer_pad"]').val(response.data.cell_value_steer_pad);
+									$('input[name="gear_retio"]').val(response.data.gear_retio);
+									$('input[name="max_steering_angle"]').val(response.data.max_steering_angle);
+									$('input[name="led_configuration"]').val(response.data.led_configuration);
+									$('input[name="button_config_for_each_menu"]').val(response.data.button_config_for_each_menu);
+								}
+							},
+							error: function() {
+								 console.log(response);
+							}
+						});
+					});						
+				});
 	</script>
 	
 @endsection

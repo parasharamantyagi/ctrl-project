@@ -15,4 +15,9 @@ class Vehicle extends Eloquent
         'manufacturer','scale','vehicle_type','special_car_specialization','lenght','length_front_of_car',
         'wheelbase','track_width','width','wheel_diameter','height'
 	];
+	
+	public function vehicle_setting()
+        {
+            return $this->hasOne('App\VehicleSetting');
+        }
 }

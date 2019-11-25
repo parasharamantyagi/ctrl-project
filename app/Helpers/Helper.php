@@ -1,18 +1,6 @@
 <?php
 // namespace App\Helpers; 
 if (!function_exists('human_file_size')) {
-    /**
-     * Returns a human readable file size
-     *
-     * @param integer $bytes
-     * Bytes contains the size of the bytes to convert
-     *
-     * @param integer $decimals
-     * Number of decimal places to be returned
-     *
-     * @return string a string in human readable format
-     *
-     * */
     function human_file_size($image_name)
     {
 		
@@ -22,22 +10,7 @@ if (!function_exists('human_file_size')) {
 }
  
 if (!function_exists('in_arrayi')) {
- 
-    /**
-     * Checks if a value exists in an array in a case-insensitive manner
-     *
-     * @param mixed $needle
-     * The searched value
-     *
-     * @param $haystack
-     * The array
-     *
-     * @param bool $strict [optional]
-     * If set to true type of needle will also be matched
-     *
-     * @return bool true if needle is found in the array,
-     * false otherwise
-     */
+
     function in_arrayi($needle, $haystack, $strict = false)
     {
         return in_array(strtolower($needle), array_map('strtolower', $haystack), $strict);
@@ -47,21 +20,6 @@ if (!function_exists('in_arrayi')) {
 
 if (!function_exists('url_segment')) {
  
-    /**
-     * Checks if a value exists in an array in a case-insensitive manner
-     *
-     * @param mixed $needle
-     * The searched value
-     *
-     * @param $haystack
-     * The array
-     *
-     * @param bool $strict [optional]
-     * If set to true type of needle will also be matched
-     *
-     * @return bool true if needle is found in the array,
-     * false otherwise
-     */
     function url_segment($needle)
     {
         return 'active';
@@ -70,21 +28,6 @@ if (!function_exists('url_segment')) {
 
 if (!function_exists('pr_year')) {
  
-    /**
-     * Checks if a value exists in an array in a case-insensitive manner
-     *
-     * @param mixed $needle
-     * The searched value
-     *
-     * @param $haystack
-     * The array
-     *
-     * @param bool $strict [optional]
-     * If set to true type of needle will also be matched
-     *
-     * @return bool true if needle is found in the array,
-     * false otherwise
-     */
     function ctrl_year()
     {
 		for($i = date('Y') ; $i >= 2010; $i--){
@@ -93,5 +36,24 @@ if (!function_exists('pr_year')) {
         return $inputData;
     }
 }
+
+if (!function_exists('api_response')) {
+	
+	function api_response($status,$message,$data)
+    {
+        return array("status"=>$status,"message"=>$message,"data"=>$data);
+    }
+}
+
+if (!function_exists('delete_file')) {
+	
+	function delete_file($file)
+    {
+		File::delete(public_path($file));
+        return true;
+    }
+}
+
+
 
 

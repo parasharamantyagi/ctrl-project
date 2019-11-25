@@ -47,7 +47,7 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
 
 #Updateuser > div {width:100%; float:left;}
 #Updateuser > div.modal-header .close  {display:none;}
-#Updateuser > div.modal-header .modal-title, div.modal-header .modal-title, .panel-heading .modal-title  {font-size:16px; font-weight:bold;}
+#Updateuser > div.modal-header .modal-title, div.modal-header .modal-title, .panel-heading .modal-title  {font-size:25px; font-weight:bold; color: #fff;}
 
 .page-sidebar .x-navigation .xn-logo a {padding: 7px 0px 0px;
     /*background: rgb(245, 245, 245) none repeat scroll 0% 0% !important;*/
@@ -330,11 +330,13 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
   float: left;
 }
 
-.page-content-wrap .alert {
-  float: none;
+.page-content-wrap {
+  float: right;
   margin: 0 auto 20px;
-  padding: 10px;
-  width: 97%;
+  padding: 4rem 1rem;
+  width: 99%;
+  background-color: #242533;
+  height: 100vh;
 }
 
 .slider_books_table th{ background: #333 none repeat scroll 0 0;
@@ -355,7 +357,7 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
 
 
 .book_identity .right > div {text-align: center; padding: 50px 0px; background: rgb(252, 252, 252) none repeat scroll 0% 0%;}
-.page-content-wrap .alert center {
+.page-content-wrap {
   text-align: left;
 }
  
@@ -397,3 +399,4 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
 .dataTables_length {width:auto;}
 .image-icone {width: 218px; height: 44px;border-bottom: 2px solid #FFF;padding: 10px;}
 
+.fa {color: #EC8031;}
