@@ -27,6 +27,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		
 		Route::get('background-color', 'SettingController@backgroundColor');
 		Route::get('pad-line-color', 'SettingController@padLineColor');
+		Route::get('qr-code', 'SettingController@getQrCode');
+		Route::post('qr-code', 'SettingController@postQrCode');
 		
 		Route::get('view-profile', 'UsersController@viewProfile');
 		Route::post('usersUpdate', 'UsersController@usersUpdate');

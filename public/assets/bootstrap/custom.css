@@ -336,7 +336,7 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
   padding: 4rem 1rem;
   width: 99%;
   background-color: #242533;
-  height: 100vh;
+  height: fit-content;
 }
 
 .slider_books_table th{ background: #333 none repeat scroll 0 0;
@@ -400,3 +400,23 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
 .image-icone {width: 218px; height: 44px;border-bottom: 2px solid #FFF;padding: 10px;}
 
 .fa {color: #EC8031;}
+
+.author_loading {
+		position: fixed;
+		top: 0px;
+		right: 0px;
+		bottom: 0px;
+		left: 0px;
+		align-items: center;
+		-webkit-align-items: center;
+		-moz-align-items: center;
+		text-align: center;
+		background: rgba(0,0,0,0.2);
+		display: flex;
+		-moz-display: flex;
+		-webkit-display: flex;
+		z-index: 999;
+		justify-content: center;
+		-webkit-justify-content: center;
+		-moz-justify-content: center;
+	}

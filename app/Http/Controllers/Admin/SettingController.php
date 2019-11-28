@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Vehicle;
 use App\VehicleSetting;
+use QrCode;
 
 class SettingController extends Controller
 {
@@ -24,7 +25,7 @@ class SettingController extends Controller
 								);
 								
 		
-		$page_info['page_title'] = 'Add Setting';
+		$page_info['page_title'] = 'Settings';
 		return view('admin/Setting/viewsetting')->with('userForm', $userForm)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/settings');
     }
 	
@@ -78,5 +79,40 @@ class SettingController extends Controller
     {
 		return view('admin/Setting/padLineColor');
     }
+	
+	public function getQrCode()
+    {
+		$vichle_name =  Vehicle::select('_id','brand','model')->get();
+		$page_info['page_title'] = 'Generate qr-code';
+		return view('admin/Setting/qrcode')->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/qr-code');
+    }
+	
+	public function postQrCode(Request $request)
+	{
+		// return view('admin/Setting/padLineColor');
+		
+		// {{ base64_encode(QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate('0023|m123|project|menu')) }}
+
+
+		// QrCode::size(100)->format('png')->generate('ItSolutionStuff.com', public_path('qrcode/qrcode.png'));
+		$inputData = $request->all();
+		QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($inputData['vehicle_id'], public_path('qrcode/'.$inputData['vehicle_id'].'png'));
+		echo json_encode(array('status'=>true,'message'=>'Generate qr-code successfully'));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

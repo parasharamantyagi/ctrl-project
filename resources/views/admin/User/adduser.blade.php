@@ -2,28 +2,6 @@
 
 @section('content')
 
-	<style>
-	.author_loading {
-		position: fixed;
-		top: 0px;
-		right: 0px;
-		bottom: 0px;
-		left: 0px;
-		align-items: center;
-		-webkit-align-items: center;
-		-moz-align-items: center;
-		text-align: center;
-		background: rgba(0,0,0,0.2);
-		display: flex;
-		-moz-display: flex;
-		-webkit-display: flex;
-		z-index: 999;
-		justify-content: center;
-		-webkit-justify-content: center;
-		-moz-justify-content: center;
-	}
-	</style>
-
 	<div class="page-content-wrap">
                     <!-- START ALERT BLOCKS -->
 
@@ -124,6 +102,7 @@
 									if(result.action === "storeUser")
 									{
 										$("#Updateuser").trigger("reset");
+										// $("#upload_image_button").val('');
 									}
 								}
 						   }
@@ -134,6 +113,7 @@
 				
 				function form_return()
 				{
+					// $("#upload_image_button").val('');
 					window.history.back();
 				}
 			  //danger  success info warning

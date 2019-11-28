@@ -44,6 +44,9 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
+	th {
+		width: 20%;
+	}
 </style>
 <div class="col-md-12">
         <div class="panel panel-default">

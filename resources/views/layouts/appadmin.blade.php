@@ -39,7 +39,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{{ url('/admin/dashboard') }}">Dashboard</a>
@@ -86,7 +86,24 @@
   <!-- Custom scripts for this template -->
   <script src="{{ url('/public/newbootstrap/js/resume.min.js') }}"></script>
   <script type="text/javascript" src="{{ url('/public/assets/jquery/jquery.toaster.js') }}"></script>
-
+	
+	<script>
+		
+		
+        // Show hide popover
+	
+	$(document).ready(function(){
+		$(document).on("click", function(event){
+			var $trigger = $(".navbar-toggler");
+			if($trigger !== event.target && !$trigger.has(event.target).length){
+				// alert('asdasd');
+				$(".navbar-collapse").removeClass("show");
+			}            
+		});
+	});
+	
+	</script>
+	
 	@yield('script')
 </body>
 
