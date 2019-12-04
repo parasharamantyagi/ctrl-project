@@ -33,7 +33,7 @@ class SettingController extends Controller
     {
 		$inputData = $request->all();
 		
-			unset($inputData["id"]);
+			// unset($inputData["id"]);
 			unset($inputData["_token"]);
 			VehicleSetting::insert($inputData);
 			$returnmessage = array('status'=>true,'action'=>'add_form','message'=>'Vehicle setting has been save');
@@ -100,6 +100,13 @@ class SettingController extends Controller
 		echo json_encode(array('status'=>true,'message'=>'Generate qr-code successfully'));
 	}
 	
+		
+	public function vehicleSetting($id)
+    {
+		$vehicleSetting = Vehicle::with('vehicle_setting')->where('_id',$id)->first();
+		$page_info['page_title'] = 'Add Vehicle';
+		return view('admin/Setting/vehicle-setting')->with('page_info', $page_info)->with('vehicles', $vehicleSetting);
+    }
 	
 	
 	

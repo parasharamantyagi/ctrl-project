@@ -29,6 +29,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('pad-line-color', 'SettingController@padLineColor');
 		Route::get('qr-code', 'SettingController@getQrCode');
 		Route::post('qr-code', 'SettingController@postQrCode');
+		Route::get('vehicle-setting/{id}','SettingController@vehicleSetting');
 		
 		Route::get('view-profile', 'UsersController@viewProfile');
 		Route::post('usersUpdate', 'UsersController@usersUpdate');
@@ -39,6 +40,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('view-vehicle','VehicleController@viewVehicleAll');
 		Route::post('vehicleUpdate', 'VehicleController@vehicleUpdate');
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
+		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
+		
 		
 	});
 });

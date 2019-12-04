@@ -24,10 +24,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'Api\AuthController@logout');
         Route::get('user', 'Api\AuthController@user');
+		Route::get('vehicle', 'Api\AuthController@vehicle');
     });
 });
 
 
-Route::get('getroles','Api\ApiController@getRoles');
-Route::get('vehicle','Api\ApiController@vehicleAll');
-Route::post('setting','Api\ApiController@settingAll');
+// Route::get('my-user-data','Api\ApiController@myuserdata');
+// Route::get('getroles','Api\ApiController@getRoles');
+// Route::get('vehicle','Api\ApiController@vehicleAll');
+// Route::post('setting','Api\ApiController@settingAll');

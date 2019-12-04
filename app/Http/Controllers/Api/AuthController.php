@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Vehicle;
+use App\VehicleSetting;
 
 
 class AuthController extends Controller
@@ -28,6 +30,7 @@ class AuthController extends Controller
 			'phone_no' => 'required|string',
 			'image' => 'required|string'
         ]);
+
 		$user_role_id = ($request->role_id) ? $request->role_id : 1;
         $user = new User([
             'name' => $request->name,
@@ -38,9 +41,7 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
         $user->save();
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        return response()->json(api_response(201,"Successfully created user!",$user));
     }
   
     /**
@@ -62,22 +63,21 @@ class AuthController extends Controller
         ]);
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+			
+            return response()->json(api_response(401,"Unauthorized",array()));
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
-        return response()->json([
+        return response()->json(api_response(201,"User login successfully",[
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
             )->toDateTimeString()
-        ]);
+        ]));
     }
   
     /**
@@ -102,6 +102,14 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
+	
+	public function vehicle(Request $request)
+    {
+		$useruserVehicle = Vehicle::with('vehicle_setting')->where('user_id',$request->user()->_id)->get();
+        return response()->json(api_response(201,"All vehicle",$useruserVehicle));
+    }
+	
+	
 	
 	
 	public function getRoles()

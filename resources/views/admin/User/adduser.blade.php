@@ -113,7 +113,9 @@
 				
 				function form_return()
 				{
+					// $('#upload_image_button').val('');
 					// $("#upload_image_button").val('');
+					// document.getElementById("upload_image_button").value = null;
 					window.history.back();
 				}
 			  //danger  success info warning

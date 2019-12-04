@@ -83,9 +83,10 @@
 								<td>{{ $vehicle->width }}</td>
 								<td>{{ $vehicle->wheel_diameter }}</td>
 								<td>
-									<a href="vehicle/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}">Edit</a>
-									/ <a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle->_id }}">Delete</a>
-									/ <a href="vehicle-view/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}">View</a>
+									<a href="vehicle/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}"><i class="fa fa-pencil-square-o" title="Edit"></i></a>
+									<a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle->_id }}"><i class="fa fa-trash" title="Delete"></i></a>
+									<a href="vehicle-view/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}"><i class="fa fa-eye" title="View"></i></a>
+									<a href="vehicle-setting/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}"><i class="fa fa-wrench" title="Vehicle setting"></i></a>
 								</td>
 							</tr>
 						  @endforeach
@@ -106,25 +107,40 @@
 	
 		jQuery(document).ready(function () {
 			$('.delete-user').click(function(){
-				if(confirm('Are you sure to delete this Vehicle ..?'))
-				{
-					$(this).parents('tr').remove();
-					
 					var delete_id = $(this).data('id');
+					var tabe_tr = $(this).parents('tr');
 					var token = $(this).data("token");
-					 $.ajax({
-						url: "vehicle/"+delete_id,
-						type: 'delete',
-						dataType: "JSON",
-						data: {
-							"_token": token,
-						},
-						success: function (response)
-						{
-							$.toaster({ priority : 'success', title : 'Success', message : response.message });
-						}
-					});
-				}
+                        $.confirm({
+                            icon: 'fa fa-smile-o',
+							content: 'Are you sure to delete this Vehicle ..?',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'blue',
+							 buttons: {
+                                'confirm': {
+                                    text: 'Delete',
+                                    btnClass: 'btn btn-primary',
+                                    action: function(){
+										tabe_tr.remove();
+										 $.ajax({
+											url: "vehicle/"+delete_id,
+											type: 'delete',
+											dataType: "JSON",
+											data: {
+												"_token": token,
+											},
+											success: function (response)
+											{
+												$.toaster({ priority : 'success', title : 'Success', message : response.message });
+											}
+										});
+                                    }
+                                },
+                                cancel: function(){
+                                },
+                            }
+                        });
 			
 			});
 			

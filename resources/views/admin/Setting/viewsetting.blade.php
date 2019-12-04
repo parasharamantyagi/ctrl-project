@@ -13,16 +13,11 @@
 			{{ csrf_field() }}
 			<div class="modal-header">
 				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				<a href="qr-code" class="btn btn-primary">Add QR code</a>
+				<!-- a href="qr-code" class="btn btn-primary">Add QR code</a -->
 			</div>
 			
-		  
-			<input type="hidden" name="id" value="" id="id">
 			<div class="modal-body">
-			
-			
 				<div class="row">
-				
 				<div class="form-group">
 						<div class="col-sm-12 col-xs-12">
 							<label for="">Select car</label>
@@ -210,52 +205,55 @@
 						event.preventDefault();
 					});
 					
-					$('select[name="vehicle_id"]').change(function(){
-						$.ajax({
-							type: 'GET',
-							dataType : 'json',
-							url: 'settings/'+$(this).val(),
-							success: function (response) {
-								// $('#subscription_label').val('Update Setting');
-								if(response.data) {
-									$('input[name="id"]').val(response.data._id);
-									$('input[name="background_color"]').val(response.data.background_color);
-									$('input[name="pad_line_color"]').val(response.data.pad_line_color);
-									$('input[name="pad_background_color"]').val(response.data.pad_background_color);
-									$('input[name="button_style"]').val(response.data.button_style);
+					// $('select[name="vehicle_id"]').change(function(){
+						// $.ajax({
+							// type: 'GET',
+							// dataType : 'json',
+							// url: 'settings/'+$(this).val(),
+							// success: function (response) {
+								// if(response.data) {
+									// $('input[name="background_color"]').val(response.data.background_color);
+									// $('input[name="pad_line_color"]').val(response.data.pad_line_color);
+									// $('input[name="pad_background_color"]').val(response.data.pad_background_color);
+									// $('input[name="button_style"]').val(response.data.button_style);
 									
-									$('input[name="daylight_auto_on"]').val(response.data.daylight_auto_on);
-									$('input[name="reverse_speed_motor"]').val(response.data.reverse_speed_motor);
-									$('input[name="reverse_steer_motor"]').val(response.data.reverse_steer_motor);
+									// $('input[name="daylight_auto_on"]').val(response.data.daylight_auto_on);
+									// $('input[name="reverse_speed_motor"]').val(response.data.reverse_speed_motor);
+									// $('input[name="reverse_steer_motor"]').val(response.data.reverse_steer_motor);
 									
-									$('input[name="motor_off"]').val(response.data.motor_off);
-									$('input[name="steering_control_point"]').val(response.data.steering_control_point);
-									$('input[name="asset_folder"]').val(response.data.asset_folder);
+									// $('input[name="motor_off"]').val(response.data.motor_off);
+									// $('input[name="steering_control_point"]').val(response.data.steering_control_point);
+									// $('input[name="asset_folder"]').val(response.data.asset_folder);
 									
-									$('input[name="firmware"]').val(response.data.firmware);
-									$('input[name="front_motor"]').val(response.data.front_motor);
-									$('input[name="rear_motor"]').val(response.data.rear_motor);
-									$('input[name="gearbox_amount_of_gears"]').val(response.data.gearbox_amount_of_gears);
-									$('input[name="max_speed_per_gears"]').val(response.data.max_speed_per_gears);
+									// $('input[name="firmware"]').val(response.data.firmware);
+									// $('input[name="front_motor"]').val(response.data.front_motor);
+									// $('input[name="rear_motor"]').val(response.data.rear_motor);
+									// $('input[name="gearbox_amount_of_gears"]').val(response.data.gearbox_amount_of_gears);
+									// $('input[name="max_speed_per_gears"]').val(response.data.max_speed_per_gears);
 									
-									$('input[name="speed_curve"]').val(response.data.speed_curve);
-									$('input[name="max_rpm"]').val(response.data.max_rpm);
-									$('input[name="idle_rpm"]').val(response.data.idle_rpm);
-									$('input[name="upper_gear_shift_value"]').val(response.data.upper_gear_shift_value);
+									// $('input[name="speed_curve"]').val(response.data.speed_curve);
+									// $('input[name="max_rpm"]').val(response.data.max_rpm);
+									// $('input[name="idle_rpm"]').val(response.data.idle_rpm);
+									// $('input[name="upper_gear_shift_value"]').val(response.data.upper_gear_shift_value);
 									
-									$('input[name="lower_gear_shift_value"]').val(response.data.lower_gear_shift_value);
-									$('input[name="cell_value_steer_pad"]').val(response.data.cell_value_steer_pad);
-									$('input[name="gear_retio"]').val(response.data.gear_retio);
-									$('input[name="max_steering_angle"]').val(response.data.max_steering_angle);
-									$('input[name="led_configuration"]').val(response.data.led_configuration);
-									$('input[name="button_config_for_each_menu"]').val(response.data.button_config_for_each_menu);
-								}
-							},
-							error: function() {
-								 console.log(response);
-							}
-						});
-					});						
+									// $('input[name="lower_gear_shift_value"]').val(response.data.lower_gear_shift_value);
+									// $('input[name="cell_value_steer_pad"]').val(response.data.cell_value_steer_pad);
+									// $('input[name="gear_retio"]').val(response.data.gear_retio);
+									// $('input[name="max_steering_angle"]').val(response.data.max_steering_angle);
+									// $('input[name="led_configuration"]').val(response.data.led_configuration);
+									// $('input[name="button_config_for_each_menu"]').val(response.data.button_config_for_each_menu);
+								// }
+							// },
+							// error: function() {
+								 // console.log(response);
+							// }
+						// });
+					// });
+
+					function form_return()
+					{
+						window.history.back();
+					}
 				});
 	</script>
 	

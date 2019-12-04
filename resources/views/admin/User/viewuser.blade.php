@@ -45,14 +45,13 @@
         transition: .4s;
     }
 	th {
-		width: 20%;
+		width: 25% !important;
 	}
 </style>
 <div class="col-md-12">
         <div class="panel panel-default">
 			<div class="modal-header">
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				
 				<a href="{{ url('/admin/users/create') }}"><button type="submit" class="btn btn-primary">Add user</button></a>
 			</div>
             <!-- ul class="panel-controls">
@@ -107,54 +106,46 @@
 @endsection
 
 @section('script')
-
 	<script>
 	
 		jQuery(document).ready(function () {
 				$(document).on('click', '.delete-user', function(){
-				if(confirm('Are you sure to delete this user ..?'))
-				{
-					$(this).parents('tr').remove();
-					
 					var delete_id = $(this).data('id');
+					var tabe_tr = $(this).parents('tr');
 					var token = $(this).data("token");
-					 $.ajax({
-						url: "users/"+delete_id,
-						type: 'delete',
-						dataType: "JSON",
-						data: {
-							"_token": token,
-						},
-						success: function (response)
-						{
-							$.toaster({ priority : 'success', title : 'Success', message : response.message });
-						}
-					});
-				}
-			
+                        $.confirm({
+                            icon: 'fa fa-smile-o',
+							content: 'Are you sure to delete this user ..?',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'blue',
+							 buttons: {
+                                'confirm': {
+                                    text: 'Delete',
+                                    btnClass: 'btn btn-primary',
+                                    action: function(){
+										tabe_tr.remove();
+										 $.ajax({
+											url: "users/"+delete_id,
+											type: 'delete',
+											dataType: "JSON",
+											data: {
+												"_token": token,
+											},
+											success: function (response)
+											{
+												$.toaster({ priority : 'success', title : 'Success', message : response.message });
+											}
+										});
+                                    }
+                                },
+                                cancel: function(){
+                                },
+                            }
+                        });
 			});
 			
-			// render: function(data, type, full, meta){
-				 // return "<img src={{ URL::to('/') }}/images/" + data + " width='70' class='img-thumbnail' />";
-				// },
-			
-			// $('#example').DataTable({
-			  // processing: true,
-			  // serverSide: true,
-			  // ajax:{
-			   // url: "{{ url('/admin/user-table') }}",
-			   // "type": "POST",
-			   // "data": {"_token": "{{ csrf_token() }}"}
-			  // },
-			  // "columns": [
-					// {"data": "_id"},
-					// {"data": "name"},
-					// {"data": "email"},
-					// {"data": "phone_no"},
-					// {"data": "image", "searchable": false, "orderable": false},
-					// {"data": "action", "searchable": false, "orderable": false}
-				// ]
-			 // });
 			jQuery('#example').DataTable({
 				dom: 'lifrtp',
 				"scrollX": true,
@@ -184,7 +175,7 @@
 							return '<img src="../public/assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
 					}},
 					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-							return '<a href="users/'+data+'">Edit</a> / <a href="javascript::void(0)" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}">Delete</a>';
+							return '<a href="users/'+data+'"><i class="fa fa-pencil-square-o" title="Edit user"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete user"></i></a>';
 					}},
 				]
 			});

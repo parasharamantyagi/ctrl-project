@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Vehicle;
+use Auth;
 
 class VehicleController extends Controller
 {
@@ -29,6 +30,7 @@ class VehicleController extends Controller
         $inputData = $request->all();
 		unset($inputData["id"]);
 		unset($inputData["_token"]);
+		$inputData['user_id'] = Auth::user()->id;
 		Vehicle::insert($inputData);
 		$returnmessage = array('status'=>true,'action'=>'storeVehicle','message'=>'Vehicle has been save');
 		echo json_encode($returnmessage);
@@ -93,4 +95,14 @@ class VehicleController extends Controller
 		echo json_encode(array('status'=>true,'message'=>'Vehicle successfully delete'));
         // print_r($ids);	
     }
+	
+	public function getVehicleQrcode($id)
+	{
+		// $Users = Vehicle::find($id); // Can chain this line with the next one
+		echo json_encode(url('/public/qrcode/5dd2d7825da0ec04c20f9213png'));
+	}
+
+	
+	
+	
 }

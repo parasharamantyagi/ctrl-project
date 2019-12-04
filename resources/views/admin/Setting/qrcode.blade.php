@@ -116,13 +116,17 @@
 						event.preventDefault();
 					});		
 
-					
+					$('.carousel').carousel({
+						interval: false
+					}); 
+
 				});
 				function form_return()
 					{
 						window.history.back();
 					}
 				
-	</script>
+				
+					</script>
 	
 @endsection

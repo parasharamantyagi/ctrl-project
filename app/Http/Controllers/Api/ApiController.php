@@ -14,6 +14,12 @@ use App\VehicleSetting;
 class ApiController extends Controller
 {
 	
+	public function myuserdata()
+	{
+		$inputData = User::first();
+		return response()->json($inputData);
+	}
+	
 	public function getRoles()
     {
 		$inputData = Role::all();

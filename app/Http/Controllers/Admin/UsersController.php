@@ -119,23 +119,23 @@ class UsersController extends Controller
             
         $totalFiltered = $totalData; 
 
-        $limit = $request->input('length');
-        $start = $request->input('start');
+        $limit = (int)$request->input('length');
+        $start = (int)$request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
-            
+		
         if(empty($request->input('search.value')))
         {            
-            $posts = User::select('name','email','phone_no','image')->offset($start)
-                         // ->limit($limit)
+            $posts = User::select('name','email','phone_no','image')->skip($start)
+                         ->take($limit)
                          ->orderBy($order,$dir)
                          ->get();
         }
         else {
             $search = $request->input('search.value'); 
             $posts =  User::select('name','email','phone_no','image')->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
-                            ->offset($start)
-                            // ->limit($limit)
+                            ->skip($start)
+                            ->take($limit)
                             ->orderBy($order,$dir)
                             ->get();
             $totalFiltered = User::select('name','email','phone_no','image')->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
