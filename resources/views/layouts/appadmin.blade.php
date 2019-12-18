@@ -9,11 +9,11 @@
   <meta name="author" content="">
 
   <title>Resume - Start Bootstrap Theme</title>
+  
 
   <!-- Bootstrap core CSS -->
-  <link href="{{ url('/public/newbootstrap/vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-  <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url('/public/newbootstrap/vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet">  
+  <link rel="stylesheet" type="text/css" href="{{ url('/public/assets/bootstrap/jquery.dataTables.css') }}">
   <link rel="stylesheet" type="text/css" id="a" href="{{ url('/public/assets/bootstrap/custom.css') }}"/>
   
   
@@ -42,22 +42,24 @@
       </span>
     </a>
 	
+	
+	
     <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
-          <a class="nav-link js-scroll-trigger" href="{{ url('/admin/dashboard') }}">Dashboard</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">Dashboard</a>
         </li>
         <li class="nav-item {{ Request::segment(2) == 'settings' ? 'active': '' }}">
-          <a class="nav-link js-scroll-trigger" href="{{ url('/admin/settings') }}">SETTINGS</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('settings')) }}">SETTINGS</a>
         </li>
         <li class="nav-item {{ Request::segment(2) == 'view-vehicle' ? 'active': '' }}">
-          <a class="nav-link js-scroll-trigger" href="{{ url('/admin/view-vehicle') }}">VEHICLE</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('view-vehicle')) }}">VEHICLE</a>
         </li>
         <li class="nav-item {{ Request::segment(2) == 'news-deals' ? 'active': '' }}">
-          <a class="nav-link js-scroll-trigger" href="{{ url('/admin/news-deals') }}">NEWS & DEALS</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('news-deals')) }}">NEWS & DEALS</a>
         </li>
         <li class="nav-item {{ Request::segment(2) == 'users' ? 'active': '' }}">
-          <a class="nav-link js-scroll-trigger" href="{{ url('/admin/users') }}">User</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('users')) }}">User</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>

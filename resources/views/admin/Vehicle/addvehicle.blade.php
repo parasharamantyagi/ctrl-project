@@ -20,10 +20,18 @@
 		<div class="modal-body">
 			<div class="row">
 			<div class="col-md-6">
+			
 					<div class="form-group">
-						<label for="">Brand</label>
-						<input type="text" class="form-control" name="brand" value="{{$userForm->brand}}" id="brand" required="">
+						<label for="">Select User</label>
+						<select class="form-control" name="user_id" id="user_id" required="">
+							  <option value="{{ Auth::user()->id }}">Select User</option>
+							  @foreach($all_user as $all_user)
+								  <option value="{{$all_user->_id}}" <?php echo ($all_user->_id == $userForm->user_id) ? 'selected':''; ?>>{{$all_user->name}}</option>
+							  @endForeach;
+						</select>
 					</div>
+					
+							
 					<div class="form-group">
 						<label for="">Model spec</label>
 						<input type="text" class="form-control" name="model_spec" value="{{$userForm->model_spec}}" id="model_spec" required="">
@@ -71,6 +79,11 @@
 			</div>
 
 			<div class="col-md-6">
+					<div class="form-group">
+						<label for="">Brand</label>
+						<input type="text" class="form-control" name="brand" value="{{$userForm->brand}}" id="brand" required="">
+					</div>
+					
 					<div class="form-group">
 						<label for="">Model</label>
 						<input type="text" class="form-control" name="model" value="{{$userForm->model}}" id="model" required="">

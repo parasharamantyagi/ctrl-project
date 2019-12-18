@@ -20,11 +20,27 @@ class ApiController extends Controller
 		return response()->json($inputData);
 	}
 	
-	public function getRoles()
+	public function allRoles()
     {
 		$inputData = Role::all();
 		return response()->json($inputData);
     }
+	
+	public function addRoles(Request $request)
+	{
+		$inputData = $request->all();
+		Role::insert($inputData);
+		return response()->json($inputData);
+	}
+	
+	public function updateUser(Request $request)
+	{
+		$inputData = $request->all();
+		$user_id = array('_id'=>$inputData['user_id']);
+		unset($inputData['user_id']);
+		User::where($user_id)->update($inputData);
+		return response()->json($inputData);
+	}
 	
 	public function vehicleAll()
 	{

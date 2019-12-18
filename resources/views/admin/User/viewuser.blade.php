@@ -11,39 +11,8 @@
                         
 <!-- END ALERT BLOCKS -->                    <!--<link href="https://ebookbazaar.com/public/css/bootstrap.min.css" rel="stylesheet">-->
 <link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
-<style>
-    /* .admin_allbooks {width:100%; float:left;} */
-    .admin_allbooks .my_form_seatch_bar{
-        float:left;
 
-    }
-    .admin_allbooks .addbook_btn {float:right;}
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-    .switch span
-    {
-        height:20px;
-    }
-    .slider:before
-    {
-        background-color:transparent!important;
-    }
-    .switch input {display:none;}
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
+<style>
 	th {
 		width: 25% !important;
 	}
@@ -52,6 +21,15 @@
         <div class="panel panel-default">
 			<div class="modal-header">
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
+				
+				
+				<select class="form-control viewuser" name="user_roll" id="user_roll">
+						  <option value="0">Select roll</option>
+						  @foreach(my_role() as $my_role)
+							<option value="{{$my_role['_id']}}">{{ucfirst($my_role['roll'])}}</option>
+						  @endforeach
+				</select>
+						
 				<a href="{{ url('/admin/users/create') }}"><button type="submit" class="btn btn-primary">Add user</button></a>
 			</div>
             <!-- ul class="panel-controls">
@@ -78,6 +56,7 @@
 								<th>Email</th>
 								<th>Phone no</th>
 								<th>Image</th>
+								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -114,7 +93,7 @@
 					var tabe_tr = $(this).parents('tr');
 					var token = $(this).data("token");
                         $.confirm({
-                            icon: 'fa fa-smile-o',
+                            icon: 'fa fa-frown-o',
 							content: 'Are you sure to delete this user ..?',
                             theme: 'modern',
                             closeIcon: true,
@@ -146,7 +125,7 @@
                         });
 			});
 			
-			jQuery('#example').DataTable({
+			var dataTable = jQuery('#example').DataTable({
 				dom: 'lifrtp',
 				"scrollX": true,
 				// language: {
@@ -165,20 +144,52 @@
 					"url": "{{ url('/admin/user-table') }}",
 					"dataType": "json",
 					"type": "POST",
-					"data": {"_token": "{{ csrf_token() }}"}
+					"data": function(data) {
+						data._token = "{{ csrf_token() }}",
+						data.user_roll = $('select[name="user_roll"]').val()	
+					}
 				},
 				"columns": [
 					{"data": "name"},
 					{"data": "email"},
-					{"data": "phone_no"},
+					{"data": "phone_no", "render": function(phone_no,type,full,meta){
+							return (phone_no) ? phone_no : '';
+					}},
 					{"data": "image", "searchable": false, "orderable": false, "render": function(data_image,type,full,meta){
 							return '<img src="../public/assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
+					}},
+					{"data": "status", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+						let user_status = (full.status == "1") ? 'active' : '';
+							return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+user_status+'" data-toggle="button" aria-pressed="true" data-id="'+full._id+'" data-token="{{ csrf_token() }}" autocomplete="off"><div class="handle"></div></button>';
 					}},
 					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
 							return '<a href="users/'+data+'"><i class="fa fa-pencil-square-o" title="Edit user"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete user"></i></a>';
 					}},
 				]
 			});
+			
+			$(document).on('click', '.btn-secondary.btn-toggle', function(){
+					$.ajax({
+							url: "user-status",
+							type: 'POST',
+							dataType: "JSON",
+							data: {
+									"_token": $(this).data('token'),
+									"status": $(this).attr("aria-pressed"),
+									"id": $(this).data('id'),
+							},
+							success: function (response)
+							{
+								// $.toaster({ priority : 'success', title : 'Success', message : response.message });
+							}
+						});
+			});
+			
+			$(document).on('change', 'select[name="user_roll"]', function(){
+					dataTable.draw();
+			});
+			
+			
 		});			
 	</script>		
 	

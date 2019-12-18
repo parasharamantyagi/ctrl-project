@@ -10,8 +10,9 @@ class Role extends Eloquent
 	protected $fillable = [
         'roll_id','roll',
 	];
-       // public function user()
-        // {
-            // return $this->belongsTo('App\User');
-        // }
+	
+       public function user()
+        {
+            return $this->hasOne('App\User');
+        }
 }

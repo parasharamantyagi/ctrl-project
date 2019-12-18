@@ -24,9 +24,17 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'Api\AuthController@logout');
         Route::get('user', 'Api\AuthController@user');
-		Route::get('vehicle', 'Api\AuthController@vehicle');
+		Route::post('vehicle', 'Api\AuthController@vehicle');
+		Route::post('userupdate','Api\AuthController@userUpdate');
+		
     });
 });
+
+Route::get('vehicle-setting/{id}','Api\AuthController@vehicleSetting');
+
+Route::get('roles','Api\ApiController@allRoles');
+
+Route::post('roles','Api\ApiController@addRoles');
 
 
 // Route::get('my-user-data','Api\ApiController@myuserdata');

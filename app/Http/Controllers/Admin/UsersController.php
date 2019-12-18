@@ -49,6 +49,16 @@ class UsersController extends Controller
 		if($countUser) {
 			$returnmessage = array('status'=>false,'message'=>'Email already exit');
 		}else{
+			
+			if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
+			{
+				$inputData['password'] = Hash::make($inputData['password']);
+			}else if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] != $inputData['confirm_password']){
+				$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
+				echo json_encode($returnmessage);
+				die;
+			}
+
 			$imageName = "userdefault.png";
 			if ($request->hasFile('userimage')) {  //check the file present or not
 				   $image = $request->file('userimage'); //get the file
@@ -58,9 +68,17 @@ class UsersController extends Controller
 				   $imageName = $namefile;
 			   }
 			$inputData['image'] = $imageName;
+			$inputData['parent_id'] = Auth::user()->_id;
+			
+			if(user_role() === 'admin')
+				$inputData['role_id'] = $request->input('role_id');
+			else
+				$inputData['role_id'] = '5ded4c225da0ec557c6efdc2';
+		
 			unset($inputData["id"]);
 			unset($inputData["_token"]);
 			unset($inputData["userimage"]);
+			
 			User::insert($inputData);
 			$returnmessage = array('status'=>true,'action'=>'storeUser','message'=>'User has been save');
 		}
@@ -87,9 +105,24 @@ class UsersController extends Controller
 		
 		$countUser = User::where('_id',"!=",$request->input('id'))->where('email',$request->input('email'))->count();
 		if($countUser) {
-			$returnmessage = array('status'=>false,'message'=>'Email already exit');
+			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
 		}else{
-		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'role_id'=>$request->input('role_id'),'phone_no'=>$request->input('phone_no'));
+		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'),'parent_id'=>Auth::user()->_id);
+		
+		if(user_role() == 'admin')
+			$resultArray = array_merge($resultArray,array('role_id'=>$request->input('role_id')));
+		else
+			$resultArray = array_merge($resultArray,array('role_id'=>'5ded4c225da0ec557c6efdc2'));
+		
+		if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
+		{
+			$resultArray['password'] = Hash::make($inputData['password']);
+		}else if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] != $inputData['confirm_password']){
+			$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
+			echo json_encode($returnmessage);
+			die;
+		}
+		
 		if ($request->hasFile('userimage')) {  //check the file present or not
 				   $image = $request->file('userimage'); //get the file
 				   $namefile = 'profile-photo-' . rand(1,999999) .time() . '.' . $image->getClientOriginalExtension(); //get the  file extention
@@ -100,6 +133,15 @@ class UsersController extends Controller
 		$userData = User::where('_id', $request->input('id'))->update($resultArray);
 		$returnmessage = array('status'=>true,'message'=>'User has been update');
 		}
+		echo json_encode($returnmessage);
+	}
+	
+	public function userStatus(Request $request)
+	{
+		$inputData = $request->all();
+		$status = ($request->input('status') == "true") ? '1':'0';
+		User::where('_id', $request->input('id'))->update(array("status"=>$status));
+		$returnmessage = array('status'=>true,'message'=>'User status has been update');
 		echo json_encode($returnmessage);
 	}
 	
@@ -114,8 +156,20 @@ class UsersController extends Controller
                             2=> 'phone_no',
                             3=> 'image'
                         );
-  
-        $totalData = User::count();
+		
+		
+		if(user_role() === 'admin')
+				$where_role = [['role_id', '!=' , '0']];
+			else
+				$where_role = [['parent_id', Auth::user()->id]];
+		
+		if($request->input('user_roll') ===  "0")
+				$user_role_s = [['role_id', '!=' , '0']];
+			else
+				$user_role_s = [['role_id', $request->input('user_roll')]];
+			
+			
+        $totalData = User::where($where_role)->where($user_role_s)->count();
             
         $totalFiltered = $totalData; 
 
@@ -126,19 +180,19 @@ class UsersController extends Controller
 		
         if(empty($request->input('search.value')))
         {            
-            $posts = User::select('name','email','phone_no','image')->skip($start)
+            $posts = User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s)->skip($start)
                          ->take($limit)
                          ->orderBy($order,$dir)
                          ->get();
         }
         else {
             $search = $request->input('search.value'); 
-            $posts =  User::select('name','email','phone_no','image')->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
+            $posts =  User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s)->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
                             ->skip($start)
                             ->take($limit)
                             ->orderBy($order,$dir)
                             ->get();
-            $totalFiltered = User::select('name','email','phone_no','image')->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
+            $totalFiltered = User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s)->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
                              ->count();
         }
           

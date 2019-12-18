@@ -8,7 +8,7 @@ class VehicleSetting extends Eloquent
 {
    protected $collection = 'vehicle_settings';
    
-   public function vehicle()
+		public function vehicle()
         {
             return $this->belongsTo('App\Vehicle');
         }

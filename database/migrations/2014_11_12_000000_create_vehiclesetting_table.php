@@ -41,6 +41,7 @@ class CreateVehicleSettingTable extends Migration
             $table->string('max_steering_angle');
             $table->string('led_configuration');
             $table->string('button_config_for_each_menu');
+            $table->string('setting_status');
             $table->timestamps();
         });
     }

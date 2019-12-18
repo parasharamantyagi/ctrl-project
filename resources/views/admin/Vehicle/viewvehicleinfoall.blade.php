@@ -11,40 +11,7 @@
                         
 <!-- END ALERT BLOCKS -->                    <!--<link href="https://ebookbazaar.com/public/css/bootstrap.min.css" rel="stylesheet">-->
 <link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
-<style>
-    /* .admin_allbooks {width:100%; float:left;} */
-    .admin_allbooks .my_form_seatch_bar{
-        float:left;
 
-    }
-    .admin_allbooks .addbook_btn {float:right;}
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-    .switch span
-    {
-        height:20px;
-    }
-    .slider:before
-    {
-        background-color:transparent!important;
-    }
-    .switch input {display:none;}
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-</style>
 <div class="col-md-12">
         <div class="panel panel-default">
 			<div class="modal-header">
@@ -70,26 +37,8 @@
 								<th>Action</th>
 							</tr>
 						</thead>
-						<!tbody>
-						  @foreach ($vehicles as $vehicle)
-							<tr role="row">
-								<td>{{ $vehicle->brand }}</td>
-								<td>{{ $vehicle->model }}</td>
-								<td>{{ $vehicle->model_spec }}</td>
-								<td>{{ $vehicle->release_year }}</td>
-								<td>{{ $vehicle->weight }}</td>
-								<td>{{ $vehicle->manufacturer }}</td>
-								<td>{{ $vehicle->vehicle_type }}</td>
-								<td>{{ $vehicle->width }}</td>
-								<td>{{ $vehicle->wheel_diameter }}</td>
-								<td>
-									<a href="vehicle/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}"><i class="fa fa-pencil-square-o" title="Edit"></i></a>
-									<a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle->_id }}"><i class="fa fa-trash" title="Delete"></i></a>
-									<a href="vehicle-view/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}"><i class="fa fa-eye" title="View"></i></a>
-									<a href="vehicle-setting/{{$vehicle->_id}}" class="edit-user" data-id="{{ $vehicle->_id }}"><i class="fa fa-wrench" title="Vehicle setting"></i></a>
-								</td>
-							</tr>
-						  @endforeach
+						<tbody>
+						  
 						</tbody>
 					</table>
 					
@@ -106,12 +55,12 @@
 	<script>
 	
 		jQuery(document).ready(function () {
-			$('.delete-user').click(function(){
+			$(document).on('click', '.delete-user', function(){
 					var delete_id = $(this).data('id');
 					var tabe_tr = $(this).parents('tr');
 					var token = $(this).data("token");
                         $.confirm({
-                            icon: 'fa fa-smile-o',
+                            icon: 'fa fa-frown-o',
 							content: 'Are you sure to delete this Vehicle ..?',
                             theme: 'modern',
                             closeIcon: true,
@@ -195,8 +144,44 @@
 				// ]
 			// });
 			
+			
 			$('#example').DataTable({
-					"scrollX": true
+				dom: 'lifrtp',
+				"scrollX": true,
+				// language: {
+					// "infoFiltered": "",
+					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+				// },
+				"processing": true,
+				"serverSide": true,
+				"bInfo" : false,
+				"pageLength": 50,
+				lengthMenu: [
+					[50, 100, 250, 500, 999999],
+					['50', '100', '250', '500', 'Show all']
+				],
+				"ajax": {
+					"url": "{{ url('/admin/vehicle-table') }}",
+					"dataType": "json",
+					"type": "POST",
+					"data": function(data) {
+						data._token = "{{ csrf_token() }}"
+					}
+				},
+				"columns": [
+					{"data": "brand"},
+					{"data": "model"},
+					{"data": "model_spec"},
+					{"data": "release_year"},
+					{"data": "weight"},
+					{"data": "manufacturer"},
+					{"data": "vehicle_type"},
+					{"data": "width"},
+					{"data": "wheel_diameter"},
+					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+							return '<a href="vehicle/'+data+'"><i class="fa fa-pencil-square-o" title="Edit user"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete user"></i></a><br /><a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a><a href="vehicle-setting/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
+					}},
+				]
 			});
 		});			
 	</script>		

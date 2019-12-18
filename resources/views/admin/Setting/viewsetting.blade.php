@@ -13,7 +13,7 @@
 			{{ csrf_field() }}
 			<div class="modal-header">
 				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				<!-- a href="qr-code" class="btn btn-primary">Add QR code</a -->
+				<a href="vehicle-setting/all" class="btn btn-primary">View settings</a>
 			</div>
 			
 			<div class="modal-body">

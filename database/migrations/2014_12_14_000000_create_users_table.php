@@ -20,8 +20,12 @@ class CreateUsersTable extends Migration
 			$table->string('role_id');
 			$table->string('phone_no');
 			$table->string('image');
+			$table->string('status');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('device_type');
+            $table->string('social_type');
+            $table->string('social_token');
             $table->rememberToken();
             $table->timestamps();
         });

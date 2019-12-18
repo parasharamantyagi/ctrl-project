@@ -12,9 +12,7 @@ class PostController extends Controller
 {
     public function getpost()
     {
-        $users = User::with('post')->Where('_id','5db0a2b253df8c2254003922')->first()->toArray();
-        echo '<pre>';
-        print_r($users);
+        return view('admin/NewsDeal/viewnewsdeal');
     }
 
     public function createPost()

@@ -12,45 +12,8 @@
 <!-- END ALERT BLOCKS -->                    <!--<link href="https://ebookbazaar.com/public/css/bootstrap.min.css" rel="stylesheet">-->
 <link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
 <style>
-    /* .admin_allbooks {width:100%; float:left;} */
-    .admin_allbooks .my_form_seatch_bar{
-        float:left;
 
-    }
-    .admin_allbooks .addbook_btn {float:right;}
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-    .switch span
-    {
-        height:20px;
-    }
-    .slider:before
-    {
-        background-color:transparent!important;
-    }
-    .switch input {display:none;}
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-	
-	
-	@media only screen and (min-width: 600px) {
-	   .vehicle_setting .btn-secondary {
-		   margin-left: 70%;
-		}
-	}
+
 </style>
 <div class="col-md-12 vehicle_setting">
 
@@ -89,10 +52,16 @@
 		
         <div class="panel panel-default">
 			<div class="modal-header">
-				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $vehicles->brand.' ('.$vehicles->model.')' }}</div></h5>
+				<div class="modal-title" id="subscription_label">
+							<select class="form-control" name="all-vehicle" id="all-vehicle">
+							<option value="all">Select vehicle</option>
+									@foreach ($allVehicle as $vehicle)
+											<option value="{{ $vehicle->_id }}" <?php if($vehicle->_id == Request::segment(3)){ echo 'selected'; }?>>{{ $vehicle->brand.' ('.$vehicle->model.')' }}</option>
+									  @endforeach
+							</select>
+				</div>
 				
 				<input type="button" class="btn btn-secondary" onclick="form_return()" value="Back">
-				<a href="{{ url('/admin/qr-code') }}"><button type="button" class="btn btn-primary">Add QR code</button></a>
 			</div>
 		
             <div class="panel-body">
@@ -109,11 +78,13 @@
 								<th>Reverse steer motor</th>
 								<th>Motor off</th>
 								<th>Steering control point</th>
+								<th>Status</th>
 								<th>Asset folder</th>
 								<th>Action</th>
 							</tr>
 						</thead>
-						<!tbody>
+						<tbody>
+						@if($vehicles)
 						  @foreach ($vehicles->vehicle_setting as $vehicle_setting)
 							<tr role="row">
 								<td>{{ $vehicle_setting->background_color }}</td>
@@ -124,15 +95,19 @@
 								<td>{{ $vehicle_setting->reverse_steer_motor }}</td>
 								<td>{{ $vehicle_setting->motor_off }}</td>
 								<td>{{ $vehicle_setting->steering_control_point }}</td>
+								<td>
+									<button type="button" class="btn btn-sm btn-secondary btn-toggle <?php echo ($vehicle_setting->setting_status == '1') ? 'active':''; ?>" data-toggle="button" aria-pressed="true" data-id="{{ $vehicle_setting->_id }}" data-token="{{ csrf_token() }}" autocomplete="off"><div class="handle"></div></button>
+								</td>
 								<td>{{ $vehicle_setting->asset_folder }}</td>
 								<td>
-									<button type="button" class="btn btn-primary" data-id="{{ $vehicle_setting->_id }}" data-toggle="modal" data-target="#exampleModalLong">QrCode</button>
+									<a href="javascript::void(0)" class="qr-code" data-id="{{ $vehicle_setting->_id }}" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>
+									<a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle_setting->_id }}"><i class="fa fa-trash" title="Delete"></i></a>
 								</td>
 							</tr>
 						  @endforeach
+						@endIf
 						</tbody>
 					</table>
-					
 			</div>
 			</div>
 		</div>
@@ -142,33 +117,50 @@
 @endsection
 
 @section('script')
-
 	<script>
 	
 		jQuery(document).ready(function () {
-			$('.delete-user').click(function(){
-				if(confirm('Are you sure to delete this Vehicle ..?'))
-				{
-					$(this).parents('tr').remove();
+			
+			
+			$(document).on('click', '.delete-user', function(){
 					var delete_id = $(this).data('id');
+					var tabe_tr = $(this).parents('tr');
 					var token = $(this).data("token");
-					 $.ajax({
-						url: "vehicle/"+delete_id,
-						type: 'delete',
-						dataType: "JSON",
-						data: {
-							"_token": token,
-						},
-						success: function (response)
-						{
-							$.toaster({ priority : 'success', title : 'Success', message : response.message });
-						}
-					});
-				}
+                        $.confirm({
+                            icon: 'fa fa-frown-o',
+							content: 'Are you sure to delete this setting ..?',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'blue',
+							 buttons: {
+                                'confirm': {
+                                    text: 'Delete',
+                                    btnClass: 'btn btn-primary',
+                                    action: function(){
+										tabe_tr.remove();
+										 $.ajax({
+											url: "../settings/"+delete_id,
+											type: 'delete',
+											dataType: "JSON",
+											data: {
+												"_token": token,
+											},
+											success: function (response)
+											{
+												$.toaster({ priority : 'success', title : 'Success', message : response.message });
+											}
+										});
+                                    }
+                                },
+                                cancel: function(){
+                                },
+                            }
+                        });
 			});
 			
 			
-			$(document).on('click', 'button[class="btn btn-primary"]', function(){
+			$(document).on('click', 'a[class="qr-code"]', function(){
 					$.ajax({
 						url: "../get-vehicle-qrcode/"+$(this).data('id'),
 						type: 'get',
@@ -180,75 +172,69 @@
 					});
 			});
 			
-			// render: function(data, type, full, meta){
-				 // return "<img src={{ URL::to('/') }}/images/" + data + " width='70' class='img-thumbnail' />";
-				// },
+			$(document).on('change', 'select[name="all-vehicle"]', function(){
+					window.location.href = $(this).val();
+			});
 			
-			// $('#example').DataTable({
-			  // processing: true,
-			  // serverSide: true,
-			  // ajax:{
-			   // url: "{{ url('/admin/user-table') }}",
-			   // "type": "POST",
-			   // "data": {"_token": "{{ csrf_token() }}"}
-			  // },
-			  // "columns": [
-					// {"data": "_id"},
-					// {"data": "name"},
-					// {"data": "email"},
-					// {"data": "phone_no"},
-					// {"data": "image", "searchable": false, "orderable": false},
-					// {"data": "action", "searchable": false, "orderable": false}
-				// ]
-			 // });
-			// jQuery('#example').DataTable({
-				// dom: 'lifrtp',
-				// language: {
-					// "infoFiltered": "",
-					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-				// },
-				// "processing": true,
-				// "serverSide": true,
-				// "pageLength": 50,
-				// lengthMenu: [
-					// [50, 100, 250, 500, 999999],
-					// ['50', '100', '250', '500', 'Show all']
-				// ],
-				// "ajax": {
-					// "url": "{{ url('/admin/user-table') }}",
-					// "dataType": "json",
-					// "type": "POST",
-					// "data": {"_token": "{{ csrf_token() }}"}
-				// },
-				// "columns": [
-					// {"targets": "0", "data": null, "sortable": false, "searchable": false},
-					// {"data": "_id"},
-					// {"data": "name"},
-					// {"data": "email"},
-					// {"data": "phone_no"},
-					// {"data": "image", "searchable": false, "orderable": false},
-					// {"data": "action", "searchable": false, "orderable": false}
-				// ]
-			// });
 			$('.carousel').carousel({
 				interval: false
 			}); 
-		
-			$('#example').DataTable({
-					"scrollX": true,
-					"language": {
-					"paginate": {
-					  "previous": "previous / ",
-					  "next": " / next",
-					}
-				  }
+			
+			$(document).on('click', '.btn-secondary.btn-toggle', function(){
+					$.ajax({
+							url: "../vehicle-setting-status",
+							type: 'POST',
+							dataType: "JSON",
+							data: {
+									"_token": $(this).data('token'),
+									"status": $(this).attr("aria-pressed"),
+									"id": $(this).data('id'),
+							},
+							success: function (response)
+							{
+								
+							}
+						});
 			});
+			
+			
 		});		
 		function form_return()
 			{
 				window.history.back();
 			}
-	</script>		
+	</script>
+
+		@if(Request::segment(3) == 'all')
+			<script>
+				$('#example').dataTable({
+					"oLanguage": {
+						"sEmptyTable": "No vehicle setting found (Please select a vehicle)"
+					},
+					"scrollX": true,
+					"language": {
+						"paginate": {
+						  "previous": "previous / ",
+						  "next": " / next",
+						}
+					}
+				});
+			</script>
+		@else
+			<script>
+			$(document).ready(function () {
+				$('#example').DataTable({
+					"scrollX": true,
+					"language": {
+						"paginate": {
+						  "previous": "previous / ",
+						  "next": " / next",
+						}
+					  }
+				});
+			});
+			</script>
+		@endIf
 	
 @endsection
 

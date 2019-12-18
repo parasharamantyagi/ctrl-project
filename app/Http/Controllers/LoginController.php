@@ -22,7 +22,7 @@ class LoginController extends Controller
                 // 'message' => 'Unauthorized'
             // ], 401);
 			return redirect('/admin')->withErrors(['Invalid email or password']);
-		return redirect('/admin/dashboard');
+		return redirect('/'.Auth::user()->role->roll.'/dashboard');
     }
 	
 	

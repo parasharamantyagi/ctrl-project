@@ -30,19 +30,54 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('qr-code', 'SettingController@getQrCode');
 		Route::post('qr-code', 'SettingController@postQrCode');
 		Route::get('vehicle-setting/{id}','SettingController@vehicleSetting');
+		Route::post('vehicle-setting-status', 'SettingController@vehicleSettingStatus');
 		
 		Route::get('view-profile', 'UsersController@viewProfile');
 		Route::post('usersUpdate', 'UsersController@usersUpdate');
 		Route::post('userProfileUpdate', 'UsersController@userProfileUpdate');
 		Route::post('user-table', 'UsersController@userTable');
+		Route::post('user-status', 'UsersController@userStatus');
+		
+		
+		Route::get('view-vehicle','VehicleController@viewVehicleAll');
+		Route::post('vehicleUpdate', 'VehicleController@vehicleUpdate');
+		Route::post('vehicle-table', 'VehicleController@vehicleTable');
+		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
+		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
+		
+		
+	});
+});
+
+
+Route::namespace('Admin')->prefix('manufacturer')->group(function () {
+	Route::group(['middleware' => 'auth'], function () {
+		Route::resource('/dashboard', 'DashboardController');
+		Route::resource('users', 'UsersController');
+		Route::resource('vehicle', 'VehicleController');
+		Route::resource('settings', 'SettingController');
+		Route::resource('my-settings', 'MySettingController');
+		// Route::resource('vehicle-info', 'VehicleInfoController');
+		Route::resource('news-deals', 'NewsDealsController');
+		
+		Route::get('background-color', 'SettingController@backgroundColor');
+		Route::get('pad-line-color', 'SettingController@padLineColor');
+		Route::get('qr-code', 'SettingController@getQrCode');
+		Route::post('qr-code', 'SettingController@postQrCode');
+		Route::get('vehicle-setting/{id}','SettingController@vehicleSetting');
+		Route::post('vehicle-setting-status', 'SettingController@vehicleSettingStatus');
+		
+		Route::get('view-profile', 'UsersController@viewProfile');
+		Route::post('usersUpdate', 'UsersController@usersUpdate');
+		Route::post('userProfileUpdate', 'UsersController@userProfileUpdate');
+		Route::post('user-table', 'UsersController@userTable');
+		Route::post('user-status', 'UsersController@userStatus');
 		
 		
 		Route::get('view-vehicle','VehicleController@viewVehicleAll');
 		Route::post('vehicleUpdate', 'VehicleController@vehicleUpdate');
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
-		
-		
 	});
 });
 	

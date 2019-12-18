@@ -4,8 +4,23 @@
 <head>
 <meta charset="utf-8">
 <link rel="shortcut icon" href="http://18.212.23.117/blog/public/assets/images/icone.jpg">
-<title>CTRL</title>
+<title> Ctrl</title>
+ 
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116706082-1"></script>
+		<script>
+		 window.dataLayer = window.dataLayer || [];
+		 function gtag(){dataLayer.push(arguments);}
+		 gtag('js', new Date());
+
+		 gtag('config', 'UA-116706082-1');
+		</script>
 		
+			
+<!-- Mobile Specific Meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- Store CSRF token for AJAX calls -->
+	
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<!-- Stylesheets -->
 		<link href="{{ url('/public/assets/bootstrap/bootstrap.min.css') }}" rel="stylesheet"><!-- Bootstrap core CSS -->
@@ -60,7 +75,7 @@
                             </div>
                         </div>
 						<div class="form-group">
-							<div class="col-xs-6 txt_right" style='float: right;'>
+							<div class="col-xs-6 txt_right">
 								<a class="btn btn-link " href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>

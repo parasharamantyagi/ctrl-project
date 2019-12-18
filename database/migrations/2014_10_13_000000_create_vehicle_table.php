@@ -18,6 +18,7 @@ class CreateVehicleTable extends Migration
             $table->string('brand');
             $table->string('model');
             $table->string('user_id');
+            $table->string('from_id');
             $table->string('model_spec');
             $table->string('release_year');
             $table->string('moter_type');
