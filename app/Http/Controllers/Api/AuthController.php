@@ -36,7 +36,7 @@ class AuthController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-		$user_role_id = ($request->role_id) ? $request->role_id : 1;
+		$user_role_id = ($request->role_id) ? $request->role_id : my_role(3);
 		$phone_no = ($request->role_id) ? $request->role_id : '';
         $user = new User([
             'name' => $request->name,
@@ -189,30 +189,36 @@ class AuthController extends Controller
 		if($request->input('search'))
 		{
 				$search = $request->input('search');
-					$useruserVehicle = Vehicle::with('vehicle_setting')->where('user_id',$request->user()->_id)->where(function($query) use($search) {
+					$useruserVehicles = Vehicle::with(array('vehicle_setting'=>function($myQuery){
+						return $myQuery->select('_id','vehicle_id');
+					}))->where('user_id',$request->user()->_id)->where(function($query) use($search) {
 							$query->where('brand', 'LIKE',"%{$search}%")->orWhere('model_spec', 'LIKE',"%{$search}%");
 					})->get();
 
 		}else{
 					$useruserVehicles = Vehicle::with(array('vehicle_setting'=>function($myQuery){
-            $arrayQuery = $myQuery->select('_id','vehicle_id');
-						return $arrayQuery;
+						return $myQuery->select('_id','vehicle_id');
 					}))->where('user_id',$request->user()->_id)->get();
-
-
-          foreach($useruserVehicles as $vehicle_settings) {
-              $vehicle_settings1 = $vehicle_settings;
-              $my_vehicle_setting_array = $vehicle_settings->vehicle_setting;
-              unset($vehicle_settings->vehicle_setting);
-              foreach($my_vehicle_setting_array as $vehicle_setting)
-                {
-                    $vehicle_setting['qr_code'] = url('public/qrcode/'.$vehicle_setting->_id.'png');
-                    $my_vehicle_setting[] = $vehicle_setting;
-                }
-              $vehicle_settings1['vehicle_setting'] = $my_vehicle_setting;
-              $useruserVehicle[] = $vehicle_settings1;
-          }
 		}
+		if($useruserVehicles->toArray())
+			foreach($useruserVehicles as $vehicle_settings) {
+				  $vehicle_settings1 = $vehicle_settings;
+				  $my_vehicle_setting_array = $vehicle_settings->vehicle_setting;
+				  unset($vehicle_settings->vehicle_setting);
+				  $my_vehicle_setting = array();
+				  foreach($my_vehicle_setting_array as $vehicle_setting)
+					{
+						$vehicle_setting['qr_code'] = url('public/qrcode/'.$vehicle_setting->_id.'png');
+						$my_vehicle_setting[] = $vehicle_setting;
+					}
+				  
+				  $vehicle_settings1['vehicle_setting'] = $my_vehicle_setting;
+		   
+				  $useruserVehicle[] = $vehicle_settings1;
+			  }
+		else
+			$useruserVehicle = (object)array();
+		
         return response()->json(api_response(1,"All vehicle",$useruserVehicle));
     }
 

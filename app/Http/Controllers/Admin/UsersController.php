@@ -168,8 +168,8 @@ class UsersController extends Controller
 			else
 				$user_role_s = [['role_id', $request->input('user_roll')]];
 			
-			
-        $totalData = User::where($where_role)->where($user_role_s)->count();
+		$userrecord = User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s);
+        $totalData = $userrecord->count();
             
         $totalFiltered = $totalData; 
 
@@ -180,19 +180,19 @@ class UsersController extends Controller
 		
         if(empty($request->input('search.value')))
         {            
-            $posts = User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s)->skip($start)
+            $posts = $userrecord->skip($start)
                          ->take($limit)
                          ->orderBy($order,$dir)
                          ->get();
         }
         else {
             $search = $request->input('search.value'); 
-            $posts =  User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s)->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
+            $posts =  $userrecord->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
                             ->skip($start)
                             ->take($limit)
                             ->orderBy($order,$dir)
                             ->get();
-            $totalFiltered = User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s)->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
+            $totalFiltered = $userrecord->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
                              ->count();
         }
           
