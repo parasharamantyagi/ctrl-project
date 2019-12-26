@@ -168,16 +168,15 @@
 						   data: new FormData(this),
 						   success:function(response)
 						   {
-							   $('#publisherEmailValidation').html('');
+							   // $('#publisherEmailValidation').html('');
 								var result = JSON.parse(response);
-								$.toaster({ priority : 'success', title : 'Success', message : result.message });
+								// $.toaster({ priority : 'success', title : 'Success', message : result.message });
 								
 								if(result.action === "storeVehicle")
-									{
-										$("#Updateuser").trigger("reset");
-									}
-								
-								
+										window.location.href = "./redirect/view-vehicle?message="+result.message;
+								else
+										window.location.href = "../redirect/view-vehicle?message="+result.message;
+										// $("#Updateuser").trigger("reset");
 						   }
 						});
 						event.preventDefault();

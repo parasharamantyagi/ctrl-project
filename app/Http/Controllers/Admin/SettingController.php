@@ -19,7 +19,7 @@ class SettingController extends Controller
 				$vichle_name =  Vehicle::select('_id','brand','model')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
 			
 		$userForm = (object)array(
-								'id'=>'','vehicle_id'=>'','background_color'=>'','pad_line_color'=>'','pad_background_color'=>'',
+								'_id'=>'','vehicle_id'=>'','background_color'=>'','pad_line_color'=>'','pad_background_color'=>'',
 								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'',
 								'reverse_steer_motor'=>'','motor_off'=>'','steering_control_point'=>'',
 								'asset_folder'=>'','firmware'=>'','front_motor'=>'',
@@ -49,21 +49,30 @@ class SettingController extends Controller
 	
 	public function show($id)
     {
-	   if(VehicleSetting::where('vehicle_id',$id)->count())
-	   {
-		   $vehicleSettingData = VehicleSetting::where('vehicle_id',$id)->first();
-	   }else{
-		   $vehicleSettingData = (object)array(
-								'_id'=>'','vehicle_id'=>'','background_color'=>'','pad_line_color'=>'','pad_background_color'=>'',
-								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'','reverse_steer_motor'=>'','motor_off'=>'',
-								'steering_control_point'=>'','asset_folder'=>'','firmware'=>'','front_motor'=>'','rear_motor'=>'',
-								'gearbox_amount_of_gears'=>'','max_speed_per_gears'=>'','speed_curve'=>'','max_rpm'=>'','idle_rpm'=>'',
-								'upper_gear_shift_value'=>'','lower_gear_shift_value'=>'','cell_value_steer_pad'=>'','gear_retio'=>'','max_steering_angle'=>'',
-								'led_configuration'=>'','button_config_for_each_menu'=>''
-									  );
-	   }
-	   echo json_encode(array('status'=>true,'message'=>'VehicleSetting successfully get','data'=>$vehicleSettingData));
+		
+	   if(user_role() === 'admin')
+				$vichle_name =  Vehicle::select('_id','brand','model')->get();
+			else
+				$vichle_name =  Vehicle::select('_id','brand','model')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
+	
+		$vehicleSettingData = VehicleSetting::find($id);
+	   				
+		$page_info['page_title'] = 'Settings';
+		return view('admin/Setting/viewsetting')->with('userForm', $vehicleSettingData)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/settings-update');
+	   // echo json_encode(array('status'=>true,'message'=>'VehicleSetting successfully get','data'=>$vehicleSettingData));
     }
+	
+	public function settingsUpdate(Request $request)
+	{
+		$inputData = $request->all();
+		$setting_id = $request->input('id');
+		unset($inputData["_token"]);
+		unset($inputData["id"]);
+		
+		VehicleSetting::where('_id',$setting_id)->update($inputData);
+		$returnmessage = array('status'=>true,'action'=>'update_form','message'=>'Vehicle setting has been update');
+		echo json_encode($returnmessage);
+	}
 	
 	public function backgroundColor()
     {

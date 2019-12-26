@@ -72,7 +72,7 @@ class VehicleController extends Controller
 		unset($inputData["id"]);
 		unset($inputData["_token"]);
 		Vehicle::where('_id', $vehicle_id)->update($inputData);
-		$returnmessage = array('status'=>true,'message'=>'Vehicle has been update');
+		$returnmessage = array('status'=>true,'action'=>'updateVehicle','message'=>'Vehicle has been update');
 		echo json_encode($returnmessage);
 	}
 	
@@ -122,13 +122,13 @@ class VehicleController extends Controller
                          ->get();
         }
         else {
-            $search = $request->input('search.value'); 
-            $posts =  $vehicles->orWhere('brand', 'LIKE',"%{$search}%")->orWhere('model', 'LIKE',"%{$search}%")->orWhere('model_spec', 'LIKE',"%{$search}%")
+            $search = $request->input('search.value');
+            $posts =  $vehicles->where('brand', 'LIKE',"%{$search}%")->orWhere('model', 'LIKE',"%{$search}%")->orWhere('model_spec', 'LIKE',"%{$search}%")
                             ->skip($start)
                             ->take($limit)
                             ->orderBy($order,$dir)
                             ->get();
-            $totalFiltered = $vehicles->orWhere('brand', 'LIKE',"%{$search}%")->orWhere('model', 'LIKE',"%{$search}%")->orWhere('model_spec', 'LIKE',"%{$search}%")
+            $totalFiltered = $vehicles->where('brand', 'LIKE',"%{$search}%")->orWhere('model', 'LIKE',"%{$search}%")->orWhere('model_spec', 'LIKE',"%{$search}%")
                              ->count();
         }
           

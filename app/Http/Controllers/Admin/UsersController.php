@@ -47,7 +47,7 @@ class UsersController extends Controller
         $inputData = $request->all();
 		$countUser = User::where('email', $inputData['email'])->count();
 		if($countUser) {
-			$returnmessage = array('status'=>false,'message'=>'Email already exit');
+			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
 		}else{
 			
 			if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
@@ -73,7 +73,7 @@ class UsersController extends Controller
 			if(user_role() === 'admin')
 				$inputData['role_id'] = $request->input('role_id');
 			else
-				$inputData['role_id'] = '5ded4c225da0ec557c6efdc2';
+				$inputData['role_id'] = strval(my_role(3));
 		
 			unset($inputData["id"]);
 			unset($inputData["_token"]);
@@ -112,7 +112,7 @@ class UsersController extends Controller
 		if(user_role() == 'admin')
 			$resultArray = array_merge($resultArray,array('role_id'=>$request->input('role_id')));
 		else
-			$resultArray = array_merge($resultArray,array('role_id'=>'5ded4c225da0ec557c6efdc2'));
+			$resultArray = array_merge($resultArray,array('role_id'=>strval(my_role(3))));
 		
 		if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
 		{
@@ -148,27 +148,24 @@ class UsersController extends Controller
 	public function userTable(Request $request)
 	{
 		$inputData = $request->all();
-		
-		
 		$columns = array( 
                             0 =>'name', 
                             1 =>'email',
                             2=> 'phone_no',
                             3=> 'image'
                         );
-		
-		
+		$userrecord = User::select('name','email','phone_no','image','status');
 		if(user_role() === 'admin')
-				$where_role = [['role_id', '!=' , '0']];
+				$userrecord = $userrecord->where('role_id','!=','0');
 			else
-				$where_role = [['parent_id', Auth::user()->id]];
-		
+				$userrecord = $userrecord->where('parent_id',Auth::user()->id);
 		if($request->input('user_roll') ===  "0")
-				$user_role_s = [['role_id', '!=' , '0']];
+				$userrecord = $userrecord->where('role_id','!=','0');
 			else
-				$user_role_s = [['role_id', $request->input('user_roll')]];
-			
-		$userrecord = User::select('name','email','phone_no','image','status')->where($where_role)->where($user_role_s);
+				$userrecord = $userrecord->where('role_id',$request->input('user_roll'));
+		
+		
+		// $userrecord = User::select('name','email','phone_no','image','status');
         $totalData = $userrecord->count();
             
         $totalFiltered = $totalData; 
@@ -280,6 +277,14 @@ class UsersController extends Controller
 		echo json_encode(array('status'=>true,'message'=>'User successfully delete'));
         // print_r($ids);	
     }
+	
+	public function redirectUrl($url)
+	{
+		return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
+		// home/dashboard
+		// redirect()->back()->with('message', 'IT WORKS!');
+		// echo $url;
+	}
 	
 	
 }

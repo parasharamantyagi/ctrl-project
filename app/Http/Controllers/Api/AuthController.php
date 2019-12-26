@@ -25,6 +25,8 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
 
+	  // print_r(my_role(3));
+	  // die;
       $user = User::where('email',$request->email)->first();
       if($user)
       {
@@ -35,9 +37,9 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ]);
-
-		$user_role_id = ($request->role_id) ? $request->role_id : my_role(3);
-		$phone_no = ($request->role_id) ? $request->role_id : '';
+		
+		$user_role_id = ($request->role_id) ? $request->role_id : strval(my_role(3));
+		$phone_no = ($request->phone_no) ? $request->phone_no : '';
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,

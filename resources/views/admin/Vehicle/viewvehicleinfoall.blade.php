@@ -156,6 +156,11 @@
 				"serverSide": true,
 				"bInfo" : false,
 				"pageLength": 50,
+				"fnDrawCallback":function(){
+						if ($('#example tr').length < 50) {
+							$('.dataTables_paginate').hide();
+						}
+				},
 				lengthMenu: [
 					[50, 100, 250, 500, 999999],
 					['50', '100', '250', '500', 'Show all']
@@ -185,7 +190,13 @@
 			});
 		});			
 	</script>		
-	
+	@if(session()->has('flash-message'))
+		<script>
+			jQuery(document).ready(function () {
+				$.toaster({ priority : 'success', title : 'Success', message : "{{ session()->get('flash-message') }}" });
+			});
+		</script>
+	@endif
 @endsection
 
 

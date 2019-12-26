@@ -1,7 +1,12 @@
 @extends('layouts.appadmin')
 
 @section('content')
-
+<style>
+		.dataTables_filter label input
+		{
+			margin: 3px;
+		}
+</style>
 
 
 	<div class="page-content-wrap">
@@ -23,7 +28,7 @@
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
 				
 				
-				<select class="form-control viewuser" name="user_roll" id="user_roll">
+				<select class="form-control viewuser" name="user_roll" id="user_roll" <?php if(user_role() != 'admin') { echo 'style="display: none;"';} ?>>
 						  <option value="0">Select roll</option>
 						  @foreach(my_role() as $my_role)
 							<option value="{{$my_role['_id']}}">{{ucfirst($my_role['roll'])}}</option>
@@ -136,6 +141,11 @@
 				"serverSide": true,
 				"bInfo" : false,
 				"pageLength": 50,
+				"fnDrawCallback":function(){
+						if ($('#example tr').length < 50) {
+							$('.dataTables_paginate').hide();
+						}
+				},
 				lengthMenu: [
 					[50, 100, 250, 500, 999999],
 					['50', '100', '250', '500', 'Show all']
@@ -192,7 +202,13 @@
 			
 		});			
 	</script>		
-	
+	@if(session()->has('flash-message'))
+		<script>
+			jQuery(document).ready(function () {
+				$.toaster({ priority : 'success', title : 'Success', message : "{{ session()->get('flash-message') }}" });
+			});
+		</script>
+	@endif
 		
 	
 @endsection

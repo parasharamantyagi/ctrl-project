@@ -1,16 +1,15 @@
 @extends('layouts.appadmin')
 
 @section('content')
-
+	
+	
 	<div class="page-content-wrap">
                     <!-- START ALERT BLOCKS -->
 
-	
-	
-                        
 <!-- END ALERT BLOCKS -->                    	
 		<form method="POST" action="{{ url($formaction) }}" id="Updateuser" enctype="multipart/form-data">
 			{{ csrf_field() }}
+			<input type="hidden" name="id" value="{{$userForm->_id}}" id="id">
 			<div class="modal-header">
 				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
 				<a href="vehicle-setting/all" class="btn btn-primary">View settings</a>
@@ -21,11 +20,10 @@
 				<div class="form-group">
 						<div class="col-sm-12 col-xs-12">
 							<label for="">Select car</label>
-							
-							<select class="form-control" name="vehicle_id" id="vehicle_id" required="">
+							<select class="form-control selectpicker" data-size="5" data-live-search="true" name="vehicle_id" id="vehicle_id" required="">
 							  <option value="2019">Select vehicle</option>
 							  @foreach($vichle_name as $vichle_name)
-								  <option value="{{$vichle_name->_id}}">{{$vichle_name->brand .' ('.$vichle_name->model.')'}}</option>
+								  <option value="{{$vichle_name->_id}}" <?php echo ($vichle_name->_id === $userForm->vehicle_id) ? 'selected':''; ?>>{{$vichle_name->brand .' ('.$vichle_name->model.')'}}</option>
 							  @endForeach;
 							</select>
 						</div>
@@ -34,62 +32,62 @@
 				  <div class="col-md-6">
 					<div class="form-group">
 						<label for="">Background color</label>
-						<input type="text" class="form-control" name="background_color" value="" id="background_color" required="">
+						<input type="text" class="form-control" name="background_color" value="{{$userForm->background_color}}" id="background_color" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Pad background color</label>
-						<input type="text" class="form-control" name="pad_background_color" value="" id="pad_background_color" required="">
+						<input type="text" class="form-control" name="pad_background_color" value="{{$userForm->pad_background_color}}" id="pad_background_color" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Daylight auto ON (if any)</label>
-						<input type="text" class="form-control email" name="daylight_auto_on" value="" id="daylight_auto_on" required="">
+						<input type="text" class="form-control email" name="daylight_auto_on" value="{{$userForm->daylight_auto_on}}" id="daylight_auto_on" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Motor off</label>
-						<input type="text" class="form-control" name="motor_off" value="" id="motor_off" required="">
+						<input type="text" class="form-control" name="motor_off" value="{{$userForm->motor_off}}" id="motor_off" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Asset folder(custom images)</label>
-						<input type="text" class="form-control" name="asset_folder" value="" id="asset_folder" required="">
+						<input type="text" class="form-control" name="asset_folder" value="{{$userForm->asset_folder}}" id="asset_folder" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Front motor</label>
-						<input type="text" class="form-control" name="front_motor" value="" id="front_motor" required="">
+						<input type="text" class="form-control" name="front_motor" value="{{$userForm->front_motor}}" id="front_motor" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Gearbox amount of gears</label>
-						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="" id="gearbox_amount_of_gears" required="">
+						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Speed curve</label>
-						<input type="text" class="form-control" name="speed_curve" value="" id="speed_curve" required="">
+						<input type="text" class="form-control" name="speed_curve" value="{{$userForm->speed_curve}}" id="speed_curve" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Idle rpm</label>
-						<input type="text" class="form-control" name="idle_rpm" value="" id="idle_rpm" required="">
+						<input type="text" class="form-control" name="idle_rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Lower gear shift value</label>
-						<input type="text" class="form-control" name="lower_gear_shift_value" value="" id="lower_gear_shift_value" required="">
+						<input type="text" class="form-control" name="lower_gear_shift_value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Gear retio</label>
-						<input type="text" class="form-control" name="gear_retio" value="" id="gear_retio" required="">
+						<input type="text" class="form-control" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">LED configuration for each button</label>
-						<input type="text" class="form-control" name="led_configuration" value="" id="led_configuration" required="">
+						<input type="text" class="form-control" name="led_configuration" value="{{$userForm->led_configuration}}" id="led_configuration" required="">
 					</div>
 					
 					
@@ -104,62 +102,62 @@
 				  <div class="col-md-6">
 					<div class="form-group">
 						<label for="">Pad line color</label>
-						<input type="text" class="form-control" name="pad_line_color" value="" id="pad_line_color" required="">
+						<input type="text" class="form-control" name="pad_line_color" value="{{$userForm->pad_line_color}}" id="pad_line_color" required="">
 					</div>	
 					
 					<div class="form-group">
 						<label for="">Button style</label>
-						<input type="text" class="form-control" name="button_style" value="" id="button_style" required="">
+						<input type="text" class="form-control" name="button_style" value="{{$userForm->button_style}}" id="button_style" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Reverse speed motor</label>
-						<input type="text" class="form-control" name="reverse_speed_motor" value="" id="reverse_speed_motor" required="">
+						<input type="text" class="form-control" name="reverse_speed_motor" value="{{$userForm->reverse_speed_motor}}" id="reverse_speed_motor" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Steering control point</label>
-						<input type="text" class="form-control" name="steering_control_point" value="" id="steering_control_point" required="">
+						<input type="text" class="form-control" name="steering_control_point" value="{{$userForm->steering_control_point}}" id="steering_control_point" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Firmware (updated from car)</label>
-						<input type="text" class="form-control" name="firmware" value="" id="firmware" required="">
+						<input type="text" class="form-control" name="firmware" value="{{$userForm->firmware}}" id="firmware" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Rear motor</label>
-						<input type="text" class="form-control" name="rear_motor" value="" id="rear_motor" required="">
+						<input type="text" class="form-control" name="rear_motor" value="{{$userForm->rear_motor}}" id="rear_motor" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Max speed per gears</label>
-						<input type="text" class="form-control" name="max_speed_per_gears" value="" id="max_speed_per_gears" required="">
+						<input type="text" class="form-control" name="max_speed_per_gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Max rpm</label>
-						<input type="text" class="form-control" name="max_rpm" value="" id="max_rpm" required="">
+						<input type="text" class="form-control" name="max_rpm" value="{{$userForm->max_rpm}}" id="max_rpm" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Upper gear shift value</label>
-						<input type="text" class="form-control" name="upper_gear_shift_value" value="" id="upper_gear_shift_value" required="">
+						<input type="text" class="form-control" name="upper_gear_shift_value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Cell value steer pad</label>
-						<input type="text" class="form-control" name="cell_value_steer_pad" value="" id="cell_value_steer_pad" required="">
+						<input type="text" class="form-control" name="cell_value_steer_pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Max steering angle</label>
-						<input type="text" class="form-control" name="max_steering_angle" value="" id="max_steering_angle" required="">
+						<input type="text" class="form-control" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle" required="">
 					</div>
 					
 					<div class="form-group">
 						<label for="">Button config for each menu</label>
-						<input type="text" class="form-control" name="button_config_for_each_menu" value="" id="button_config_for_each_menu" required="">
+						<input type="text" class="form-control" name="button_config_for_each_menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu" required="">
 					</div>
 				  </div>
 				  
@@ -250,11 +248,13 @@
 						// });
 					// });
 
-					function form_return()
+					
+				});
+				function form_return()
 					{
 						window.history.back();
 					}
-				});
+				
 	</script>
 	
 @endsection

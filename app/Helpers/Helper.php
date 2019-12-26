@@ -91,7 +91,7 @@ if (!function_exists('pr')) {
 	function pr($value)
     {
 		echo '<pre>';
-		print_r($value->toArray());
+		print_r($value);
 		echo '</pre>';
 		die;
     }

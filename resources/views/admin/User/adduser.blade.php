@@ -115,12 +115,14 @@
 										$('input[type="password"]').val('');
 									}
 								}else{
-									$.toaster({ priority : 'success', title : 'Success', message : result.message });
-									if(result.action === "storeUser")
-									{
-										$("#Updateuser").trigger("reset");
-										// $("#upload_image_button").val('');
-									}
+									window.location.href = "../redirect/users?message="+result.message;
+
+									// return true;
+									// $.toaster({ priority : 'success', title : 'Success', message : result.message });
+									// if(result.action === "storeUser")
+									// {
+										// $("#Updateuser").trigger("reset");
+									// }
 								}
 						   }
 						});

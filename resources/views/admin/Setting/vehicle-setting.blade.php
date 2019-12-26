@@ -34,7 +34,7 @@
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
 							  <div class="carousel-inner">
 								<div class="carousel-item active">
-								  <img class="d-block w-100" src="{{ url('/public/qrcode/5dd2d7825da0ec04c20f9213png') }}" alt="First slide">
+								  <img class="d-block w-100" src="{{ url('/public/qrcode/5dfa5f795da0ec0aa277de75png') }}" alt="First slide">
 								</div>
 							  </div>
 							</div>
@@ -101,6 +101,7 @@
 								<td>{{ $vehicle_setting->asset_folder }}</td>
 								<td>
 									<a href="javascript::void(0)" class="qr-code" data-id="{{ $vehicle_setting->_id }}" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>
+									<a href="../settings/{{ $vehicle_setting->_id }}" class="edit-vehicle-setting"><i class="fa fa-pencil-square-o" title="Edit"></i></a>
 									<a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle_setting->_id }}"><i class="fa fa-trash" title="Delete"></i></a>
 								</td>
 							</tr>
@@ -212,12 +213,7 @@
 						"sEmptyTable": "No vehicle setting found (Please select a vehicle)"
 					},
 					"scrollX": true,
-					"language": {
-						"paginate": {
-						  "previous": "previous / ",
-						  "next": " / next",
-						}
-					}
+					"bPaginate": false
 				});
 			</script>
 		@else
@@ -230,7 +226,12 @@
 						  "previous": "previous / ",
 						  "next": " / next",
 						}
-					  }
+					  },
+					"fnDrawCallback":function(){
+							if ($('#example tr').length < 10) {
+								$('.dataTables_paginate').hide();
+							}
+					}
 				});
 			});
 			</script>
