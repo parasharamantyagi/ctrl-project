@@ -3087,6 +3087,12 @@ input[type="button"].btn-block {
   }
 }
 
+@media (max-width: 992px) {
+	.nav-link-submenu {
+		margin-left: 0 !important;
+	}
+}
+
 @media (min-width: 1200px) {
   .dropdown-menu-xl-left {
     right: auto;
@@ -4030,9 +4036,9 @@ input[type="button"].btn-block {
   list-style: none;
 }
 
-.nav-link {
-  display: block;
+.nav-link-main {
   padding: 0.5rem 1rem;
+  padding-bottom: 0;
 }
 
 .nav-link:hover, .nav-link:focus {
@@ -4125,6 +4131,10 @@ input[type="button"].btn-block {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+}
+
+.nav-link-submenu {
+    margin-left: -40px;
 }
 
 .navbar > .container,

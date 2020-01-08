@@ -46,6 +46,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::post('vehicle-table', 'VehicleController@vehicleTable');
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
+		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
 		
 		
 	});
@@ -53,6 +54,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 
 Route::namespace('Admin')->prefix('manufacturer')->group(function () {
+	Route::resource('/', 'LoginController');
 	Route::group(['middleware' => 'auth'], function () {
 		Route::resource('/dashboard', 'DashboardController');
 		Route::resource('users', 'UsersController');
@@ -84,11 +86,33 @@ Route::namespace('Admin')->prefix('manufacturer')->group(function () {
 		
 	});
 });
+
 	
 	
-	
-Route::get('/', function () {
-    return view('welcome');
+Route::resource('/', 'Admin\LoginController');
+
+Route::namespace('User')->prefix('user')->group(function () {
+	Route::resource('/', 'LoginController');
+	Route::group(['middleware' => 'auth'], function () {
+		Route::resource('/dashboard', 'DashboardController');
+		Route::resource('profile', 'UsersController');
+		Route::get('redirect/{id}','UsersController@redirectUrl');
+		
+		Route::resource('vehicle', 'VehicleController');
+		
+		Route::get('test', 'VehicleController@test');
+		Route::post('settings-update', 'VehicleController@settingsUpdate');
+		Route::get('setting/{id}','VehicleController@settingId');
+		Route::get('settings/{id}','VehicleController@editSettingId');
+		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
+		Route::post('vehicle-setting-status', 'VehicleController@vehicleSettingStatus');
+		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
+		
+		// Route::get('view-vehicle','VehicleController@viewVehicleAll');
+		// Route::post('vehicle-table', 'VehicleController@vehicleTable');
+		
+		
+	});
 });
 
 Route::get('/post','PostController@getpost');

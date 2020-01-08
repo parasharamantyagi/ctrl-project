@@ -1,4 +1,4 @@
-@extends('layouts.appadmin')
+@extends('layouts.appuser')
 
 @section('content')
 	
@@ -11,13 +11,14 @@
 			<input type="hidden" name="id" value="{{$userForm->_id}}" id="id">
 			<div class="modal-header">
 				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				<a href="{{ url(user_role().'/vehicle-setting/all') }}" class="btn btn-primary">View settings</a>
+				<a href="{{ url(user_role().'/setting/all') }}" class="btn btn-primary">View settings</a>
 			</div>
 			
 			<div class="modal-body">
 				<div class="row">
 				<div class="form-group">
 						<div class="col-sm-12 col-xs-12">
+							<label for="">Select car</label>
 							<select class="form-control selectpicker" data-size="5" data-live-search="true" name="vehicle_id" id="vehicle_id" required="">
 							  <option value="2019">Select vehicle</option>
 							  @foreach($vichle_name as $vichle_name)
@@ -29,54 +30,66 @@
 				
 				  <div class="col-md-6">
 					<div class="form-group">
-						<input type="text" class="form-control" name="background_color" placeholder="Background color" value="{{$userForm->background_color}}" id="background_color" required="">
+						<label for="">Background color</label>
+						<input type="text" class="form-control" name="background_color" value="{{$userForm->background_color}}" id="background_color" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="pad_background_color" placeholder="Pad background color" value="{{$userForm->pad_background_color}}" id="pad_background_color" required="">
+						<label for="">Pad background color</label>
+						<input type="text" class="form-control" name="pad_background_color" value="{{$userForm->pad_background_color}}" id="pad_background_color" required="">
 					</div>
 					
 					<div class="form-group">
+						<label for="">Daylight auto ON (if any)</label>
 						<select class="form-control" name="daylight_auto_on" id="daylight_auto_on" required="">
-							  <option value="on">Daylight auto ON (if any)</option>
 							  <option value="on" <?php echo ($userForm->daylight_auto_on === 'on') ? 'selected':''; ?>>on</option>
 							  <option value="off" <?php echo ($userForm->daylight_auto_on === 'off') ? 'selected':''; ?>>off</option>
 						</select>
 					</div>
+					
 					<div class="form-group">
-						<input type="text" class="form-control" name="motor_off" placeholder="Motor off" value="{{$userForm->motor_off}}" id="motor_off" required="">
+						<label for="">Motor off</label>
+						<input type="text" class="form-control" name="motor_off" value="{{$userForm->motor_off}}" id="motor_off" required="">
 					</div>
 					
 					<div class="form-group">
-						Asset folder(custom images) <input type="file" class="form-control" name="asset_folder" value="" id="asset_folder">
+						<label for="">Asset folder(custom images)</label>
+						<input type="file" class="form-control" name="asset_folder" value="" id="asset_folder">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="front_motor" placeholder="Front motor" value="{{$userForm->front_motor}}" id="front_motor" required="">
+						<label for="">Front motor</label>
+						<input type="text" class="form-control" name="front_motor" value="{{$userForm->front_motor}}" id="front_motor" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="gearbox_amount_of_gears" placeholder="Gearbox amount of gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears" required="">
+						<label for="">Gearbox amount of gears</label>
+						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="speed_curve" placeholder="Speed curve" value="{{$userForm->speed_curve}}" id="speed_curve" required="">
+						<label for="">Speed curve</label>
+						<input type="text" class="form-control" name="speed_curve" value="{{$userForm->speed_curve}}" id="speed_curve" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="idle_rpm" placeholder="Idle rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm" required="">
+						<label for="">Idle rpm</label>
+						<input type="text" class="form-control" name="idle_rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="lower_gear_shift_value" placeholder="Lower gear shift value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value" required="">
+						<label for="">Lower gear shift value</label>
+						<input type="text" class="form-control" name="lower_gear_shift_value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="gear_retio" placeholder="Gear retio" value="{{$userForm->gear_retio}}" id="gear_retio" required="">
+						<label for="">Gear retio</label>
+						<input type="text" class="form-control" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="led_configuration" placeholder="LED configuration for each button" value="{{$userForm->led_configuration}}" id="led_configuration" required="">
+						<label for="">LED configuration for each button</label>
+						<input type="text" class="form-control" name="led_configuration" value="{{$userForm->led_configuration}}" id="led_configuration" required="">
 					</div>
 					
 					
@@ -90,52 +103,63 @@
 				  
 				  <div class="col-md-6">
 					<div class="form-group">
-						<input type="text" class="form-control" name="pad_line_color" placeholder="Pad line color" value="{{$userForm->pad_line_color}}" id="pad_line_color" required="">
+						<label for="">Pad line color</label>
+						<input type="text" class="form-control" name="pad_line_color" value="{{$userForm->pad_line_color}}" id="pad_line_color" required="">
 					</div>	
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="button_style" placeholder="Button style" value="{{$userForm->button_style}}" id="button_style" required="">
+						<label for="">Button style</label>
+						<input type="text" class="form-control" name="button_style" value="{{$userForm->button_style}}" id="button_style" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="reverse_speed_motor" placeholder="Reverse speed motor" value="{{$userForm->reverse_speed_motor}}" id="reverse_speed_motor" required="">
+						<label for="">Reverse speed motor</label>
+						<input type="text" class="form-control" name="reverse_speed_motor" value="{{$userForm->reverse_speed_motor}}" id="reverse_speed_motor" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="steering_control_point" placeholder="Steering control point" value="{{$userForm->steering_control_point}}" id="steering_control_point" required="">
+						<label for="">Steering control point</label>
+						<input type="text" class="form-control" name="steering_control_point" value="{{$userForm->steering_control_point}}" id="steering_control_point" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="firmware" placeholder="Firmware (updated from car)" value="{{$userForm->firmware}}" id="firmware" required="">
+						<label for="">Firmware (updated from car)</label>
+						<input type="text" class="form-control" name="firmware" value="{{$userForm->firmware}}" id="firmware" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="rear_motor" placeholder="Rear motor" value="{{$userForm->rear_motor}}" id="rear_motor" required="">
+						<label for="">Rear motor</label>
+						<input type="text" class="form-control" name="rear_motor" value="{{$userForm->rear_motor}}" id="rear_motor" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="max_speed_per_gears" placeholder="Max speed per gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears" required="">
+						<label for="">Max speed per gears</label>
+						<input type="text" class="form-control" name="max_speed_per_gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="max_rpm" placeholder="Max rpm" value="{{$userForm->max_rpm}}" id="max_rpm" required="">
+						<label for="">Max rpm</label>
+						<input type="text" class="form-control" name="max_rpm" value="{{$userForm->max_rpm}}" id="max_rpm" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="upper_gear_shift_value" placeholder="Upper gear shift value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value" required="">
+						<label for="">Upper gear shift value</label>
+						<input type="text" class="form-control" name="upper_gear_shift_value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="cell_value_steer_pad" placeholder="Cell value steer pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad" required="">
+						<label for="">Cell value steer pad</label>
+						<input type="text" class="form-control" name="cell_value_steer_pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad" required="">
 					</div>
 					
 					<div class="form-group">
-						<label for=""></label>
-						<input type="text" class="form-control" name="max_steering_angle" placeholder="Max steering angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle" required="">
+						<label for="">Max steering angle</label>
+						<input type="text" class="form-control" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control" name="button_config_for_each_menu" placeholder="Button config for each menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu" required="">
+						<label for="">Button config for each menu</label>
+						<input type="text" class="form-control" name="button_config_for_each_menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu" required="">
 					</div>
 				  </div>
 				  
@@ -172,11 +196,11 @@
 						   success:function(response)
 						   {
 								var result = JSON.parse(response);
-								if(result.action === 'add_form')
+								window.location.href = "../redirectsetting/"+result.vehicle_id+"?message="+result.message;
+
+								// $.toaster({ priority : 'success', title : 'Success', message : result.message });
+								// if(result.action === 'add_form')
 									// $("#Updateuser").trigger("reset");
-									window.location.href = "./redirectsetting/"+result.vehicle_id+"?message="+result.message;
-								else
-									window.location.href = "../redirectsetting/"+result.vehicle_id+"?message="+result.message;
 						   }
 						});
 						event.preventDefault();

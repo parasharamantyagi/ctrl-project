@@ -31,7 +31,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-	   $userForm = (object)array('id'=>'','name'=>'','email'=>'','role_id'=>'','phone_no'=>'','image'=>'/public/assets/userimages/edit_profile_img.png');
+	   $userForm = (object)array('id'=>'','name'=>'','email'=>'','role_id'=>'','phone_no'=>'','image'=>'/public/assets/userimages/userdefault.png');
 	   $page_info['page_title'] = 'Add User';
 	   return view('admin/User/adduser')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/admin/users');
     }
@@ -69,12 +69,13 @@ class UsersController extends Controller
 			   }
 			$inputData['image'] = $imageName;
 			$inputData['parent_id'] = Auth::user()->_id;
+			$inputData["status"] = '1';
 			
 			if(user_role() === 'admin')
 				$inputData['role_id'] = $request->input('role_id');
 			else
 				$inputData['role_id'] = strval(my_role(3));
-		
+			
 			unset($inputData["id"]);
 			unset($inputData["_token"]);
 			unset($inputData["userimage"]);
@@ -107,7 +108,7 @@ class UsersController extends Controller
 		if($countUser) {
 			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
 		}else{
-		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'),'parent_id'=>Auth::user()->_id);
+		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'));
 		
 		if(user_role() == 'admin')
 			$resultArray = array_merge($resultArray,array('role_id'=>$request->input('role_id')));
@@ -184,13 +185,14 @@ class UsersController extends Controller
         }
         else {
             $search = $request->input('search.value'); 
-            $posts =  $userrecord->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
-                            ->skip($start)
+            $userrecord =  $userrecord->where(function($q) use ($search){
+							$q->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%");
+							});
+			$posts =  $userrecord->skip($start)
                             ->take($limit)
                             ->orderBy($order,$dir)
                             ->get();
-            $totalFiltered = $userrecord->where('name', 'LIKE',"%{$search}%")->orWhere('email', 'LIKE',"%{$search}%")->orWhere('phone_no', 'LIKE',"%{$search}%")
-                             ->count();
+            $totalFiltered = $userrecord->count();
         }
           
         $json_data = array(

@@ -1,4 +1,4 @@
-@extends('layouts.appadmin')
+@extends('layouts.appuser')
 
 @section('content')
 
@@ -19,25 +19,15 @@
 
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
-						<input type="text" class="form-control" name="name" value="{{$userForm->name}}" id="name" placeholder="Name" required="">
+						<input type="text" class="form-control" placeholder="Name" name="name" value="{{$userForm->name}}" id="name" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="password" class="form-control" name="password" value="" id="password" placeholder="Password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
+						<input type="password" class="form-control" placeholder="Password" name="password" value="" id="password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
 					</div>
-					<?php if(user_role() === 'admin') { ?>
-					<div class="form-group">
-						<select class="form-control" name="role_id" id="role_id">
-						  <option value="{{ my_role(3)}}">Select roll</option>
-						  <option value="{{ my_role(1)}}" <?php if($userForm->role_id == my_role(1)) { echo 'selected'; } ?>>Admin</option>
-						  <option value="{{ my_role(2)}}" <?php if($userForm->role_id == my_role(2)) { echo 'selected'; } ?>>Manufacturer</option>
-						  <option value="{{ my_role(3)}}" <?php if($userForm->role_id == my_role(3)) { echo 'selected'; } ?>>Users</option>
-						</select>
-					</div>
-					<?php } ?>
 
 					<div class="form-group">
-						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" placeholder="Phone no" id="phone_no" required="">
+						<input type="text" class="form-control email" placeholder="Phone no" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
 					</div>
 				</div>
 		
@@ -46,12 +36,12 @@
 				<div class="col-sm-6 col-xs-12">
 	
 					<div class="form-group">
-						<input type="email" class="form-control email" name="email" value="{{$userForm->email}}" id="email" placeholder="Email" required="">
+						<input type="email" class="form-control email" placeholder="Email" name="email" value="{{$userForm->email}}" id="email" required="" disabled>
 						<div id="publisherEmailValidation"></div>
 					</div>
 					
 					<div class="form-group">
-						<input type="password" class="form-control" name="confirm_password" value="" id="confirm_password" placeholder="Confirm password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
+						<input type="password" class="form-control" placeholder="Confirm password" name="confirm_password" value="" id="confirm_password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
 						<div id="passwordcanformValidation"></div>
 					</div>
 
@@ -108,10 +98,11 @@
 										$('input[type="password"]').val('');
 									}
 								}else{
-									window.location.href = "../redirect/users?message="+result.message;
-
-									// return true;
-									// $.toaster({ priority : 'success', title : 'Success', message : result.message });
+									$.toaster({ priority : 'success', title : 'Success', message : result.message });
+									$('input[type="email"]').val(result.email_id);
+									// window.location.href = "../redirect/users?message="+result.message;
+									return true;
+									// 
 									// if(result.action === "storeUser")
 									// {
 										// $("#Updateuser").trigger("reset");

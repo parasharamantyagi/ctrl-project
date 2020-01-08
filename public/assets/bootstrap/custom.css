@@ -47,7 +47,11 @@ input {border: 1px solid rgb(221, 221, 221); padding:0 10px;}
 
 #Updateuser > div {width:100%; float:left;}
 #Updateuser > div.modal-header .close  {display:none;}
-#Updateuser > div.modal-header .modal-title, div.modal-header .modal-title, .panel-heading .modal-title  {font-size:25px; font-weight:bold; color: #fff;}
+#Updateuser > div.modal-header .modal-title, div.modal-header .modal-title, .panel-heading .modal-title  {
+	font-size:23px; 
+	/* font-weight:bold;  */
+	color: #fff;
+}
 
 .page-sidebar .x-navigation .xn-logo a {padding: 7px 0px 0px;
     /*background: rgb(245, 245, 245) none repeat scroll 0% 0% !important;*/

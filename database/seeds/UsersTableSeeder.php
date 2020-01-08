@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
           'name' => 'admin',
           'email' => 'admin@gmail.com',
           'password' => bcrypt('123456789'),
-          'role_id' => '5ded4c0d5da0ec55861d0a92',
+          'role_id' => '5df911145da0ec690c629633',
           'phone_no' => '7087332930',
           'image' => 'profile-photo-4750911574450817.png',
           'status' => '1'

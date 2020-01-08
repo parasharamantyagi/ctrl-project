@@ -12,12 +12,9 @@ class PostController extends Controller
 {
     public function getpost()
     {
-        // return view('admin/NewsDeal/viewnewsdeal');
-		// where('role_id','5df911375da0ec64270ee1d2')->
-		// $userrecord = User::get();
-		echo '<pre>';
-		print_r(strval(my_role(3)));
-		die;
+      $userForm = (object)array('id'=>'','name'=>'','email'=>'','phone_no'=>'','image'=>'');
+      $page_info['page_title'] = 'Update User';
+      return view('post')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/user/profile');
     }
 
     public function createPost()

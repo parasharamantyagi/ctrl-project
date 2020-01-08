@@ -47,48 +47,20 @@
 	
     <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
       <ul class="navbar-nav">
-		<li class="nav-item {{ Request::segment(2) == 'news-deals' ? 'active': '' }}">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('news-deals')) }}">NEWS & DEALS</a>
+        <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">Dashboard</a>
         </li>
-        <!-- li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">Dashboard</a>
+        <li class="nav-item {{ Request::segment(2) == 'setting' ? 'active': '' }}">
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('setting/all')) }}">SETTINGS</a>
         </li>
-        <li class="nav-item {{ Request::segment(2) == 'settings' ? 'active': '' }}">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('settings')) }}">SETTINGS</a>
-        </li -->
-        <li class="nav-item {{ Request::segment(2) == 'view-vehicle' ? 'active': '' }}">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('view-vehicle')) }}">VEHICLE</a>
+        <li class="nav-item {{ Request::segment(2) == 'vehicle' ? 'active': '' }}">
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('vehicle')) }}">VEHICLE</a>
         </li>
-		  <ul class="navbar-nav">
-			<li class="nav-item {{ Request::segment(2) == 'vehicle' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('vehicle')) }}">- NEW</a>
-			</li>
-			<li class="nav-item {{ Request::segment(2) == 'view-vehicle' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('users')) }}">- EXISTING</a>
-			</li>
-			<li class="nav-item {{ Request::segment(2) == 'settings' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('settings')) }}">- SETTINGS</a>
-			</li>
-		  </ul>
-		
-			
-        <li class="nav-item {{ Request::segment(2) == 'users' ? 'active': '' }}">
-			<a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('users')) }}">User</a>
-		</li>
-		  <ul class="navbar-nav">
-			<li class="nav-item {{ Request::segment(2) == 'users' && Request::segment(3) == 'create' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('users/create')) }}">- NEW</a>
-			</li>
-			<li class="nav-item {{ Request::segment(2) == 'users' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('users')) }}">- EXISTING</a>
-			</li>
-			<li class="nav-item {{ Request::segment(2) == 'settings' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('settings')) }}">- SETTINGS</a>
-			</li>
-		  </ul>
-		  
+        <li class="nav-item {{ Request::segment(2) == 'profile' ? 'active': '' }}">
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('profile')) }}">Profile</a>
+        </li>
         <li class="nav-item">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>
 			 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
 				{{ csrf_field() }}
 			</form>

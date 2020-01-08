@@ -25,8 +25,7 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
 
-	  // print_r(my_role(3));
-	  // die;
+	  $user = array();
       $user = User::where('email',$request->email)->first();
       if($user)
       {
@@ -40,12 +39,22 @@ class AuthController extends Controller
 		
 		$user_role_id = ($request->role_id) ? $request->role_id : strval(my_role(3));
 		$phone_no = ($request->phone_no) ? $request->phone_no : '';
+		
+		if ($request->hasFile('image')) {  //check the file present or not
+				   $image = $request->file('image'); //get the file
+				   $namefile = 'profile-photo-' . rand(1,999999) .time() . '.' . $image->getClientOriginalExtension(); //get the  file extention
+				   $destinationPath = public_path('/assets/userimages'); //public path folder dir
+				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
+				   // $imageName = $namefile;
+			}else{
+				   $namefile = 'userdefault.png';
+		}
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => $user_role_id,
             'phone_no' => $phone_no,
-            'image' => "userdefault.png",
+            'image' => $namefile,
 			'status' => "1",
             'password' => bcrypt($request->password)
         ]);

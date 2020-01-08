@@ -71,3 +71,8 @@
     </div>
 </div>
 @endsection
+
+<script>
+			// alert('hllllllllllll');
+			window.location = "./";
+</script>

@@ -182,7 +182,10 @@ class VehicleController extends Controller
 			echo json_encode(url('/public/qrcode/qrcode.png'));
 	}
 
-	
+	public function redirectUrl($url)
+	{
+		return redirect(user_role().'/vehicle-setting/'.$url)->with('flash-message',$_GET['message']);
+	}
 	
 	
 }

@@ -1,4 +1,4 @@
-@extends('layouts.appadmin')
+@extends('layouts.appuser')
 <style>
 .select2-container .select2-selection--single {
     height: calc(1.5em + -0.25rem + 2px) !important;
@@ -80,9 +80,9 @@
 								<th>Daylight auto on</th>
 								<th>Reverse speed motor</th>
 								<th>Motor off</th>
-								<th>Steering control point</th>
+								<th>Front motor</th>
 								<th>Rear motor</th>
-								<th>Status</th>
+								<th>Steering control point</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -96,15 +96,13 @@
 								<td>{{ $vehicle_setting->daylight_auto_on }}</td>
 								<td>{{ $vehicle_setting->reverse_speed_motor }}</td>
 								<td>{{ $vehicle_setting->motor_off }}</td>
-								<td>{{ $vehicle_setting->steering_control_point }}</td>
+								<td>{{ $vehicle_setting->front_motor }}</td>
 								<td>{{ $vehicle_setting->rear_motor }}</td>
-								<td>
-									<button type="button" class="btn btn-sm btn-secondary btn-toggle <?php echo ($vehicle_setting->setting_status == '1') ? 'active':''; ?>" data-toggle="button" aria-pressed="true" data-id="{{ $vehicle_setting->_id }}" data-token="{{ csrf_token() }}" autocomplete="off"><div class="handle"></div></button>
-								</td>
+								<td>{{ $vehicle_setting->steering_control_point }}</td>
 								<td>
 									<a href="javascript::void(0)" class="qr-code" data-id="{{ $vehicle_setting->_id }}" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>
 									<a href="../settings/{{ $vehicle_setting->_id }}" class="edit-vehicle-setting"><i class="fa fa-pencil-square-o" title="Edit"></i></a>
-									<a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle_setting->_id }}"><i class="fa fa-trash" title="Delete"></i></a>
+									<!-- a href="javascript::void(0)" class="delete-user" data-token="{{ csrf_token() }}" data-id="{{ $vehicle_setting->_id }}"><i class="fa fa-trash" title="Delete"></i></a -->
 								</td>
 							</tr>
 						  @endforeach

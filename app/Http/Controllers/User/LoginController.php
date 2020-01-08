@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,13 +17,12 @@ class LoginController extends Controller
     {
         $input = $request->all();
 		$credentials = request(['email', 'password']);
-		$credentials['status'] = '1';
         if(!Auth::attempt($credentials))
             // return response()->json([
                 // 'message' => 'Unauthorized'
             // ], 401);
 			return redirect('/admin')->withErrors(['Invalid email or password']);
-		return redirect('/'.Auth::user()->role->roll.'/dashboard');
+		return redirect('/admin/dashboard');
     }
 	
 	

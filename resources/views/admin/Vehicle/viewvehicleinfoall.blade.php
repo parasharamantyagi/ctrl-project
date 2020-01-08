@@ -184,7 +184,7 @@
 					{"data": "width"},
 					{"data": "wheel_diameter"},
 					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-							return '<a href="vehicle/'+data+'"><i class="fa fa-pencil-square-o" title="Edit user"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete user"></i></a><br /><a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a><a href="vehicle-setting/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
+							return '<a href="vehicle/'+data+'"><i class="fa fa-pencil-square-o" title="Edit vehicle"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete vehicle"></i></a><br /><a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a><a href="vehicle-setting/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
 					}},
 				]
 			});

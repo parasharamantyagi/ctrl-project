@@ -39,12 +39,11 @@ class SettingController extends Controller
 		$inputData = $request->all();
 		unset($inputData["_token"]);
 		$inputData['setting_status'] = '1';
-		$inputData['asset_folder'] = 'mycar.png';
 		$vichleSetting = VehicleSetting::insertGetId($inputData);
 		// $vichleSetting_image = 'http://18.212.23.117/blogs/post';
 		$vichleSetting_text = url('api/vehicle-setting/'.(string)$vichleSetting);
 		QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($vichleSetting_text, public_path('qrcode/'.$vichleSetting.'png'));
-		$returnmessage = array('status'=>true,'action'=>'add_form','vehicle_id'=>$request->input('vehicle_id'),'message'=>'Vehicle setting has been save');
+		$returnmessage = array('status'=>true,'action'=>'add_form','message'=>'Vehicle setting has been save');
 		echo json_encode($returnmessage);
     }
 	
@@ -71,7 +70,7 @@ class SettingController extends Controller
 		unset($inputData["id"]);
 		
 		VehicleSetting::where('_id',$setting_id)->update($inputData);
-		$returnmessage = array('status'=>true,'vehicle_id'=>$request->input('vehicle_id'),'action'=>'update_form','message'=>'Vehicle setting has been update');
+		$returnmessage = array('status'=>true,'action'=>'update_form','message'=>'Vehicle setting has been update');
 		echo json_encode($returnmessage);
 	}
 	

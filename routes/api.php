@@ -36,6 +36,10 @@ Route::get('roles','Api\ApiController@allRoles');
 
 Route::post('roles','Api\ApiController@addRoles');
 
+Route::get('mytest','Api\MyApiController@getMyPost');
+Route::post('mytest-search','Api\MyApiController@getMyPostSearch');
+Route::post('mytest','Api\MyApiController@addMyPost');
+
 
 // Route::get('my-user-data','Api\ApiController@myuserdata');
 // Route::get('getroles','Api\ApiController@getRoles');
