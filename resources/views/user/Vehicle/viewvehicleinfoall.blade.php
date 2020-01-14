@@ -2,7 +2,11 @@
 
 @section('content')
 
-
+<style>
+table.dataTable thead th {
+    padding: 3px 28px 7px 2px;
+}
+</style>
 
 	<div class="page-content-wrap">
                     <!-- START ALERT BLOCKS -->
@@ -24,16 +28,13 @@
 						<thead>
 							<tr role="row">
 								<!-- th>Sr No.</th -->
-								<th>Brand</th>
+								<th>Qr code</th>
 								<th>Model</th>
-								<th>Model spec</th>
 								<th>Release year</th>
-								<th>Weight</th>
-								<th>Manufacturer</th>
-								<th>Vehicle type</th>
-								<th>Width</th>
-								<th>Height</th>
-								<th>Wheel diameter</th>
+								<th>Daylight auto on</th>
+								<th>Front motor</th>
+								<th>Product status</th>
+								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -59,6 +60,10 @@
 			$('#example').DataTable({
 				dom: 'lifrtp',
 				"scrollX": true,
+				// language: {
+					// "infoFiltered": "",
+					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+				// },
 				"processing": true,
 				"serverSide": true,
 				"bInfo" : false,
@@ -81,18 +86,34 @@
 					}
 				},
 				"columns": [
-					{"data": "brand"},
-					{"data": "model"},
-					{"data": "model_spec"},
-					{"data": "release_year"},
-					{"data": "weight"},
-					{"data": "manufacturer"},
-					{"data": "vehicle_type"},
-					{"data": "width"},
-					{"data": "height"},
-					{"data": "wheel_diameter"},
+					{"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
+							return data;
+					}},
+					{"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
+							return full.getvehicle.model;
+					}},
+					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
+							return full.getvehicle.release_year;
+					}},
+					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
+							return data;
+					}},
+					{"data": "front_motor","sClass":"text_align", "render": function(data,type,full,meta){
+							return data;
+					}},
+					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
+							return (data === '1') ? '<button type="submit" class="btn btn-danger vechile_status">USED</button>' : '<button type="submit" class="btn btn-success vechile_status">AVAILABLE</button>';
+					}},
+					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
+							// if(data == "1")
+								// var vechile_setting_status = 'active';
+							// else
+								// var vechile_setting_status = '';
+							// return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+full._id+'" data-token="{{ csrf_token() }}" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
+							return '<button type="submit" class="btn btn-success vechile_status">ACTIVE</button>';
+					}},
 					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-							return '<a href="setting/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
+							return '<a href="settings/'+data+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
 					}},
 				]
 			});

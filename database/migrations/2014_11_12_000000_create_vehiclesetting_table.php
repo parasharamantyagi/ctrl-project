@@ -42,6 +42,9 @@ class CreateVehicleSettingTable extends Migration
             $table->string('led_configuration');
             $table->string('button_config_for_each_menu');
             $table->string('setting_status');
+            $table->string('setting_use_status');
+            $table->string('user_id');
+            $table->string('from_id');
             $table->timestamps();
         });
     }

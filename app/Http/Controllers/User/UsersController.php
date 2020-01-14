@@ -33,28 +33,33 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $inputData = $request->all();
-			if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
-			{
-				$userData['password'] = Hash::make($inputData['password']);
-			}else if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] != $inputData['confirm_password']){
+		$updateData = array('name'=>$inputData['name'],'phone_no'=>$inputData['phone_no']);
+		
+		$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
+		if($inputData['old_password'] && $inputData['new_password'] && $inputData['confirm_password'])
+		{
+			$user = User::find(Auth::user()->_id);
+			$hasher = app('hash');
+			if(!$hasher->check($inputData['old_password'],$user->password)){
+				$returnmessage = array('status'=>false,'type'=>'old_passwordValidation','message'=>'Your old password does not match');
+				die(json_encode($returnmessage));
+			}else if($inputData['new_password'] && $inputData['confirm_password'] && $inputData['new_password'] == $inputData['confirm_password']){
+				$updateData['password'] = Hash::make($inputData['new_password']);
+				$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
+			}else if($inputData['new_password'] && $inputData['confirm_password'] && $inputData['new_password'] != $inputData['confirm_password']){
 				$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
-				echo json_encode($returnmessage);
-				die;
+				die(json_encode($returnmessage));
 			}
-			if ($request->hasFile('userimage')) {  //check the file present or not
+		}
+		if ($request->hasFile('userimage')) {  //check the file present or not
 				   $image = $request->file('userimage'); //get the file
 				   $namefile = 'profile-photo-' . rand(1,999999) .time() . '.' . $image->getClientOriginalExtension(); //get the  file extention
 				   $destinationPath = public_path('/assets/userimages'); //public path folder dir
-				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned
-				   $userData['image'] = $namefile;   
+				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
+				   $updateData['image'] = $namefile;
 			   }
-			$userData['name'] = $inputData['name'];
-			$userData['phone_no'] = $inputData['phone_no'];
-			// unset($inputData["userimage"]);
-			
-			User::where('_id',Auth::user()->_id)->update($userData);
-			$returnmessage = array('status'=>true,'action'=>'storeUser','email_id'=>Auth::user()->email,'message'=>'Your profile has been update');
-			echo json_encode($returnmessage);
+		User::where('_id',Auth::user()->_id)->update($updateData);
+		echo json_encode($returnmessage);
     }
 	
 	public function redirectUrl($url)

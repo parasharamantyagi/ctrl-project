@@ -50,11 +50,11 @@
         <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
           <a class="nav-link js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">Dashboard</a>
         </li>
-        <li class="nav-item {{ Request::segment(2) == 'setting' ? 'active': '' }}">
+        <!-- li class="nav-item {{ Request::segment(2) == 'setting' ? 'active': '' }}">
           <a class="nav-link js-scroll-trigger" href="{{ url(user_role('setting/all')) }}">SETTINGS</a>
-        </li>
+        </li -->
         <li class="nav-item {{ Request::segment(2) == 'vehicle' ? 'active': '' }}">
-          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('vehicle')) }}">VEHICLE</a>
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('vehicle')) }}">PRODUCT</a>
         </li>
         <li class="nav-item {{ Request::segment(2) == 'profile' ? 'active': '' }}">
           <a class="nav-link js-scroll-trigger" href="{{ url(user_role('profile')) }}">Profile</a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Vehicle;
+use App\VehicleSetting;
 use App\User;
 use Auth;
 
@@ -16,8 +17,6 @@ class VehicleController extends Controller
 				$user_all = User::where('role_id', '!=' , '0')->get();
 			else
 				$user_all = User::where('parent_id',Auth::user()->id)->get();
-			
-			
 		$userForm = (object)array(
 								'id'=>'','user_id'=>'','brand'=>'','model'=>'','model_spec'=>'',
 								'release_year'=>'','moter_type'=>'','horse_power'=>'',
@@ -28,7 +27,7 @@ class VehicleController extends Controller
 								'wheelbase'=>'','track_width'=>'','width'=>'',
 								'wheel_diameter'=>'','height'=>'',
 								);
-		$page_info['page_title'] = 'Add Vehicle';
+		$page_info['page_title'] = 'Add product';
 		return view('admin/Vehicle/addvehicle')->with('all_user', $user_all)->with('userForm', $userForm)->with('page_info', $page_info)->with('formaction','/admin/vehicle');
     }
 	
@@ -78,34 +77,34 @@ class VehicleController extends Controller
 	
 	public function viewVehicleAll()
 	{
-		// if(user_role() === 'admin')
-				// $vehicles = Vehicle::all();
-			// else
-				// $vehicles = Vehicle::where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
-		$page_info['page_title'] = 'Add Vehicle';
+		$page_info['page_title'] = 'All product';
 		return view('admin/Vehicle/viewvehicleinfoall')->with('page_info', $page_info);
 	}
+	
+	public function viewOwnedVehicleAll()
+	{
+		$page_info['page_title'] = 'Add Vehicle';
+		return view('admin/Vehicle/view-owned-vehicleinfoall')->with('page_info', $page_info);
+	}
+	
 	
 	public function vehicleTable(Request $request)
 	{
 		$inputData = $request->all();
 		$columns = array( 
-                            0 =>'brand', 
-                            1 =>'model',
-                            2=> 'model_spec',
-                            3=> 'release_year',
-                            4=> 'weight',
-                            5=> 'manufacturer',
-                            6=> 'vehicle_type',
-                            7=> 'width',
-                            8=> 'wheel_diameter'
+                            0 =>'_id', 
+                            1 =>'pad_background_color',
+                            2=> 'daylight_auto_on',
+							3=> 'front_motor',
+							4=> 'pad_line_color'
                         );
-		if(user_role() === 'admin')
-				$vehicles = Vehicle::select('brand','model','model_spec','release_year','weight','manufacturer','vehicle_type','width','wheel_diameter');
-			else
-				$vehicles = Vehicle::select('brand','model','model_spec','release_year','weight','manufacturer','vehicle_type','width','wheel_diameter')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id);
-			
-			
+		$vehicles = VehicleSetting::with('getvehicle');
+		if(user_role() != 'admin')
+				$vehicles = $vehicles->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id);
+		
+		if($request->input('type'))
+				$vehicles = $vehicles->where('setting_use_status','1');
+		
 		$totalData = $vehicles->count();
 		$totalFiltered = $totalData;
 		
@@ -113,7 +112,6 @@ class VehicleController extends Controller
         $start = (int)$request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
-		
 		if(empty($request->input('search.value')))
         {            
             $posts = $vehicles->skip($start)
@@ -131,14 +129,12 @@ class VehicleController extends Controller
             $totalFiltered = $vehicles->where('brand', 'LIKE',"%{$search}%")->orWhere('model', 'LIKE',"%{$search}%")->orWhere('model_spec', 'LIKE',"%{$search}%")
                              ->count();
         }
-          
         $json_data = array(
                     "draw"            => intval($request->input('draw')),  
                     "recordsTotal"    => intval($totalData),  
                     "recordsFiltered" => intval($totalFiltered), 
                     "data"            => $posts   
                     );
-            
         echo json_encode($json_data);
 	}
 	
@@ -149,9 +145,6 @@ class VehicleController extends Controller
 				$user_all = User::where('role_id', '!=' , '0')->get();
 			else
 				$user_all = User::where('parent_id',Auth::user()->id)->get();
-			
-			
-			
 			$userForm = (object)array(
 								'id'=>$vichleData->_id,'user_id'=>$vichleData->user_id,'brand'=>$vichleData->brand,'model'=>$vichleData->model,'model_spec'=>$vichleData->model_spec,
 								'release_year'=>$vichleData->release_year,'moter_type'=>$vichleData->moter_type,'horse_power'=>$vichleData->horse_power,
@@ -171,7 +164,6 @@ class VehicleController extends Controller
 		$Users = Vehicle::find($id); // Can chain this line with the next one
 		$Users->delete($id);
 		echo json_encode(array('status'=>true,'message'=>'Vehicle successfully delete'));
-        // print_r($ids);	
     }
 	
 	public function getVehicleQrcode($id)
@@ -186,6 +178,5 @@ class VehicleController extends Controller
 	{
 		return redirect(user_role().'/vehicle-setting/'.$url)->with('flash-message',$_GET['message']);
 	}
-	
 	
 }

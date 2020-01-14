@@ -13,5 +13,13 @@ class VehicleSetting extends Eloquent
             return $this->belongsTo('App\Vehicle');
         }
 		
+		public function getvehicle()
+        {
+            return $this->hasOne('App\Vehicle', '_id', 'vehicle_id');
+        }
+		
+		
+		
+		
 		
 }

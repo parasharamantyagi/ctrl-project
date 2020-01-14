@@ -20,7 +20,7 @@ table.dataTable thead th {
         <div class="panel panel-default">
 			<div class="modal-header">
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				<a href="{{ url('/admin/vehicle') }}"><button type="submit" class="btn btn-primary">Add product</button></a>
+				<a href="{{ url('/admin/vehicle') }}"><button type="submit" class="btn btn-primary">Add Vehicle</button></a>
 			</div>
 		
             <div class="panel-body">
@@ -95,57 +95,6 @@ table.dataTable thead th {
 			
 			});
 			
-			// render: function(data, type, full, meta){
-				 // return "<img src={{ URL::to('/') }}/images/" + data + " width='70' class='img-thumbnail' />";
-				// },
-			
-			// $('#example').DataTable({
-			  // processing: true,
-			  // serverSide: true,
-			  // ajax:{
-			   // url: "{{ url('/admin/user-table') }}",
-			   // "type": "POST",
-			   // "data": {"_token": "{{ csrf_token() }}"}
-			  // },
-			  // "columns": [
-					// {"data": "_id"},
-					// {"data": "name"},
-					// {"data": "email"},
-					// {"data": "phone_no"},
-					// {"data": "image", "searchable": false, "orderable": false},
-					// {"data": "action", "searchable": false, "orderable": false}
-				// ]
-			 // });
-			// jQuery('#example').DataTable({
-				// dom: 'lifrtp',
-				// language: {
-					// "infoFiltered": "",
-					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-				// },
-				// "processing": true,
-				// "serverSide": true,
-				// "pageLength": 50,
-				// lengthMenu: [
-					// [50, 100, 250, 500, 999999],
-					// ['50', '100', '250', '500', 'Show all']
-				// ],
-				// "ajax": {
-					// "url": "{{ url('/admin/user-table') }}",
-					// "dataType": "json",
-					// "type": "POST",
-					// "data": {"_token": "{{ csrf_token() }}"}
-				// },
-				// "columns": [
-					// {"targets": "0", "data": null, "sortable": false, "searchable": false},
-					// {"data": "_id"},
-					// {"data": "name"},
-					// {"data": "email"},
-					// {"data": "phone_no"},
-					// {"data": "image", "searchable": false, "orderable": false},
-					// {"data": "action", "searchable": false, "orderable": false}
-				// ]
-			// });
-			
 			
 			$('#example').DataTable({
 				dom: 'lifrtp',
@@ -168,7 +117,7 @@ table.dataTable thead th {
 					['50', '100', '250', '500', 'Show all']
 				],
 				"ajax": {
-					"url": "{{ url('/admin/vehicle-table') }}",
+					"url": "{{ url('/admin/vehicle-table?type=owned') }}",
 					"dataType": "json",
 					"type": "POST",
 					"data": function(data) {
@@ -192,6 +141,7 @@ table.dataTable thead th {
 							return data;
 					}},
 					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
+							console.log('setting_use_status '+data);
 							return (data === '1') ? '<button type="submit" class="btn btn-danger vechile_status">USED</button>' : '<button type="submit" class="btn btn-success vechile_status">AVAILABLE</button>';
 					}},
 					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){

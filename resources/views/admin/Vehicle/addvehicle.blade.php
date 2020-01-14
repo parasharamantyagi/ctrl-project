@@ -13,6 +13,7 @@
 			{{ csrf_field() }}
 			<div class="modal-header">
 				<h5>{{ $page_info['page_title'] }}</h5>
+				<a href="{{ url(user_role('settings')) }}" class="btn btn-primary">Add settings</a>
 			</div>
 			
 		  

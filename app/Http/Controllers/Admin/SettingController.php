@@ -17,7 +17,6 @@ class SettingController extends Controller
 				$vichle_name =  Vehicle::select('_id','brand','model')->get();
 			else
 				$vichle_name =  Vehicle::select('_id','brand','model')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
-			
 		$userForm = (object)array(
 								'_id'=>'','vehicle_id'=>'','background_color'=>'','pad_line_color'=>'','pad_background_color'=>'',
 								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'',
@@ -28,8 +27,6 @@ class SettingController extends Controller
 								'upper_gear_shift_value'=>'','lower_gear_shift_value'=>'','cell_value_steer_pad'=>'',
 								'gear_retio'=>'','max_steering_angle'=>'','led_configuration'=>'','button_config_for_each_menu'=>'',
 								);
-								
-		
 		$page_info['page_title'] = 'Settings';
 		return view('admin/Setting/viewsetting')->with('userForm', $userForm)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/settings');
     }
@@ -37,9 +34,13 @@ class SettingController extends Controller
 	public function store(Request $request)
     {
 		$inputData = $request->all();
+		$myVehicle = Vehicle::find($inputData['vehicle_id']);
 		unset($inputData["_token"]);
+		$inputData['user_id'] = $myVehicle->user_id;
+		$inputData['from_id'] = $myVehicle->from_id;
 		$inputData['setting_status'] = '1';
 		$inputData['asset_folder'] = 'mycar.png';
+		$inputData['setting_use_status'] = '0';
 		$vichleSetting = VehicleSetting::insertGetId($inputData);
 		// $vichleSetting_image = 'http://18.212.23.117/blogs/post';
 		$vichleSetting_text = url('api/vehicle-setting/'.(string)$vichleSetting);
@@ -55,12 +56,9 @@ class SettingController extends Controller
 				$vichle_name =  Vehicle::select('_id','brand','model')->get();
 			else
 				$vichle_name =  Vehicle::select('_id','brand','model')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
-	
 		$vehicleSettingData = VehicleSetting::find($id);
-	   				
 		$page_info['page_title'] = 'Settings';
 		return view('admin/Setting/viewsetting')->with('userForm', $vehicleSettingData)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/settings-update');
-	   // echo json_encode(array('status'=>true,'message'=>'VehicleSetting successfully get','data'=>$vehicleSettingData));
     }
 	
 	public function settingsUpdate(Request $request)
@@ -69,7 +67,6 @@ class SettingController extends Controller
 		$setting_id = $request->input('id');
 		unset($inputData["_token"]);
 		unset($inputData["id"]);
-		
 		VehicleSetting::where('_id',$setting_id)->update($inputData);
 		$returnmessage = array('status'=>true,'vehicle_id'=>$request->input('vehicle_id'),'action'=>'update_form','message'=>'Vehicle setting has been update');
 		echo json_encode($returnmessage);
@@ -79,6 +76,7 @@ class SettingController extends Controller
     {
 		return view('admin/Setting/backgroundColor');
     }
+	
 	public function padLineColor()
     {
 		return view('admin/Setting/padLineColor');
@@ -96,29 +94,22 @@ class SettingController extends Controller
 		// return view('admin/Setting/padLineColor');
 		
 		// {{ base64_encode(QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate('0023|m123|project|menu')) }}
-
-
 		// QrCode::size(100)->format('png')->generate('ItSolutionStuff.com', public_path('qrcode/qrcode.png'));
 		$inputData = $request->all();
 		QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($inputData['vehicle_id'], public_path('qrcode/'.$inputData['vehicle_id'].'png'));
 		echo json_encode(array('status'=>true,'message'=>'Generate qr-code successfully'));
 	}
 	
-		
 	public function vehicleSetting($id)
     {
-		
-		
 		if(user_role() === 'admin')
 				$allVehicle = Vehicle::all();
 			else
 				$allVehicle = Vehicle::where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
-			
 		$vehicleSetting = Vehicle::with('vehicle_setting')->where('_id',$id)->first();
 		$page_info['page_title'] = 'Add Vehicle';
 		return view('admin/Setting/vehicle-setting')->with('page_info', $page_info)->with('allVehicle', $allVehicle)->with('vehicles', $vehicleSetting);
     }
-	
 	
 	public function destroy($id)
     {
@@ -135,16 +126,4 @@ class SettingController extends Controller
 		$returnmessage = array('status'=>true,'message'=>'Vehicle setting status has been update');
 		echo json_encode($returnmessage);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

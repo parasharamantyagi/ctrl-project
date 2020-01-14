@@ -11,7 +11,6 @@
 			<input type="hidden" name="id" value="{{$userForm->_id}}" id="id">
 			<div class="modal-header">
 				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				<a href="{{ url(user_role().'/vehicle-setting/all') }}" class="btn btn-primary">View settings</a>
 			</div>
 			
 			<div class="modal-body">
@@ -174,9 +173,9 @@
 								var result = JSON.parse(response);
 								if(result.action === 'add_form')
 									// $("#Updateuser").trigger("reset");
-									window.location.href = "./redirectsetting/"+result.vehicle_id+"?message="+result.message;
+									window.location.href = "./redirect/view-vehicle?message="+result.message;
 								else
-									window.location.href = "../redirectsetting/"+result.vehicle_id+"?message="+result.message;
+									window.location.href = "../redirect/view-vehicle?message="+result.message;
 						   }
 						});
 						event.preventDefault();

@@ -32,7 +32,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::get('vehicle-setting/{id}','Api\AuthController@vehicleSetting');
 
+Route::get('vehicle/{id}','Api\AuthController@vehicleById');
+
 Route::get('roles','Api\ApiController@allRoles');
+Route::get('testing','Api\ApiController@testing');
 
 Route::post('roles','Api\ApiController@addRoles');
 

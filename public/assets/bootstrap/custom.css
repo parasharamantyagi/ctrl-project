@@ -617,6 +617,24 @@ img.img-circle {width:75px; height:75px; float:left;border-radius: 50%;}
 	}
 }
 
+table tbody tr td.text_align {
+    padding: 12px 0px;
+}
+
+table.users-table tbody tr td.text_align {
+    padding: 20px 10px;
+}
+
+
+a i.fa {
+	font-size: 20px;
+}
+
+button.btn.vechile_status{
+	font-size: 0.5rem;
+    width: 70px;
+}
+
 
 
 /* width: 43%; */

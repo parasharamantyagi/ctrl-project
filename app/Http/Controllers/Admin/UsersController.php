@@ -17,8 +17,6 @@ class UsersController extends Controller
      */
     public function index()
     {
-		// $imageName = 'example.png';
-		// $fullpath = human_file_size($imageName);
 		$userData = User::all();
 		$page_info['page_title'] = 'All Users';
 		return view('admin/User/viewuser')->with('page_info', $page_info)->with('users', $userData);
@@ -215,20 +213,23 @@ class UsersController extends Controller
 	public function userProfileUpdate(Request $request)
 	{
 		$inputData = $request->all();
-		
 		$updateData = array('name'=>$inputData['name'],'phone_no'=>$inputData['phone_no']);
-		if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
+		
+		$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
+		if($inputData['old_password'] && $inputData['new_password'] && $inputData['confirm_password'])
 		{
-			$returnmessage = array('status'=>true,'message'=>'User has been update');
-			$updateData['password'] = Hash::make($inputData['password']);
-		}else if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] != $inputData['confirm_password']){
-			$returnmessage = array('status'=>false,'message'=>'Your confirm password does not match');
-			echo json_encode($returnmessage);
-			die;
-		}else if(!$inputData['password'] && !$inputData['confirm_password']){
-			$returnmessage = array('status'=>true,'message'=>'User has been update');
-		}else{
-			$returnmessage = array('status'=>true,'message'=>'User has been update');
+			$user = User::find(Auth::user()->_id);
+			$hasher = app('hash');
+			if(!$hasher->check($inputData['old_password'],$user->password)){
+				$returnmessage = array('status'=>false,'type'=>'old_passwordValidation','message'=>'Your old password does not match');
+				die(json_encode($returnmessage));
+			}else if($inputData['new_password'] && $inputData['confirm_password'] && $inputData['new_password'] == $inputData['confirm_password']){
+				$updateData['password'] = Hash::make($inputData['new_password']);
+				$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
+			}else if($inputData['new_password'] && $inputData['confirm_password'] && $inputData['new_password'] != $inputData['confirm_password']){
+				$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
+				die(json_encode($returnmessage));
+			}
 		}
 		if ($request->hasFile('userimage')) {  //check the file present or not
 				   $image = $request->file('userimage'); //get the file
@@ -277,15 +278,11 @@ class UsersController extends Controller
 		$Users = User::find($id); // Can chain this line with the next one
 		$Users->delete($id);
 		echo json_encode(array('status'=>true,'message'=>'User successfully delete'));
-        // print_r($ids);	
     }
 	
 	public function redirectUrl($url)
 	{
 		return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
-		// home/dashboard
-		// redirect()->back()->with('message', 'IT WORKS!');
-		// echo $url;
 	}
 	
 	

@@ -196,7 +196,7 @@
 						   success:function(response)
 						   {
 								var result = JSON.parse(response);
-								window.location.href = "../redirectsetting/"+result.vehicle_id+"?message="+result.message;
+								window.location.href = "../redirectsetting/vehicle?message="+result.message;
 
 								// $.toaster({ priority : 'success', title : 'Success', message : result.message });
 								// if(result.action === 'add_form')

@@ -61,6 +61,14 @@ class ApiController extends Controller
 		$vehicleSetting = Vehicle::with('vehicle_setting')->where('_id',$vehicle_id)->get();
 		return response()->json(api_response(200,"vechile data",$vehicleSetting));
 	}
+	public function testing()
+	{
+		// VehicleSetting::where('setting_status','1')->update(array('setting_use_status'=>'0'));
+		echo 'testing testing';
+		// $vehicle_id = $request->input('vehicle_id');
+		// $vehicleSetting = Vehicle::with('vehicle_setting')->where('_id',$vehicle_id)->get();
+		// return response()->json(api_response(200,"vechile data",$vehicleSetting));
+	}
 	
 	
 	

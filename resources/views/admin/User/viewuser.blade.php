@@ -19,7 +19,7 @@
 
 <style>
 	th {
-		width: 25% !important;
+		width: 25%;
 	}
 </style>
 <div class="col-md-12">
@@ -53,7 +53,7 @@
 		
             <div class="panel-body">
             <div id="example_wrapper" class="dataTables_wrapper no-footer">
-					<table id="example" class="table table-hover table-striped">
+					<table id="example" class="table table-hover table-striped users-table">
 						<thead>
 							<tr role="row">
 								<!-- th>Sr No.</th -->
@@ -160,19 +160,21 @@
 					}
 				},
 				"columns": [
-					{"data": "name"},
-					{"data": "email"},
-					{"data": "phone_no", "render": function(phone_no,type,full,meta){
+					{"data": "name","sClass":"text_align"},
+					{"data": "email","sClass":"text_align","render": function(email,type,full,meta){
+						return '<p>'+email+'</p>';
+					}},
+					{"data": "phone_no","sClass":"text_align" , "render": function(phone_no,type,full,meta){
 							return (phone_no) ? phone_no : '';
 					}},
 					{"data": "image", "searchable": false, "orderable": false, "render": function(data_image,type,full,meta){
 							return '<img src="../public/assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
 					}},
-					{"data": "status", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+					{"data": "status","sClass":"text_align" , "searchable": false, "orderable": false, "render": function(data,type,full,meta){
 						let user_status = (full.status == "1") ? 'active' : '';
 							return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+user_status+'" data-toggle="button" aria-pressed="true" data-id="'+full._id+'" data-token="{{ csrf_token() }}" autocomplete="off"><div class="handle"></div></button>';
 					}},
-					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+					{"data": "_id","sClass":"text_align" , "searchable": false, "orderable": false, "render": function(data,type,full,meta){
 							return '<a href="users/'+data+'"><i class="fa fa-pencil-square-o" title="Edit user"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete user"></i></a>';
 					}},
 				]

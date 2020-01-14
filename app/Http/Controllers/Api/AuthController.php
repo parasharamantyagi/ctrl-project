@@ -9,6 +9,7 @@ use App\User;
 use App\Vehicle;
 use App\Role;
 use App\VehicleSetting;
+use DB;
 
 
 class AuthController extends Controller
@@ -242,6 +243,14 @@ class AuthController extends Controller
 		return response()->json(api_response(1,"my vehicle setting",$myVehicle));
     }
 
+	public function vehicleById($id)
+	{
+		$myVehicle = VehicleSetting::with('getvehicle')->where('user_id','5e09c3575da0ec68223e14e2')->orWhere('from_id','5e09c3575da0ec68223e14e2')->where('setting_use_status','1')->get();
+		// 
+		// $myVehicle = Vehicle::with('vehicle_setting')->get();
+		return response()->json(api_response(1,"my vehicle setting",$myVehicle));
+		// print_r($myVehicle);
+	}
 
 
 

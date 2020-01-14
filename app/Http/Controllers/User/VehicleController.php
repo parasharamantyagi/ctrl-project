@@ -13,7 +13,7 @@ class VehicleController extends Controller
 {
     public function index()
     {
-		$page_info['page_title'] = 'View Vehicle';
+		$page_info['page_title'] = 'View Product';
 		return view('user/Vehicle/viewvehicleinfoall')->with('page_info', $page_info);
 	}
 	
@@ -21,20 +21,17 @@ class VehicleController extends Controller
     {
         $inputData = $request->all();
 		$columns = array( 
-                            0 =>'brand', 
-                            1 =>'model',
-                            2=> 'model_spec',
-                            3=> 'release_year',
-                            4=> 'weight',
-                            5=> 'manufacturer',
-                            6=> 'vehicle_type',
-                            7=> 'width',
-                            8=> 'height',
-                            9=> 'wheel_diameter'
+                            0 =>'_id', 
+                            1 =>'pad_background_color',
+                            2=> 'daylight_auto_on',
+							3=> 'front_motor',
+							4=> 'pad_line_color'
                         );
 	
-		$vehicles = Vehicle::select('brand','model','model_spec','release_year','weight','manufacturer','vehicle_type','width','height','wheel_diameter')->where('user_id',Auth::user()->id);
-			
+		// $vehicles = Vehicle::select('brand','model','model_spec','release_year','weight','manufacturer','vehicle_type','width','height','wheel_diameter')->where('user_id',Auth::user()->id);
+		
+		$vehicles = VehicleSetting::with('getvehicle')->where('user_id',Auth::user()->id)->where('setting_status',"1");
+		
 		$totalData = $vehicles->count();
 		$totalFiltered = $totalData;
 		
@@ -103,7 +100,7 @@ class VehicleController extends Controller
 	
 	public function redirectUrl($url)
 	{
-		return redirect(user_role().'/setting/'.$url)->with('flash-message',$_GET['message']);
+		return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
 	}
 	
 	

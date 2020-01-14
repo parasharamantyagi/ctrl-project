@@ -34,7 +34,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::post('settings-update', 'SettingController@settingsUpdate');
 		
 		
-		Route::get('view-profile', 'UsersController@viewProfile');
+		Route::get('my-setting', 'UsersController@viewProfile');
 		Route::post('usersUpdate', 'UsersController@usersUpdate');
 		Route::post('userProfileUpdate', 'UsersController@userProfileUpdate');
 		Route::post('user-table', 'UsersController@userTable');
@@ -47,7 +47,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
-		
+		Route::get('owned','VehicleController@viewOwnedVehicleAll');
 		
 	});
 });
@@ -72,7 +72,7 @@ Route::namespace('Admin')->prefix('manufacturer')->group(function () {
 		Route::post('vehicle-setting-status', 'SettingController@vehicleSettingStatus');
 		Route::post('settings-update', 'SettingController@settingsUpdate');
 		
-		Route::get('view-profile', 'UsersController@viewProfile');
+		Route::get('my-setting', 'UsersController@viewProfile');
 		Route::post('usersUpdate', 'UsersController@usersUpdate');
 		Route::post('userProfileUpdate', 'UsersController@userProfileUpdate');
 		Route::post('user-table', 'UsersController@userTable');
@@ -83,6 +83,7 @@ Route::namespace('Admin')->prefix('manufacturer')->group(function () {
 		Route::post('vehicleUpdate', 'VehicleController@vehicleUpdate');
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
+		Route::get('owned','VehicleController@viewOwnedVehicleAll');
 		
 	});
 });

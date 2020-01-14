@@ -23,12 +23,19 @@
 					</div>
 					
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="Password" name="password" value="" id="password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
+						<input type="password" class="form-control" placeholder="Old password" name="old_password" value="" id="old_password">
+						<div id="old_passwordValidation"></div>
 					</div>
 
 					<div class="form-group">
-						<input type="text" class="form-control email" placeholder="Phone no" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
+						<input type="password" class="form-control" placeholder="New password" name="new_password" value="" id="new_password">
 					</div>
+
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Confirm password" name="confirm_password" value="" id="confirm_password">
+						<div id="passwordcanformValidation"></div>
+					</div>
+					
 				</div>
 		
 				<div id="ctrlscrolbar"></div>
@@ -36,13 +43,10 @@
 				<div class="col-sm-6 col-xs-12">
 	
 					<div class="form-group">
-						<input type="email" class="form-control email" placeholder="Email" name="email" value="{{$userForm->email}}" id="email" required="" disabled>
-						<div id="publisherEmailValidation"></div>
+						<input type="email" class="form-control email" placeholder="Email" value="{{$userForm->email}}" id="email" disabled>
 					</div>
-					
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="Confirm password" name="confirm_password" value="" id="confirm_password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
-						<div id="passwordcanformValidation"></div>
+						<input type="text" class="form-control email" placeholder="Phone no" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
 					</div>
 
 					<div class="form-group">
@@ -77,7 +81,15 @@
 	<script>
 				$(document).ready(function(){
 					$('#Updateuser').submit(function(event){
-						$('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
+						 if($('input[name="old_password"]').val() && $('input[name="new_password"]').val() && $('input[name="confirm_password"]').val())
+						 {
+							if($('input[name="new_password"]').val() !== $('input[name="confirm_password"]').val())
+							{
+								$('#passwordcanformValidation').html('<font color="red">Your confirm password does not match.</font>');
+								return false;
+							}
+						 }
+						 $('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
 						 $.ajax({
 						   type:this.method,
 						   url: this.action,
@@ -87,19 +99,21 @@
 						   success:function(response)
 						   {
 								$('#ctrlscrolbar').html('');
-								$('#publisherEmailValidation').html('');
 								$('#passwordcanformValidation').html('');
+								$('#old_passwordValidation').html('');
 								var result = JSON.parse(response);
 								if(result.status === false)
 								{
+									$('input[name="_token"]').val(result.token);
 									$('#'+result.type).html('<font color="red">'+result.message+'</font>');
-									if(result.type == 'passwordcanformValidation')
+									if(result.type == 'old_passwordValidation')
 									{
 										$('input[type="password"]').val('');
 									}
 								}else{
 									$.toaster({ priority : 'success', title : 'Success', message : result.message });
 									$('input[type="email"]').val(result.email_id);
+									$('input[type="password"]').val('');
 									// window.location.href = "../redirect/users?message="+result.message;
 									return true;
 									// 
