@@ -57,8 +57,8 @@ class ApiController extends Controller
 	
 	public function settingAll(Request $request)
 	{
-		$vehicle_id = $request->input('vehicle_id');
-		$vehicleSetting = Vehicle::with('vehicle_setting')->where('_id',$vehicle_id)->get();
+		// $vehicle_id = $request->input('vehicle_id');
+		$vehicleSetting = VehicleSetting::with('getvehicle')->get();
 		return response()->json(api_response(200,"vechile data",$vehicleSetting));
 	}
 	public function testing()

@@ -47,4 +47,5 @@ Route::post('mytest','Api\MyApiController@addMyPost');
 // Route::get('my-user-data','Api\ApiController@myuserdata');
 // Route::get('getroles','Api\ApiController@getRoles');
 // Route::get('vehicle','Api\ApiController@vehicleAll');
-// Route::post('setting','Api\ApiController@settingAll');
+Route::post('setting','Api\ApiController@settingAll');
+

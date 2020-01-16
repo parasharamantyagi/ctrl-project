@@ -20,6 +20,12 @@ table.dataTable thead th {
         <div class="panel panel-default">
 			<div class="modal-header">
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
+				<select class="form-control selectpicker viewvechile_select" name="vehicle_id" id="vehicle_id">
+						  <option value="0">Select roll</option>
+						  @foreach(my_role() as $my_role)
+							<option value="{{$my_role['_id']}}">{{ucfirst($my_role['roll'])}}</option>
+						  @endforeach
+				</select>
 				<a href="{{ url('/admin/vehicle') }}"><button type="submit" class="btn btn-primary">Add product</button></a>
 			</div>
 		
@@ -31,9 +37,9 @@ table.dataTable thead th {
 								<!-- th>Sr No.</th -->
 								<th>Qr code</th>
 								<th>Model</th>
+								<th>Brand</th>
 								<th>Release year</th>
-								<th>Daylight auto on</th>
-								<th>Front motor</th>
+								<th>Daylight auto</th>
 								<th>Product status</th>
 								<th>Status</th>
 								<th>Action</th>
@@ -182,14 +188,14 @@ table.dataTable thead th {
 					{"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
 							return full.getvehicle.model;
 					}},
+					{"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
+							return full.getvehicle.brand;
+					}},
 					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
 							return full.getvehicle.release_year;
 					}},
 					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
-					}},
-					{"data": "front_motor","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
+							return (data === 'on') ? '<p class="daylight_auto_on">On</p>' : '<p class="daylight_auto_off">Off</p>';
 					}},
 					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
 							return (data === '1') ? '<button type="submit" class="btn btn-danger vechile_status">USED</button>' : '<button type="submit" class="btn btn-success vechile_status">AVAILABLE</button>';

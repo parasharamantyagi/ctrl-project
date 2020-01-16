@@ -4,7 +4,11 @@
 
 <style>
 table.dataTable thead th {
-    padding: 3px 28px 7px 2px;
+    padding: 3px 28px 6px 5px
+}
+
+table tbody tr td.text_align {
+    padding: 13px 3px 4px 0px;
 }
 </style>
 
@@ -31,9 +35,9 @@ table.dataTable thead th {
 								<!-- th>Sr No.</th -->
 								<th>Qr code</th>
 								<th>Model</th>
+								<th>Brand</th>
 								<th>Release year</th>
-								<th>Daylight auto on</th>
-								<th>Front motor</th>
+								<th>Daylight auto</th>
 								<th>Product status</th>
 								<th>Status</th>
 								<th>Action</th>
@@ -131,17 +135,16 @@ table.dataTable thead th {
 					{"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
 							return full.getvehicle.model;
 					}},
+					{"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
+							return full.getvehicle.brand;
+					}},
 					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
 							return full.getvehicle.release_year;
 					}},
 					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
-					}},
-					{"data": "front_motor","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
+							return (data === 'on') ? '<p class="daylight_auto_on">On</p>' : '<p class="daylight_auto_off">Off</p>';
 					}},
 					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
-							console.log('setting_use_status '+data);
 							return (data === '1') ? '<button type="submit" class="btn btn-danger vechile_status">USED</button>' : '<button type="submit" class="btn btn-success vechile_status">AVAILABLE</button>';
 					}},
 					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){

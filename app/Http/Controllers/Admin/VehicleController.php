@@ -78,7 +78,8 @@ class VehicleController extends Controller
 	public function viewVehicleAll()
 	{
 		$page_info['page_title'] = 'All product';
-		return view('admin/Vehicle/viewvehicleinfoall')->with('page_info', $page_info);
+		$vichleData = Vehicle::all();
+		return view('admin/Vehicle/viewvehicleinfoall')->with('page_info', $page_info)->with('all_Vehicle', $vichleData);
 	}
 	
 	public function viewOwnedVehicleAll()
