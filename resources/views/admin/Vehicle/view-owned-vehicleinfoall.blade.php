@@ -3,12 +3,12 @@
 @section('content')
 
 <style>
-table.dataTable thead th {
-    padding: 3px 28px 6px 5px
+.dataTables_filter label input
+{
+  margin: 3px;
 }
-
-table tbody tr td.text_align {
-    padding: 13px 3px 4px 0px;
+th {
+  width: 25%;
 }
 </style>
 
@@ -16,7 +16,7 @@ table tbody tr td.text_align {
                     <!-- START ALERT BLOCKS -->
 
 
-                        
+
 <!-- END ALERT BLOCKS -->                    <!--<link href="https://ebookbazaar.com/public/css/bootstrap.min.css" rel="stylesheet">-->
 <link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
 
@@ -26,7 +26,7 @@ table tbody tr td.text_align {
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
 				<a href="{{ url('/admin/vehicle') }}"><button type="submit" class="btn btn-primary">Add Vehicle</button></a>
 			</div>
-		
+
             <div class="panel-body">
             <div id="example_wrapper" class="dataTables_wrapper no-footer">
 					<table id="example" class="table table-hover table-striped">
@@ -44,10 +44,10 @@ table tbody tr td.text_align {
 							</tr>
 						</thead>
 						<tbody>
-						  
+
 						</tbody>
 					</table>
-					
+
 			</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@ table tbody tr td.text_align {
 @section('script')
 
 	<script>
-	
+
 		jQuery(document).ready(function () {
 			$(document).on('click', '.delete-user', function(){
 					var delete_id = $(this).data('id');
@@ -96,10 +96,10 @@ table tbody tr td.text_align {
                                 },
                             }
                         });
-			
+
 			});
-			
-			
+
+
 			$('#example').DataTable({
 				dom: 'lifrtp',
 				"scrollX": true,
@@ -142,10 +142,10 @@ table tbody tr td.text_align {
 							return full.getvehicle.release_year;
 					}},
 					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
-							return (data === 'on') ? '<p class="daylight_auto_on">On</p>' : '<p class="daylight_auto_off">Off</p>';
+							return (data === 'on') ? '<p class="daylight_auto_on btn-success">On</p>' : '<p class="daylight_auto_on btn-danger">Off</p>';
 					}},
 					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
-							return (data === '1') ? '<button type="submit" class="btn btn-danger vechile_status">USED</button>' : '<button type="submit" class="btn btn-success vechile_status">AVAILABLE</button>';
+							return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
 					}},
 					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
 							if(data == "1")
@@ -171,8 +171,8 @@ table tbody tr td.text_align {
 							}
 						});
 			});
-		});			
-	</script>		
+		});
+	</script>
 	@if(session()->has('flash-message'))
 		<script>
 			jQuery(document).ready(function () {
@@ -181,9 +181,3 @@ table tbody tr td.text_align {
 		</script>
 	@endif
 @endsection
-
-
-
-
-
-

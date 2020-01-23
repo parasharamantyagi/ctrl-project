@@ -213,8 +213,7 @@ class UsersController extends Controller
 	public function userProfileUpdate(Request $request)
 	{
 		$inputData = $request->all();
-		$updateData = array('name'=>$inputData['name'],'phone_no'=>$inputData['phone_no']);
-		
+		$updateData = $inputData;
 		$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
 		if($inputData['old_password'] && $inputData['new_password'] && $inputData['confirm_password'])
 		{
@@ -238,6 +237,9 @@ class UsersController extends Controller
 				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
 				   $updateData['image'] = $namefile;
 			   }
+		unset($updateData['userimage']); unset($updateData['_token']); unset($updateData['id']); 
+		unset($updateData['old_password']); unset($updateData['new_password']); unset($updateData['confirm_password']);
+		$updateData = array_filter($updateData);
 		User::where('_id',Auth::user()->_id)->update($updateData);
 		echo json_encode($returnmessage);
 	}

@@ -208,30 +208,37 @@ class AuthController extends Controller
 					})->get();
 
 		}else{
-					$useruserVehicles = Vehicle::with(array('vehicle_setting'=>function($myQuery){
-						return $myQuery->select('_id','vehicle_id');
-					}))->where('user_id',$request->user()->_id)->get();
+					$useruserVehicles = Vehicle::all()->filter(function ($post) {
+											return $post->user_id > 3;
+										});
+					
+					// Vehicle::with(array('vehicle_setting'=>function($myQuery){
+						// return $myQuery->select('_id','vehicle_id');
+					// }))->where('user_id',$request->user()->_id)->get()->filter(function ($post) {
+						  // return $post->user_id > 500;
+						// });
 		}
-		if($useruserVehicles->toArray())
-			foreach($useruserVehicles as $vehicle_settings) {
-				  $vehicle_settings1 = $vehicle_settings;
-				  $my_vehicle_setting_array = $vehicle_settings->vehicle_setting;
-				  unset($vehicle_settings->vehicle_setting);
-				  $my_vehicle_setting = array();
-				  foreach($my_vehicle_setting_array as $vehicle_setting)
-					{
-						$vehicle_setting['qr_code'] = url('public/qrcode/'.$vehicle_setting->_id.'png');
-						$my_vehicle_setting[] = $vehicle_setting;
-					}
-				  
-				  $vehicle_settings1['vehicle_setting'] = $my_vehicle_setting;
-		   
-				  $useruserVehicle[] = $vehicle_settings1;
-			  }
-		else
-			$useruserVehicle = (object)array();
 		
-        return response()->json(api_response(1,"All vehicle",$useruserVehicle));
+		
+		// if($useruserVehicles->toArray())
+			// foreach($useruserVehicles as $vehicle_settings) {
+				  // $vehicle_settings1 = $vehicle_settings;
+				  // $my_vehicle_setting_array = $vehicle_settings->vehicle_setting;
+				  // unset($vehicle_settings->vehicle_setting);
+				  // $my_vehicle_setting = array();
+				  // foreach($my_vehicle_setting_array as $vehicle_setting)
+					// {
+						// $vehicle_setting['qr_code'] = url('public/qrcode/'.$vehicle_setting->_id.'png');
+						// $my_vehicle_setting[] = $vehicle_setting;
+					// }
+				  
+				  // $vehicle_settings1['vehicle_setting'] = $my_vehicle_setting;
+		   
+				  // $useruserVehicle[] = $vehicle_settings1;
+			  // }
+		
+		
+        return response()->json(api_response(1,"All vehicle",$useruserVehicles));
     }
 
 

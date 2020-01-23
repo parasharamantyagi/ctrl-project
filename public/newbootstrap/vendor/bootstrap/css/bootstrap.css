@@ -1787,6 +1787,10 @@ pre code {
   .table-responsive-md > .table-bordered {
     border: 0;
   }
+  
+  .navbar-parent {
+		padding-top: 5px;
+	}
 }
 
 @media (max-width: 991.98px) {
@@ -1799,6 +1803,7 @@ pre code {
   .table-responsive-lg > .table-bordered {
     border: 0;
   }
+	
 }
 
 @media (max-width: 1199.98px) {

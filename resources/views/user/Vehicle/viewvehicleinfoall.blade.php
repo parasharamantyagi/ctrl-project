@@ -6,6 +6,10 @@
 table.dataTable thead th {
     padding: 3px 28px 7px 2px;
 }
+a i.fa {
+    font-size: 18px;
+    padding: 14px 1px;
+}
 </style>
 
 	<div class="page-content-wrap">
@@ -102,7 +106,7 @@ table.dataTable thead th {
 							return data;
 					}},
 					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
-							return (data === '1') ? '<button type="submit" class="btn btn-danger vechile_status">USED</button>' : '<button type="submit" class="btn btn-success vechile_status">AVAILABLE</button>';
+							return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
 					}},
 					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
 							// if(data == "1")
@@ -110,7 +114,7 @@ table.dataTable thead th {
 							// else
 								// var vechile_setting_status = '';
 							// return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+full._id+'" data-token="{{ csrf_token() }}" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
-							return '<button type="submit" class="btn btn-success vechile_status">ACTIVE</button>';
+							return '<p class="setting_use_status btn-success">ACTIVE</p>';
 					}},
 					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
 							return '<a href="settings/'+data+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';

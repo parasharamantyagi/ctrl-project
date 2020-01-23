@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/jquery-confirm.min.css') }}">
   <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/select2.min.css') }}">
-	
+  <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/bootstrap-datetimepicker.min.css') }}">
 </head>
 
 <body id="page-top">
@@ -36,7 +36,7 @@
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+    <a class="navbar-brand js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">
       <span class="d-block d-lg-none">CTRL</span>
       <span class="d-none d-lg-block">
         <img class="img-fluid img-profile mx-auto mb-2" src="http://18.212.23.117/blogs/public/ctrl-icon/ctrl_title3x.png" alt="">
@@ -48,11 +48,11 @@
     <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
       <ul class="navbar-nav">
 	  
-		<li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
+		<li class="nav-item navbar-parent {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">START</a>
         </li>
 		
-		<li class="nav-item {{ Request::segment(2) == 'news-deals' ? 'active': '' }}">
+		<li class="nav-item navbar-parent {{ Request::segment(2) == 'news-deals' ? 'active': '' }}">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('news-deals')) }}">NEWS & DEALS</a>
         </li>
         <!-- li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active': '' }}">
@@ -61,7 +61,7 @@
         <li class="nav-item {{ Request::segment(2) == 'settings' ? 'active': '' }}">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('settings')) }}">SETTINGS</a>
         </li -->
-        <li class="nav-item {{ Request::segment(2) == 'view-vehicle' ? 'active': '' }}">
+        <li class="nav-item navbar-parent {{ Request::segment(2) == 'vehicle' || Request::segment(2) == 'view-vehicle' || Request::segment(2) == 'owned' ? 'active': '' }}">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('view-vehicle')) }}">Product</a>
         </li>
 		  <ul class="navbar-nav">
@@ -74,17 +74,20 @@
 			<li class="nav-item {{ Request::segment(2) == 'owned' ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('owned')) }}">- Owned</a>
 			</li>
+			<li class="nav-item {{ Request::segment(2) == 'led-config' ? 'active': '' }}">
+			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="#led-config">- Led Config</a>
+			</li>
 		  </ul>
 		
 			
-        <li class="nav-item {{ Request::segment(2) == 'users' ? 'active': '' }}">
+        <li class="nav-item navbar-parent {{ Request::segment(2) == 'users' || Request::segment(2) == 'create' || Request::segment(2) == 'my-setting' ? 'active': '' }}">
 			<a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('users')) }}">User</a>
 		</li>
 		  <ul class="navbar-nav">
 			<li class="nav-item {{ Request::segment(2) == 'users' && Request::segment(3) == 'create' ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('users/create')) }}">- NEW</a>
 			</li>
-			<li class="nav-item {{ Request::segment(2) == 'users' ? 'active': '' }}">
+			<li class="nav-item {{ Request::segment(2) == 'users' && !Request::segment(3) ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('users')) }}">- EXISTING</a>
 			</li>
 			<li class="nav-item {{ Request::segment(2) == 'my-setting' ? 'active': '' }}">
@@ -92,12 +95,12 @@
 			</li>
 		  </ul>
 		
-		<li class="nav-item {{ Request::segment(2) == 'maintenance' ? 'active': '' }}">
-			<a class="nav-link nav-link-main js-scroll-trigger" href="#maintenance">Maintenance</a>
+		<li class="nav-item navbar-parent {{ Request::segment(2) == 'edit-tables' ? 'active': '' }}">
+			<a class="nav-link nav-link-main js-scroll-trigger" href="edit-tables">Maintenance</a>
 		</li>
 		<ul class="navbar-nav">
-			<li class="nav-item {{ Request::segment(3) == 'edit-tables' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="#edit-tables">- Edit tables</a>
+			<li class="nav-item {{ Request::segment(2) == 'edit-tables' ? 'active': '' }}">
+			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="edit-tables">- Edit tables</a>
 			</li>
 		</ul>
 		
@@ -113,8 +116,7 @@
 	
 		<div class="container-fluid p-0">
 				@yield('content')
-			
-	</div>
+		</div>
 
   <!-- Bootstrap core JavaScript -->
   
@@ -133,6 +135,7 @@
   <script type="text/javascript" src="{{ url('/public/assets/jquery/jquery.toaster.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script type="text/javascript" src="{{ url('/public/assets/jquery/select2.min.js') }}"></script>
+  <script src="{{ url('/public/assets/bootstrap/bootstrap-datetimepicker.js') }}"></script>
 	<script>
 		
 		
@@ -150,6 +153,8 @@
 				$(".selectpicker").select2({
 					allowClear: true
 				});
+				
+				$(".date-picker").datetimepicker({format: 'yyyy-mm-dd'});
 	</script>
 	
 	@yield('script')

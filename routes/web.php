@@ -49,6 +49,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
 		Route::get('owned','VehicleController@viewOwnedVehicleAll');
 		
+		Route::resource('edit-tables', 'EditTableController');
+		
 	});
 });
 

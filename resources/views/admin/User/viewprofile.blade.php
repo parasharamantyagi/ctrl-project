@@ -1,7 +1,6 @@
 @extends('layouts.appadmin')
 
 @section('content')
-
 	<div class="page-content-wrap">
                     <!-- START ALERT BLOCKS -->
 
@@ -35,6 +34,21 @@
 						<input type="password" class="form-control" placeholder="Confirm password" name="confirm_password" value="" id="confirm_password">
 						<div id="passwordcanformValidation"></div>
 					</div>
+					
+					<div class="form-group">
+						<input type="text" class="form-control date-picker" placeholder="Birth date" name="birth_date" value="" id="birth_date">
+					</div>
+					
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="City" name="city" value="{{$userForm->city}}" id="city">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="State" name="state" value="{{$userForm->state}}" id="state">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Country" name="country" value="{{$userForm->country}}" id="country">
+					</div>
+					
 				</div>
 		
 				<div id="ctrlscrolbar"></div>
@@ -46,7 +60,7 @@
 					</div>
 					
 					<div class="form-group">
-						<input type="text" class="form-control email" placeholder="Phone no" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
+						<input type="text" class="form-control" placeholder="Phone no" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
 					</div>
 
 					<div class="form-group">
@@ -54,8 +68,18 @@
 						<img src="{{ url('public/assets/userimages/'.$userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
 					<p>Click on image for change this</p>
 					</div>
+					<br><br><br><br><br><br><br><br><br>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Company name" name="company_name" value="{{$userForm->company_name}}" id="company_name">
+					</div>
 					
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Address" name="address" value="{{$userForm->address}}" id="address">
+					</div>
 					
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Address 2" name="address2" value="{{$userForm->address2}}" id="address2">
+					</div>
 				</div>
 			  
 			    
@@ -76,7 +100,6 @@
 
 
 @section('script')
-
 	<script>
 				$(document).ready(function(){
 					$('#Updateuser').submit(function(event){
@@ -134,6 +157,7 @@
 					// document.getElementById("upload_image_button").value = null;
 					window.history.back();
 				}
+				    
 			  //danger  success info warning
 	</script>
 	

@@ -84,7 +84,7 @@ class VehicleController extends Controller
 	
 	public function viewOwnedVehicleAll()
 	{
-		$page_info['page_title'] = 'Add Vehicle';
+		$page_info['page_title'] = 'All Vehicle';
 		return view('admin/Vehicle/view-owned-vehicleinfoall')->with('page_info', $page_info);
 	}
 	
@@ -100,9 +100,18 @@ class VehicleController extends Controller
 							4=> 'pad_line_color'
                         );
 		$vehicles = VehicleSetting::with('getvehicle');
+		if(edit_table('vehicle_id'))
+				$vehicles = $vehicles->whereIn('vehicle_id',explode(',',edit_table('vehicle_id')));
+			
+		if(edit_table('users'))
+				$vehicles = $vehicles->whereIn('user_id',explode(',',edit_table('users')));
+			
 		if(user_role() != 'admin')
 				$vehicles = $vehicles->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id);
 		
+		if($request->input('vehicle_id') && $request->input('vehicle_id') !=  "0")
+				$vehicles = $vehicles->where('vehicle_id',$request->input('vehicle_id'));
+			
 		if($request->input('type'))
 				$vehicles = $vehicles->where('setting_use_status','1');
 		

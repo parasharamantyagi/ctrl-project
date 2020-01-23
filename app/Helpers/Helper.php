@@ -84,6 +84,19 @@ if (!function_exists('my_role')) {
     }
 }
 
+if (!function_exists('edit_table')) {
+	
+	function edit_table($input)
+    {
+		$result = DB::table('edittables')->where('user_id',strval(Auth::user()->id))->first();
+		if($result)
+		{
+			return ($result[$input]) ? $result[$input] : false;
+		}else{
+			return false;
+		}
+    }
+}
 
 
 if (!function_exists('pr')) {

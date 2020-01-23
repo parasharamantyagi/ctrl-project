@@ -618,11 +618,12 @@ img.img-circle {width:75px; height:75px; float:left;border-radius: 50%;}
 }
 
 table tbody tr td.text_align {
-    padding: 12px 0px;
+    padding: 12px 0px 0px 0px;
 }
 
 table.users-table tbody tr td.text_align {
-    padding: 20px 10px;
+    /* padding: 20px 10px; */
+    padding: 17px 3px 0px 0px;
 }
 
 
@@ -637,32 +638,27 @@ button.btn.vechile_status{
 
 p.daylight_auto_on{
 	border-radius: 6px;
-    border: 1px solid #28a745;
-    padding: 4px;
+    padding: 6px;
     width: 50px;
     height: 30px;
-    background-color: #28a745;
     text-align: center;
     font-size: 0.8rem;
 }
 
-p.daylight_auto_off{
+p.setting_use_status{
 	border-radius: 6px;
-    border: 1px solid #b21f2d;
-    padding: 4px;
-    width: 50px;
+    padding: 6px;
+    width: 85px;
     height: 30px;
-    background-color: #bd2130;
     text-align: center;
     font-size: 0.8rem;
 }
 
-/* select.viewvechile_select { */
-    /* width: 0px !important; */
-    /* margin-left: 63% !important; */
-    /* position: relative !important; */
-    /* float: right; */
-/* } */
+.view-vehicle span.select2.select2-container.select2-container--default {
+    width: 200px !important;
+    position: relative;
+    margin-right: -55%;
+}
 
 
 /* width: 43%; */
