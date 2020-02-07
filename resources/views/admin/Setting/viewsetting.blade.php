@@ -234,5 +234,12 @@
 					}
 				
 	</script>
+	@if(session()->has('flash-message'))
+	  <script>
+		jQuery(document).ready(function () {
+		  $.toaster({ priority : 'success', title : 'Success', message : "{{ session()->get('flash-message') }}" });
+		});
+	  </script>
+	@endif
 	
 @endsection

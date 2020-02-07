@@ -13,10 +13,11 @@ class SettingController extends Controller
 {
     public function index()
     {
+		// user_id from_id
 		if(user_role() === 'admin')
 				$vichle_name =  Vehicle::select('_id','brand','model')->get();
 			else
-				$vichle_name =  Vehicle::select('_id','brand','model')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
+				$vichle_name =  Vehicle::select('_id','brand','model')->where('from_id',Auth::user()->id)->get();
 		$userForm = (object)array(
 								'_id'=>'','vehicle_id'=>'','background_color'=>'','pad_line_color'=>'','pad_background_color'=>'',
 								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'',
@@ -36,10 +37,11 @@ class SettingController extends Controller
 		$inputData = $request->all();
 		$myVehicle = Vehicle::find($inputData['vehicle_id']);
 		unset($inputData["_token"]);
-		$inputData['user_id'] = $myVehicle->user_id;
-		$inputData['from_id'] = $myVehicle->from_id;
+		// $inputData['user_id'] = Auth::user()->id;
+		$inputData['from_id'] = Auth::user()->id;
 		$inputData['setting_status'] = '1';
 		$inputData['asset_folder'] = 'mycar.png';
+		$inputData['setting_art_no'] = car_model(Vehicle::find($inputData['vehicle_id'])->model);
 		$inputData['setting_use_status'] = '0';
 		$vichleSetting = VehicleSetting::insertGetId($inputData);
 		// $vichleSetting_image = 'http://18.212.23.117/blogs/post';
@@ -55,7 +57,7 @@ class SettingController extends Controller
 	   if(user_role() === 'admin')
 				$vichle_name =  Vehicle::select('_id','brand','model')->get();
 			else
-				$vichle_name =  Vehicle::select('_id','brand','model')->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
+				$vichle_name =  Vehicle::select('_id','brand','model')->where('from_id',Auth::user()->id)->get();
 		$vehicleSettingData = VehicleSetting::find($id);
 		$page_info['page_title'] = 'Settings';
 		return view('admin/Setting/viewsetting')->with('userForm', $vehicleSettingData)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/settings-update');
@@ -105,7 +107,7 @@ class SettingController extends Controller
 		if(user_role() === 'admin')
 				$allVehicle = Vehicle::all();
 			else
-				$allVehicle = Vehicle::where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id)->get();
+				$allVehicle = Vehicle::where('from_id',Auth::user()->id)->get();
 		$vehicleSetting = Vehicle::with('vehicle_setting')->where('_id',$id)->first();
 		$page_info['page_title'] = 'Add Vehicle';
 		return view('admin/Setting/vehicle-setting')->with('page_info', $page_info)->with('allVehicle', $allVehicle)->with('vehicles', $vehicleSetting);

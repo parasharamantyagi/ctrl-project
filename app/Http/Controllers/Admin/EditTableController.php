@@ -30,8 +30,9 @@ class EditTableController extends Controller
 		$inputData = $request->all();
 		$vehicle_id = ($request->input('vehicle_id')) ? implode(',',$request->input('vehicle_id')) : 0;
 		$users = ($request->input('users')) ? implode(',',$request->input('users')) : 0;
+		$specification = ($request->input('specification')) ? implode(',',$request->input('specification')) : 0;
 		$user_id = strval(Auth::user()->id);
-		EditTable::updateOrCreate(array('user_id' => $user_id),array('vehicle_id'=>$vehicle_id,'user_id'=>$user_id,'users'=>$users));
+		EditTable::updateOrCreate(array('user_id' => $user_id),array('vehicle_id'=>$vehicle_id,'user_id'=>$user_id,'users'=>$users,'specification'=>$specification));
 		$returnmessage = array('status'=>true,'message'=>'Setting add successfully');
 		echo json_encode($returnmessage);
 	}

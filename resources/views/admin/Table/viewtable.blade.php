@@ -36,20 +36,25 @@
 			<div class="modal-body">
 			<div class="row">
 				<div class="col-sm-6 col-xs-12">
-					<div class="form-group">
-						<label>Select vehicle</label>
-						<select class="form-control test" name="vehicle_id[]" multiple="multiple">
+					<div class="form-group vehicle">
+						<select class="form-control vehicle_id_selector" name="vehicle_id[]" multiple="multiple">
 							@foreach($vichle_name as $vichle_name)
 								<option value="{{$vichle_name->_id}}" <?php echo (in_array($vichle_name->_id,explode(',',$editTable->vehicle_id))) ? 'selected':''; ?>>{{$vichle_name->brand .' ('.$vichle_name->model.')'}}</option>
 							@endForeach;
 						</select>
 					</div>
+					
+					<div class="form-group specification">
+						<select class="form-control specification_selector" name="specification[]" multiple="multiple">
+								<option value="none" <?php echo (in_array("none",explode(',',$editTable->specification))) ? 'selected':''; ?>>None</option>
+								<option value="police" <?php echo (in_array("police",explode(',',$editTable->specification))) ? 'selected':''; ?>>Police</option>
+						</select>
+					</div>
 				</div>
 				
 				<div class="col-sm-6 col-xs-12">
-					<div class="form-group">
-						<label>Select User</label>
-						<select class="form-control test" name="users[]" multiple="multiple">
+					<div class="form-group user">
+						<select class="form-control users_selector" name="users[]" multiple="multiple">
 							@foreach($users as $user)
 								<option value="{{$user->_id}}" <?php echo (in_array($user->_id,explode(',',$editTable->users))) ? 'selected':''; ?>>{{$user->name}}</option>
 							@endForeach;
@@ -106,7 +111,34 @@
 				
 				(function($) {
 					$(function() {
-						window.fs_test = $('.test').fSelect();
+						$('.vehicle_id_selector').fSelect({
+							placeholder: 'Vehicle type',
+							numDisplayed: 3,
+							overflowText: '{n} selected',
+							noResultsText: 'No results found',
+							searchText: 'Search',
+							showSearch: true
+						});
+						$('.specification_selector').fSelect({
+							placeholder: 'Special car specification',
+							numDisplayed: 3,
+							overflowText: '{n} selected',
+							noResultsText: 'No results found',
+							searchText: 'Search',
+							showSearch: true
+						});
+						$('.users_selector').fSelect({
+							placeholder: 'Select manufacturer',
+							numDisplayed: 3,
+							overflowText: '{n} selected',
+							noResultsText: 'No results found',
+							searchText: 'Search',
+							showSearch: true
+						});
+							// specification users
+						// $('.vehicle .fs-label-wrap .fs-label').html('Vehicle type');
+						// $('.user .fs-label-wrap .fs-label').html('Select manufacturer');
+						// $('.specification .fs-label-wrap .fs-label').html('Special car specification');
 					});
 				})(jQuery);
 			  //danger  success info warning

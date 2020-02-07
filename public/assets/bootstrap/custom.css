@@ -607,7 +607,8 @@ img.img-circle {width:75px; height:75px; float:left;border-radius: 50%;}
 }
 .form-control.viewuser {
   width: 125px;
-  right: -34%;
+  left: 27%;
+  /* right: -34%; */
   /* margin-left: 62%; */
 }
 
@@ -660,6 +661,9 @@ p.setting_use_status{
     margin-right: -55%;
 }
 
+em.error.help-block {
+	color: red;
+}
 
 /* width: 43%; */
     /* margin-left: 0%;

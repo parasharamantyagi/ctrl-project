@@ -104,6 +104,14 @@
 			</li>
 		</ul>
 		
+		<li class="nav-item navbar-parent">
+          <a class="nav-link nav-link-main js-scroll-trigger" href="create-new-car">CREATE NEW CAR</a>
+        </li>
+		
+		<li class="nav-item navbar-parent">
+          <a class="nav-link nav-link-main js-scroll-trigger" href="create-excel-sheet">CREATE EXCEL SHEET</a>
+        </li>
+		
         <li class="nav-item">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>
 			 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -136,6 +144,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script type="text/javascript" src="{{ url('/public/assets/jquery/select2.min.js') }}"></script>
   <script src="{{ url('/public/assets/bootstrap/bootstrap-datetimepicker.js') }}"></script>
+  <script type='text/javascript' src="{{ url('/public/assets/jquery/jquery.validate.min.js') }}"></script>
 	<script>
 		
 		

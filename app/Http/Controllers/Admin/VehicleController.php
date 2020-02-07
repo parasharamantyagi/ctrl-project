@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Vehicle;
 use App\VehicleSetting;
 use App\User;
+use App\CarModel;
 use Auth;
 
 class VehicleController extends Controller
@@ -17,8 +18,9 @@ class VehicleController extends Controller
 				$user_all = User::where('role_id', '!=' , '0')->get();
 			else
 				$user_all = User::where('parent_id',Auth::user()->id)->get();
+		$carModel = CarModel::all();
 		$userForm = (object)array(
-								'id'=>'','user_id'=>'','brand'=>'','model'=>'','model_spec'=>'',
+								'id'=>'','brand'=>'','model'=>'','car_name'=>'','model_spec'=>'',
 								'release_year'=>'','moter_type'=>'','horse_power'=>'',
 								'torque'=>'','km_h_0_100'=>'','km_h_0_160'=>'',
 								'km_h_100_0'=>'','weight'=>'','max_weight'=>'',
@@ -28,7 +30,7 @@ class VehicleController extends Controller
 								'wheel_diameter'=>'','height'=>'',
 								);
 		$page_info['page_title'] = 'Add product';
-		return view('admin/Vehicle/addvehicle')->with('all_user', $user_all)->with('userForm', $userForm)->with('page_info', $page_info)->with('formaction','/admin/vehicle');
+		return view('admin/Vehicle/addvehicle')->with('all_user', $user_all)->with('userForm', $userForm)->with('carModel', $carModel)->with('page_info', $page_info)->with('formaction','/admin/vehicle');
     }
 	
 	public function store(Request $request)
@@ -37,6 +39,11 @@ class VehicleController extends Controller
 		unset($inputData["id"]);
 		unset($inputData["_token"]);
 		$inputData["from_id"] = Auth::user()->id;
+		if(!CarModel::where('model_name',$inputData["model"])->count())
+		{
+			CarModel::updateOrCreate(array('model_name' =>$inputData["model"]),array('model_name'=>$inputData["model"],'vehicle_id'=>'jbhjbhhvhg','art_no'=>rand(111111,999999)));
+		}
+		// $inputData["art_no"] = rand(111111,999999);
 		Vehicle::insert($inputData);
 		$returnmessage = array('status'=>true,'action'=>'storeVehicle','message'=>'Vehicle has been save');
 		echo json_encode($returnmessage);
@@ -50,8 +57,9 @@ class VehicleController extends Controller
 				$user_all = User::where('parent_id',Auth::user()->id)->get();
 			
 			$vichleData = Vehicle::find($id);
+			$carModel = CarModel::all();
 			$userForm = (object)array(
-								'id'=>$vichleData->_id,'user_id'=>$vichleData->user_id,'brand'=>$vichleData->brand,'model'=>$vichleData->model,'model_spec'=>$vichleData->model_spec,
+								'id'=>$vichleData->_id,'brand'=>$vichleData->brand,'model'=>$vichleData->model,'car_name'=>$vichleData->car_name,'model_spec'=>$vichleData->model_spec,
 								'release_year'=>$vichleData->release_year,'moter_type'=>$vichleData->moter_type,'horse_power'=>$vichleData->horse_power,
 								'torque'=>$vichleData->torque,'km_h_0_100'=>$vichleData->km_h_0_100,'km_h_0_160'=>$vichleData->km_h_0_160,
 								'km_h_100_0'=>$vichleData->km_h_100_0,'weight'=>$vichleData->weight,'max_weight'=>$vichleData->max_weight,
@@ -61,7 +69,7 @@ class VehicleController extends Controller
 								'wheel_diameter'=>$vichleData->wheel_diameter,'height'=>$vichleData->height,
 								);
 			$page_info['page_title'] = 'Edit Vehicle';
-			return view('admin/Vehicle/addvehicle')->with('all_user', $user_all)->with('userForm', $userForm)->with('page_info', $page_info)->with('formaction','/admin/vehicleUpdate');
+			return view('admin/Vehicle/addvehicle')->with('all_user', $user_all)->with('userForm', $userForm)->with('carModel', $carModel)->with('page_info', $page_info)->with('formaction','/admin/vehicleUpdate');
 	}
 	
 	public function vehicleUpdate(Request $request)
@@ -97,17 +105,17 @@ class VehicleController extends Controller
                             1 =>'pad_background_color',
                             2=> 'daylight_auto_on',
 							3=> 'front_motor',
-							4=> 'pad_line_color'
+							4=> 'setting_art_no'
                         );
 		$vehicles = VehicleSetting::with('getvehicle');
-		if(edit_table('vehicle_id'))
-				$vehicles = $vehicles->whereIn('vehicle_id',explode(',',edit_table('vehicle_id')));
+		// if(edit_table('vehicle_id'))
+				// $vehicles = $vehicles->whereIn('vehicle_id',explode(',',edit_table('vehicle_id')));
 			
-		if(edit_table('users'))
-				$vehicles = $vehicles->whereIn('user_id',explode(',',edit_table('users')));
+		// if(edit_table('users'))
+				// $vehicles = $vehicles->whereIn('user_id',explode(',',edit_table('users')));
 			
 		if(user_role() != 'admin')
-				$vehicles = $vehicles->where('user_id',Auth::user()->id)->orWhere('from_id',Auth::user()->id);
+				$vehicles = $vehicles->where('from_id',Auth::user()->id);
 		
 		if($request->input('vehicle_id') && $request->input('vehicle_id') !=  "0")
 				$vehicles = $vehicles->where('vehicle_id',$request->input('vehicle_id'));
@@ -143,7 +151,7 @@ class VehicleController extends Controller
                     "draw"            => intval($request->input('draw')),  
                     "recordsTotal"    => intval($totalData),  
                     "recordsFiltered" => intval($totalFiltered), 
-                    "data"            => $posts   
+                    "data"            => $posts
                     );
         echo json_encode($json_data);
 	}
@@ -156,7 +164,7 @@ class VehicleController extends Controller
 			else
 				$user_all = User::where('parent_id',Auth::user()->id)->get();
 			$userForm = (object)array(
-								'id'=>$vichleData->_id,'user_id'=>$vichleData->user_id,'brand'=>$vichleData->brand,'model'=>$vichleData->model,'model_spec'=>$vichleData->model_spec,
+								'id'=>$vichleData->_id,'brand'=>$vichleData->brand,'model'=>$vichleData->model,'model_spec'=>$vichleData->model_spec,
 								'release_year'=>$vichleData->release_year,'moter_type'=>$vichleData->moter_type,'horse_power'=>$vichleData->horse_power,
 								'torque'=>$vichleData->torque,'km_h_0_100'=>$vichleData->km_h_0_100,'km_h_0_160'=>$vichleData->km_h_0_160,
 								'km_h_100_0'=>$vichleData->km_h_100_0,'weight'=>$vichleData->weight,'max_weight'=>$vichleData->max_weight,
@@ -171,13 +179,13 @@ class VehicleController extends Controller
 	
 	public function destroy($id)
     {
-		$Users = Vehicle::find($id); // Can chain this line with the next one
+		$Users = VehicleSetting::find($id); // Can chain this line with the next one
 		$Users->delete($id);
 		echo json_encode(array('status'=>true,'message'=>'Vehicle successfully delete'));
     }
 	
 	public function getVehicleQrcode($id)
-	{	
+	{
 		if(file_exists(public_path('/qrcode/'.$id.'png')))
 			echo json_encode(url('/public/qrcode/'.$id.'png'));
 		else

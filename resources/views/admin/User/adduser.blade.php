@@ -24,6 +24,7 @@
 					
 					<div class="form-group">
 						<input type="password" class="form-control" name="password" value="" id="password" placeholder="Password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
+						<div id="passwordValidation"></div>
 					</div>
 					<?php if(user_role() === 'admin') { ?>
 					<div class="form-group">
@@ -38,6 +39,7 @@
 
 					<div class="form-group">
 						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" placeholder="Phone no" id="phone_no" required="">
+						<div id="phone_noValidation"></div>
 					</div>
 				</div>
 		
@@ -88,6 +90,41 @@
 				$(document).ready(function(){
 					$('#Updateuser').submit(function(event){
 						$('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
+						 var val_return = true;
+						 if($('input[name="phone_no"]').val().length < 10)
+						 {
+							 $('#ctrlscrolbar').html('');
+							 $('#phone_noValidation').html('<font color="red">Min 10 characters are required.</font>');
+							 val_return = false;
+						 }else{
+							 $('#phone_noValidation').html('');
+							 val_return = true;
+						 }
+						 
+						 if($('input[name="password"]').val().length < 6 && "{{ $page_info['page_title'] }}" === "Add User")
+						 {
+							 $('#ctrlscrolbar').html('');
+							 $('#passwordValidation').html('<font color="red">Min 6 characters are required.</font>');
+							 val_return = false;
+						 }else{
+							 $('#passwordValidation').html('');
+						 }
+						 if($('input[name="confirm_password"]').val().length < 6 && "{{ $page_info['page_title'] }}" === "Add User")
+						 {
+							 $('#ctrlscrolbar').html('');
+							 $('#passwordcanformValidation').html('<font color="red">Min 6 characters are required.</font>');
+							 val_return = false;
+						 }else{
+							 $('#passwordcanformValidation').html('');
+						 }
+						
+						if(val_return === false)
+						{
+							return val_return;
+						}
+						 
+						 
+						 
 						 $.ajax({
 						   type:this.method,
 						   url: this.action,
@@ -103,10 +140,10 @@
 								if(result.status === false)
 								{
 									$('#'+result.type).html('<font color="red">'+result.message+'</font>');
-									if(result.type == 'passwordcanformValidation')
-									{
-										$('input[type="password"]').val('');
-									}
+									// if(result.type == 'passwordcanformValidation')
+									// {
+										// $('input[type="password"]').val('');
+									// }
 								}else{
 									window.location.href = "../redirect/users?message="+result.message;
 

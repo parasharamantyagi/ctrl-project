@@ -13,7 +13,11 @@
 			{{ csrf_field() }}
 			<div class="modal-header">
 				<h5>{{ $page_info['page_title'] }}</h5>
-				<a href="{{ url(user_role('settings')) }}" class="btn btn-primary">Add settings</a>
+				
+				@if($formaction != 'vehicleview')
+					<a href="{{ url(user_role('settings')) }}" class="btn btn-primary">Add settings</a>
+				@endIf
+				
 			</div>
 			
 		  
@@ -21,19 +25,11 @@
 		<div class="modal-body">
 			<div class="row">
 			<div class="col-md-6">
-			
 					<div class="form-group">
-						<select class="form-control selectpicker" name="user_id" id="user_id" required="">
-							  <option value="{{ Auth::user()->id }}">Select User</option>
-							  @foreach($all_user as $all_user)
-								  <option value="{{$all_user->_id}}" <?php echo ($all_user->_id == $userForm->user_id) ? 'selected':''; ?>>{{$all_user->name}}</option>
-							  @endForeach;
-						</select>
+						<input type="text" class="form-control" name="brand" value="{{$userForm->brand}}" placeholder="Brand" id="brand" required="">
 					</div>
-					
-							
 					<div class="form-group">
-						<input type="text" class="form-control" name="model_spec" value="{{$userForm->model_spec}}" placeholder="Model spec" id="model_spec" required="">
+						<input type="text" class="form-control" name="car_name" value="{{$userForm->car_name}}" placeholder="Car name" id="car_name" required="">
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control email" name="moter_type" value="{{$userForm->moter_type}}" placeholder="Moter Type" id="moter_type" required="">
@@ -69,11 +65,16 @@
 
 			<div class="col-md-6">
 					<div class="form-group">
-						<input type="text" class="form-control" name="brand" value="{{$userForm->brand}}" placeholder="Brand" id="brand" required="">
+						<select class="form-control selectpickerss" data-size="5" data-live-search="true" name="model" id="model" required="">
+							  <option value="">Model</option>
+							  @foreach($carModel as $carModel)
+								  <option value="{{$carModel->model_name}}">{{$carModel->model_name}}</option>
+							  @endForeach;
+						</select>
+							
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="model" value="{{$userForm->model}}" placeholder="Model" id="model" required="">
+						<input type="text" class="form-control" name="model_spec" value="{{$userForm->model_spec}}" placeholder="Model spec" id="model_spec" required="">
 					</div>
 					<div class="form-group">
 						<select class="form-control" name="release_year" id="release_year">
@@ -150,14 +151,37 @@
 								// $.toaster({ priority : 'success', title : 'Success', message : result.message });
 								
 								if(result.action === "storeVehicle")
-										window.location.href = "./redirect/view-vehicle?message="+result.message;
+										window.location.href = "./redirect/settings?message="+result.message;
 								else
-										window.location.href = "../redirect/view-vehicle?message="+result.message;
+										window.location.href = "../redirect/settings?message="+result.message;
 										// $("#Updateuser").trigger("reset");
 						   }
 						});
 						event.preventDefault();
 					});
+					
+					
+					$(".selectpickerss").select2({
+						  tags: true,
+						  createTag: function (params) {
+							return {
+							  id: params.term,
+							  text: params.term,
+							  newOption: true
+							}
+						  },
+						   templateResult: function (data) {
+							var $result = $("<span></span>");
+
+							$result.text(data.text);
+
+							if (data.newOption) {
+							  $result.append(" <em>(new)</em>");
+							}
+
+							return $result;
+						  }
+						});
 				});
 				
 				function form_return()

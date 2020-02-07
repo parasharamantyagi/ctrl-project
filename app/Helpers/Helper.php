@@ -98,6 +98,18 @@ if (!function_exists('edit_table')) {
     }
 }
 
+if (!function_exists('car_model')) {
+	
+	function car_model($input)
+    {
+		// ->toArray()
+		$result = DB::table('car_models')->where('model_name',$input)->get()->toArray();
+		$key = array_search($input, array_column($result, 'model_name'));
+		return $result[$key]['art_no'];
+		// return $result['art_no'];
+    }
+}
+
 
 if (!function_exists('pr')) {
 	

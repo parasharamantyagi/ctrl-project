@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Vehicle;
+use App\VehicleSetting;
 
 
 class MyApiController extends Controller
@@ -11,8 +13,15 @@ class MyApiController extends Controller
 	
 	public function getMyPost()
 	{
-		$inputData = Post::get();
-		print_r($inputData->toArray());
+		$inputData = VehicleSetting::all();
+		// foreach($inputData as $inputDatad)
+		// {
+			// $inputDatad['setting_art_no'] = car_model(Vehicle::find($inputDatad->vehicle_id)->model);
+			// VehicleSetting::where('_id',$inputDatad->_id)->update(array('setting_art_no'=>$inputDatad['setting_art_no']));
+			// $inputDatads[] = $inputDatad;
+		// }
+		return response()->json(api_response(1,"Successfully created user!",$inputData));
+		// print_r($inputData);
 	}
 	
 	public function addMyPost(Request $request)

@@ -6,6 +6,13 @@
 		{
 			margin: 3px;
 		}
+		
+		a i.fa {
+			padding: 18px 4px 0px 0px;
+		}
+		td.text_align.release_year_text_align {
+			text-align: center;
+		}
 </style>
 
 
@@ -23,6 +30,37 @@
 	}
 </style>
 <div class="col-md-12">
+
+
+		<!--      popup model start   -->
+				<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<h5>QR-CODE</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+					  </div>
+					  <div class="modal-body">
+							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
+							  <div class="carousel-inner">
+								<div class="carousel-item active">
+								  <img class="d-block w-100" src="{{ url('/public/qrcode/5dfa5f795da0ec0aa277de75png') }}" alt="First slide">
+								</div>
+							  </div>
+							</div>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<!-- button type="button" class="btn btn-primary">Save changes</button -->
+					  </div>
+					</div>
+				  </div>
+				</div>
+		<!--      End   -->
+		
+		
         <div class="panel panel-default">
 			<div class="modal-header">
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
@@ -59,9 +97,9 @@
 								<!-- th>Sr No.</th -->
 								<th>Qr code</th>
 								<th>Model</th>
-								<th>Brand</th>
+								<th>Car name</th>
 								<th>Release year</th>
-								<th>Daylight auto</th>
+								<th>Art&nbsp;No</th>
 								<th>Product status</th>
 								<th>Status</th>
 								<th>Action</th>
@@ -126,6 +164,7 @@
       "serverSide": true,
       "bInfo" : false,
       "pageLength": 50,
+	  "aaSorting": [[4, 'asc']],
       "fnDrawCallback":function(){
           if ($('#example tr').length < 50) {
             $('.dataTables_paginate').hide();
@@ -148,17 +187,17 @@
         {"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
             return data;
         }},
-        {"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
-            return full.getvehicle.model;
+        {"data": "getvehicle","sClass":"text_align", "render": function(data,type,full,meta){
+            return data.model;
         }},
-        {"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
-            return full.getvehicle.brand;
+        {"data": "getvehicle","sClass":"text_align", "render": function(data,type,full,meta){
+            return data.car_name;
         }},
-        {"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
+        {"data": "daylight_auto_on","sClass":"text_align release_year_text_align", "render": function(data,type,full,meta){
             return full.getvehicle.release_year;
         }},
-        {"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data === 'on') ? '<p class="daylight_auto_on btn-success">On</p>' : '<p class="daylight_auto_on btn-danger">Off</p>';
+        {"data": "setting_art_no","sClass":"text_align", "render": function(data,type,full,meta){
+            return data;
         }},
         {"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
             return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
@@ -171,7 +210,9 @@
             return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+full._id+'" data-token="{{ csrf_token() }}" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
         }},
         {"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-            return '<a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete vehicle"></i></a><br /><a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a><a href="vehicle/'+full.vehicle_id+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Edit vehicle"></i></a>';
+			// <a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a> 
+			// <a href="vehicle/'+full.vehicle_id+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Edit vehicle"></i></a>
+            return '<a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete vehicle"></i></a><a href="vehicle-view/'+full.vehicle_id+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a><a href="javascript::void(0)" class="qr-code" data-id="'+data+'" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>';
         }},
       ]
     });
@@ -192,6 +233,22 @@
             }
           });
     });
+	
+			$(document).on('click', 'a[class="qr-code"]', function(){
+					$.ajax({
+						url: "./get-vehicle-qrcode/"+$(this).data('id'),
+						type: 'get',
+						dataType: "JSON",
+						success: function (response)
+						{
+							$('img[class="d-block w-100"]').attr('src',response);
+						}
+					});
+			});
+			
+			$('.carousel').carousel({
+				interval: false
+			});
   });
 </script>
 @if(session()->has('flash-message'))

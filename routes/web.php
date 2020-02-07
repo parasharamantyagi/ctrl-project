@@ -51,6 +51,9 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		
 		Route::resource('edit-tables', 'EditTableController');
 		
+		Route::resource('create-new-car', 'CreateNewCarController');
+		Route::get('create-excel-sheet', 'CreateNewCarController@createExcelSheet');
+		
 	});
 });
 

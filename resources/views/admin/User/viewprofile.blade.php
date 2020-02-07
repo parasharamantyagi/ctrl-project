@@ -16,7 +16,7 @@
 			<div class="modal-body">
 			<div class="row">
 
-				<div class="col-sm-6 col-xs-12">
+				<div class="col-sm-6 col-xs-12 control-group">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Name" name="name" value="{{$userForm->name}}" id="name" required="">
 					</div>
@@ -101,8 +101,14 @@
 
 @section('script')
 	<script>
-				$(document).ready(function(){
-					$('#Updateuser').submit(function(event){
+				// $(document).ready(function(){
+					
+				// });
+				
+				
+		$.validator.setDefaults({
+			submitHandler: function() {
+				$('#Updateuser').submit(function(event){
 						 if($('input[name="old_password"]').val() && $('input[name="new_password"]').val() && $('input[name="confirm_password"]').val())
 						 {
 							if($('input[name="new_password"]').val() !== $('input[name="confirm_password"]').val())
@@ -136,29 +142,50 @@
 									$.toaster({ priority : 'success', title : 'Success', message : result.message });
 									$('input[type="email"]').val(result.email_id);
 									$('input[type="password"]').val('');
-									// window.location.href = "../redirect/users?message="+result.message;
 									return true;
-									// 
-									// if(result.action === "storeUser")
-									// {
-										// $("#Updateuser").trigger("reset");
-									// }
 								}
 						   }
 						});
 						event.preventDefault();
 					});
-				});
+			}
+		});
+		
 				
-				function form_return()
+				
+		$( document ).ready( function () {
+			$("#Updateuser").validate({
+				rules: {
+					new_password: {required: false,minlength: 6},
+					confirm_password: {required: false,minlength: 6,equalTo: "#new_password"}
+				},
+				messages: {
+					new_password: {minlength:"Your password must be at least 6 characters long"},
+					confirm_password: {minlength:"Your canform password must be at least 6 characters long",equalTo: "Your confirm password does't match"}
+				},
+				errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					error.addClass( "help-block" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.parent( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+				},
+				highlight: function( element, errorClass, validClass ) {
+					$( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+				}
+			});
+		});
+		
+			function form_return()
 				{
-					// $('#upload_image_button').val('');
-					// $("#upload_image_button").val('');
-					// document.getElementById("upload_image_button").value = null;
 					window.history.back();
 				}
-				    
-			  //danger  success info warning
 	</script>
 	
 @endsection
