@@ -232,7 +232,7 @@
 									<input type="submit" class="btn btn-primary" value="Save changes">
 					</div>
 		</div>
-	<script src="http://18.212.23.117/blogs/public/newbootstrap/vendor/jquery/jquery.min.js"></script>
+	<script src="{{ url('/public/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script>
 			$(document).ready(function(){

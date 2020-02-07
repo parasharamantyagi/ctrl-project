@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<link rel="shortcut icon" href="http://18.212.23.117/blog/public/assets/images/icone.jpg">
+<link rel="shortcut icon" href="{{ url('/public/assets/images/icone.jpg') }}">
 <title> Ctrl</title>
  
 		<!-- Global site tag (gtag.js) - Google Analytics -->

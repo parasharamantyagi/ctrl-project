@@ -39,7 +39,7 @@
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none">CTRL</span>
       <span class="d-none d-lg-block">
-        <img class="img-fluid img-profile mx-auto mb-2" src="http://18.212.23.117/blogs/public/ctrl-icon/ctrl_title3x.png" alt="">
+        <img class="img-fluid img-profile mx-auto mb-2" src="{{ url('/public/ctrl-icon/ctrl_title3x.png') }}" alt="">
       </span>
     </a>
 	
