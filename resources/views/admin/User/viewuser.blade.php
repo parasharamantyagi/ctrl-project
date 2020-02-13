@@ -9,7 +9,7 @@
 </style>
 
 
-	<div class="page-content-wrap">
+	<div class="page-content-wrap viewuser-parent">
                     <!-- START ALERT BLOCKS -->
 
 
@@ -90,121 +90,7 @@
 @endsection
 
 @section('script')
-	<script>
-	
-		jQuery(document).ready(function () {
-				$(document).on('click', '.delete-user', function(){
-					var delete_id = $(this).data('id');
-					var tabe_tr = $(this).parents('tr');
-					var token = $(this).data("token");
-                        $.confirm({
-                            icon: 'fa fa-frown-o',
-							content: 'Are you sure to delete this user ..?',
-                            theme: 'modern',
-                            closeIcon: true,
-                            animation: 'scale',
-                            type: 'blue',
-							 buttons: {
-                                'confirm': {
-                                    text: 'Delete',
-                                    btnClass: 'btn btn-primary',
-                                    action: function(){
-										tabe_tr.remove();
-										 $.ajax({
-											url: "users/"+delete_id,
-											type: 'delete',
-											dataType: "JSON",
-											data: {
-												"_token": token,
-											},
-											success: function (response)
-											{
-												$.toaster({ priority : 'success', title : 'Success', message : response.message });
-											}
-										});
-                                    }
-                                },
-                                cancel: function(){
-                                },
-                            }
-                        });
-			});
-			
-			var dataTable = jQuery('#example').DataTable({
-				dom: 'lifrtp',
-				"scrollX": true,
-				// language: {
-					// "infoFiltered": "",
-					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-				// },
-				"processing": true,
-				"serverSide": true,
-				"bInfo" : false,
-				"pageLength": 50,
-				"fnDrawCallback":function(){
-						if ($('#example tr').length < 50) {
-							$('.dataTables_paginate').hide();
-						}
-				},
-				lengthMenu: [
-					[50, 100, 250, 500, 999999],
-					['50', '100', '250', '500', 'Show all']
-				],
-				"ajax": {
-					"url": "{{ url('/admin/user-table') }}",
-					"dataType": "json",
-					"type": "POST",
-					"data": function(data) {
-						data._token = "{{ csrf_token() }}",
-						data.user_roll = $('select[name="user_roll"]').val()	
-					}
-				},
-				"columns": [
-					{"data": "name","sClass":"text_align"},
-					{"data": "email","sClass":"text_align","render": function(email,type,full,meta){
-						return '<p>'+email+'</p>';
-					}},
-					{"data": "phone_no","sClass":"text_align" , "render": function(phone_no,type,full,meta){
-							return (phone_no) ? phone_no : '';
-					}},
-					{"data": "image", "searchable": false, "orderable": false, "render": function(data_image,type,full,meta){
-							return '<img src="../public/assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
-					}},
-					{"data": "status","sClass":"text_align" , "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-						let user_status = (full.status == "1") ? 'active' : '';
-							return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+user_status+'" data-toggle="button" aria-pressed="true" data-id="'+full._id+'" data-token="{{ csrf_token() }}" autocomplete="off"><div class="handle"></div></button>';
-					}},
-					{"data": "_id","sClass":"text_align" , "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-							return '<a href="users/'+data+'"><i class="fa fa-pencil-square-o" title="Edit user"></i></a><a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete user"></i></a>';
-					}},
-				]
-			});
-			
-			$(document).on('click', '.btn-secondary.btn-toggle', function(){
-					$.ajax({
-							url: "user-status",
-							type: 'POST',
-							dataType: "JSON",
-							data: {
-									"_token": $(this).data('token'),
-									"status": $(this).attr("aria-pressed"),
-									"id": $(this).data('id'),
-							},
-							success: function (response)
-							{
-								// $.toaster({ priority : 'success', title : 'Success', message : response.message });
-							}
-						});
-			});
-			
-			$(document).on('change', 'select[name="user_roll"]', function(){
-					dataTable.draw();
-			});
-			
-			
-		});			
-	</script>		
-	@if(session()->has('flash-message'))
+		@if(session()->has('flash-message'))
 		<script>
 			jQuery(document).ready(function () {
 				$.toaster({ priority : 'success', title : 'Success', message : "{{ session()->get('flash-message') }}" });

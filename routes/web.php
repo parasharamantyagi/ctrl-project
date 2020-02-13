@@ -45,7 +45,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::post('vehicleUpdate', 'VehicleController@vehicleUpdate');
 		Route::post('vehicle-table', 'VehicleController@vehicleTable');
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
-		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
+		Route::post('get-vehicle-qrcode','VehicleController@getVehicleQrcode');
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
 		Route::get('owned','VehicleController@viewOwnedVehicleAll');
 		
@@ -53,6 +53,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		
 		Route::resource('create-new-car', 'CreateNewCarController');
 		Route::get('create-excel-sheet', 'CreateNewCarController@createExcelSheet');
+		Route::post('create-excel-sheet','CreateNewCarController@createExcelSheetPost');
 		
 	});
 });

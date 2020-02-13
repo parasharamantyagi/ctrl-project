@@ -184,10 +184,10 @@ class VehicleController extends Controller
 		echo json_encode(array('status'=>true,'message'=>'Vehicle successfully delete'));
     }
 	
-	public function getVehicleQrcode($id)
+	public function getVehicleQrcode(Request $request)
 	{
-		if(file_exists(public_path('/qrcode/'.$id.'png')))
-			echo json_encode(url('/public/qrcode/'.$id.'png'));
+		if(file_exists(public_path('/qrcode/'.$request->id.'png')))
+			echo json_encode(url('/public/qrcode/'.$request->id.'png'));
 		else
 			echo json_encode(url('/public/qrcode/qrcode.png'));
 	}

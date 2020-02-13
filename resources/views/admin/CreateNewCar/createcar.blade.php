@@ -254,39 +254,16 @@
 				});
 
 				function download(file, text) { 
-  
-                    //creating an invisible element 
                     var element = document.createElement('a'); 
                     element.setAttribute('href', 'data:text/plain;charset=utf-8, ' 
                                          + encodeURIComponent(text)); 
                     element.setAttribute('download', file); 
-  
-                    //the above code is equivalent to 
-                    // <a href="path of file" download="file name"> 
-  
                     document.body.appendChild(element); 
-  
-                    //onClick property 
                     element.click(); 
-  
                     document.body.removeChild(element); 
                 } 
 				
 				$('input[type="submit"]').on("click", function(event){
-						// alert('shbhjbhjbhjb');
-
-						// var currentRow = $('.myTable').closest("tr:eq(0)");
-						// var col1=currentRow.find("td").text();
-						// alert(col1);
-							// $('#myTable tr:eq(2)').each(function() {
-							// 	var customerId = $(this).find(".customerIDCell").text();
-							// 	alert(customerId);
-						 // });
-
-						 // $('#myTable tr').each(function() {
-						 //    var customerId = $(this).find(".customerIDCell").html();
-							// 	alert(customerId);
-						 // });
 						 var row_1 = [];
 						 var row_2 = [];
 						 var row_3 = [];
@@ -336,15 +313,11 @@
 									return el != null;
 							});
 						}
-						// var final_array = {"status":1,leds:{"F":row_1,"G":row_2,"H":row_3,"I":row_4,"J":row_5,"K":row_6,"L":row_7,"M":row_8,"N":row_9,"O":row_10,"P":row_11,"Q":row_12,"R":row_13}};
-						// var final_array = {"status":1,leds:{row_1,row_2,row_3,row_4,row_5,row_6,row_7,row_8,row_9,row_10,row_11,row_12,row_13}};
-						
 						function my_fiter_array(objects) {
 							return objects.filter(function (el) {
 							  return el != null;
 							});
 						}
-						
 						var myState_array = [];
 							if(row_1.length >= 1 && row_1 != null)
 								myState_array = myState_array.concat(my_fiter_array(row_1));
@@ -372,25 +345,22 @@
 								myState_array = myState_array.concat(my_fiter_array(row_12));
 							if(row_13.length >= 1 && row_13 != null)
 								myState_array = myState_array.concat(my_fiter_array(row_13));
-							
-						// var my_arr = [row_1,row_2,row_3,row_4,row_5,row_6,row_7,row_8,row_9,row_10,row_11,row_12,row_13];
-						
-						// console.log(filtered);
-						// function filter(myState_array) {
-							// $.each(myState_array, function(key, value){
-								// if (value === "" || value === null){
-									// delete myState_array[key];
-								// }
-							// });
-						// }
 						
 						var myJSON = JSON.stringify({leds:myState_array});
-						// console.log(myJSON);
 						download("data.json", myJSON);
-						// var final_array = ["F"=>row_1,row_2,row_3,row_4,row_5,row_6,row_7,row_8,row_9,row_10,row_11,row_12,row_13];
-						// alert(final_array);
-						// console.log(myJSON);
-						
+						$.ajax({
+							url: "create-new-car",
+							type: 'POST',
+							dataType: "JSON",
+							data: {
+									"_token": "{{ csrf_token() }}",
+									"data_leds": myJSON,
+							},
+							success: function (response)
+							{
+								// $.toaster({ priority : 'success', title : 'Success', message : response.message });
+							}
+						});
 				});
 			});
 	</script>

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="_token" content="{{ csrf_token() }}" base_url="{{ url('') }}">
 
   <title>CTRL</title>
   
@@ -105,11 +106,11 @@
 		</ul>
 		
 		<li class="nav-item navbar-parent">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="create-new-car">CREATE NEW CAR</a>
+          <a class="nav-link nav-link-main js-scroll-trigger" href="create-new-car" target="_blank">TOOL-1</a>
         </li>
 		
 		<li class="nav-item navbar-parent">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="create-excel-sheet">CREATE EXCEL SHEET</a>
+          <a class="nav-link nav-link-main js-scroll-trigger" href="create-excel-sheet" target="_blank">TOOL-2</a>
         </li>
 		
         <li class="nav-item">

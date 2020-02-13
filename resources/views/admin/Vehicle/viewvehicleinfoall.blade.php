@@ -233,12 +233,16 @@
             }
           });
     });
-	
+			
 			$(document).on('click', 'a[class="qr-code"]', function(){
 					$.ajax({
-						url: "./get-vehicle-qrcode/"+$(this).data('id'),
-						type: 'get',
+						url: "./get-vehicle-qrcode",
+						type: 'POST',
 						dataType: "JSON",
+						data: {
+							"id": $(this).data('id'),
+							"_token": "{{ csrf_token() }}",
+						},
 						success: function (response)
 						{
 							$('img[class="d-block w-100"]').attr('src',response);

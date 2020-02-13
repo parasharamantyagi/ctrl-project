@@ -245,9 +245,17 @@ class AuthController extends Controller
 	public function vehicleSetting($id)
     {
 		$vehicleSetting = VehicleSetting::find($id);
-		$myVehicle = Vehicle::select('model_spec','moter_type','torque','manufacturer')->find($vehicleSetting->vehicle_id);
-		$myVehicle->vehicle_setting = $vehicleSetting;
-		return response()->json(api_response(1,"my vehicle setting",$myVehicle));
+			if($vehicleSetting->setting_status === "1") {
+				$vehicleSetting->update(array("setting_use_status"=>"1"));
+				$myVehicle = Vehicle::select('model_spec','moter_type','torque','manufacturer')->find($vehicleSetting->vehicle_id);
+				$myVehicle->vehicle_setting = $vehicleSetting;
+				$my_vehicleSetting = $myVehicle;
+				$message = "my vehicle setting";
+			} else {
+				$my_vehicleSetting = array();
+				$message = "You can't access this setting";
+			}
+		return response()->json(api_response(1,$message,$my_vehicleSetting));
     }
 
 	public function vehicleById($id)

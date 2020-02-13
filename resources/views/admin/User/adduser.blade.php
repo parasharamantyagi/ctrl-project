@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="page-content-wrap">
+	<div class="page-content-wrap adduser-parent">
                     <!-- START ALERT BLOCKS -->
 
 
@@ -86,88 +86,4 @@
 
 @section('script')
 
-	<script>
-				$(document).ready(function(){
-					$('#Updateuser').submit(function(event){
-						$('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
-						 var val_return = true;
-						 if($('input[name="phone_no"]').val().length < 10)
-						 {
-							 $('#ctrlscrolbar').html('');
-							 $('#phone_noValidation').html('<font color="red">Min 10 characters are required.</font>');
-							 val_return = false;
-						 }else{
-							 $('#phone_noValidation').html('');
-							 val_return = true;
-						 }
-						 
-						 if($('input[name="password"]').val().length < 6 && "{{ $page_info['page_title'] }}" === "Add User")
-						 {
-							 $('#ctrlscrolbar').html('');
-							 $('#passwordValidation').html('<font color="red">Min 6 characters are required.</font>');
-							 val_return = false;
-						 }else{
-							 $('#passwordValidation').html('');
-						 }
-						 if($('input[name="confirm_password"]').val().length < 6 && "{{ $page_info['page_title'] }}" === "Add User")
-						 {
-							 $('#ctrlscrolbar').html('');
-							 $('#passwordcanformValidation').html('<font color="red">Min 6 characters are required.</font>');
-							 val_return = false;
-						 }else{
-							 $('#passwordcanformValidation').html('');
-						 }
-						
-						if(val_return === false)
-						{
-							return val_return;
-						}
-						 
-						 
-						 
-						 $.ajax({
-						   type:this.method,
-						   url: this.action,
-						   contentType: false, 
-						   processData:false,   
-						   data: new FormData(this),
-						   success:function(response)
-						   {
-								$('#ctrlscrolbar').html('');
-								$('#publisherEmailValidation').html('');
-								$('#passwordcanformValidation').html('');
-								var result = JSON.parse(response);
-								if(result.status === false)
-								{
-									$('#'+result.type).html('<font color="red">'+result.message+'</font>');
-									// if(result.type == 'passwordcanformValidation')
-									// {
-										// $('input[type="password"]').val('');
-									// }
-								}else{
-									window.location.href = "../redirect/users?message="+result.message;
-
-									// return true;
-									// $.toaster({ priority : 'success', title : 'Success', message : result.message });
-									// if(result.action === "storeUser")
-									// {
-										// $("#Updateuser").trigger("reset");
-									// }
-								}
-						   }
-						});
-						event.preventDefault();
-					});
-				});
-				
-				function form_return()
-				{
-					// $('#upload_image_button').val('');
-					// $("#upload_image_button").val('');
-					// document.getElementById("upload_image_button").value = null;
-					window.history.back();
-				}
-			  //danger  success info warning
-	</script>
-	
 @endsection
