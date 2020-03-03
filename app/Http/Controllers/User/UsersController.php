@@ -23,17 +23,18 @@ class UsersController extends Controller
 		// $page_info['page_title'] = 'All Users';
 		// return view('admin/User/viewuser')->with('page_info', $page_info)->with('users', $userData);
 		
-	   $userData = User::find(Auth::user()->_id);
-	   $userForm = (object)array('id'=>Auth::user()->_id,'name'=>$userData->name,'email'=>$userData->email,'phone_no'=>$userData->phone_no,'image'=>'/public/assets/userimages/'.$userData->image);
+	   // $userData = User::find(Auth::user()->_id);
+	   $userData = Auth::user();
+	   // $userForm = (object)array('id'=>Auth::user()->_id,'name'=>$userData->name,'email'=>$userData->email,'phone_no'=>$userData->phone_no,'image'=>'/public/assets/userimages/'.$userData->image);
 	   $page_info['page_title'] = 'Update User';
-	   return view('user/User/adduser')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/user/profile');
+	   return view('user/User/adduser')->with('page_info', $page_info)->with('userForm', $userData)->with('formaction','/user/profile');
     }
 
     
     public function store(Request $request)
     {
         $inputData = $request->all();
-		$updateData = array('name'=>$inputData['name'],'phone_no'=>$inputData['phone_no']);
+		$updateData = $inputData;
 		
 		$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
 		if($inputData['old_password'] && $inputData['new_password'] && $inputData['confirm_password'])
@@ -58,6 +59,7 @@ class UsersController extends Controller
 				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
 				   $updateData['image'] = $namefile;
 			   }
+		$updateData = array_filter($updateData);
 		User::where('_id',Auth::user()->_id)->update($updateData);
 		echo json_encode($returnmessage);
     }

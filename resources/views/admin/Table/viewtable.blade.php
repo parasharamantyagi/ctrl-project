@@ -22,7 +22,7 @@
 		border-radius: 0.25rem;
 	}
 	</style>
-	<div class="page-content-wrap">
+	<div class="page-content-wrap viewtable">
                     <!-- START ALERT BLOCKS -->
 
 
@@ -35,11 +35,19 @@
 		  </div>
 			<div class="modal-body">
 			<div class="row">
-				<div class="col-sm-6 col-xs-12">
+				<div class="col-sm-12 col-xs-12">
 					<div class="form-group vehicle">
 						<select class="form-control vehicle_id_selector" name="vehicle_id[]" multiple="multiple">
 							@foreach($vichle_name as $vichle_name)
 								<option value="{{$vichle_name->_id}}" <?php echo (in_array($vichle_name->_id,explode(',',$editTable->vehicle_id))) ? 'selected':''; ?>>{{$vichle_name->brand .' ('.$vichle_name->model.')'}}</option>
+							@endForeach;
+						</select>
+					</div>
+					
+					<div class="form-group user">
+						<select class="form-control users_selector" name="users[]" multiple="multiple">
+							@foreach($users as $user)
+								<option value="{{$user->_id}}" <?php echo (in_array($user->_id,explode(',',$editTable->users))) ? 'selected':''; ?>>{{$user->name}}</option>
 							@endForeach;
 						</select>
 					</div>
@@ -50,17 +58,9 @@
 								<option value="police" <?php echo (in_array("police",explode(',',$editTable->specification))) ? 'selected':''; ?>>Police</option>
 						</select>
 					</div>
+					
 				</div>
 				
-				<div class="col-sm-6 col-xs-12">
-					<div class="form-group user">
-						<select class="form-control users_selector" name="users[]" multiple="multiple">
-							@foreach($users as $user)
-								<option value="{{$user->_id}}" <?php echo (in_array($user->_id,explode(',',$editTable->users))) ? 'selected':''; ?>>{{$user->name}}</option>
-							@endForeach;
-						</select>
-					</div>
-				</div>
 				
 			</div>
 			</div>
@@ -82,36 +82,9 @@
 @section('script')
 	<script src="{{ url('/public/assets/select/fSelect.js') }}"></script>
 	<script>
-				$(document).ready(function(){
-					$('#Updateuser').submit(function(event){
-						$('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
-						 $.ajax({
-						   type:this.method,
-						   url: this.action,
-						   contentType: false, 
-						   processData:false,   
-						   data: new FormData(this),
-						   success:function(response)
-						   {
-								var result = JSON.parse(response);
-								$.toaster({ priority : 'success', title : 'Success', message : result.message });
-						   }
-						});
-						event.preventDefault();
-					});
-				});
-				
-				function form_return()
-				{
-					// $('#upload_image_button').val('');
-					// $("#upload_image_button").val('');
-					// document.getElementById("upload_image_button").value = null;
-					window.history.back();
-				}
-				
 				(function($) {
 					$(function() {
-						$('.vehicle_id_selector').fSelect({
+						$('.viewtable .vehicle_id_selector').fSelect({
 							placeholder: 'Vehicle type',
 							numDisplayed: 3,
 							overflowText: '{n} selected',
@@ -119,7 +92,7 @@
 							searchText: 'Search',
 							showSearch: true
 						});
-						$('.specification_selector').fSelect({
+						$('.viewtable .specification_selector').fSelect({
 							placeholder: 'Special car specification',
 							numDisplayed: 3,
 							overflowText: '{n} selected',
@@ -127,7 +100,7 @@
 							searchText: 'Search',
 							showSearch: true
 						});
-						$('.users_selector').fSelect({
+						$('.viewtable .users_selector').fSelect({
 							placeholder: 'Select manufacturer',
 							numDisplayed: 3,
 							overflowText: '{n} selected',

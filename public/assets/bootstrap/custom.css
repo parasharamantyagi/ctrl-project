@@ -616,6 +616,10 @@ img.img-circle {width:75px; height:75px; float:left;border-radius: 50%;}
     .form-control.viewuser {
 	  position: relative;
 	}
+	
+	.form-control {
+		width: 25% !important;
+	}
 }
 
 table tbody tr td.text_align {

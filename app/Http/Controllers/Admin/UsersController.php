@@ -241,7 +241,7 @@ class UsersController extends Controller
 		unset($updateData['old_password']); unset($updateData['new_password']); unset($updateData['confirm_password']);
 		$updateData = array_filter($updateData);
 		User::where('_id',Auth::user()->_id)->update($updateData);
-		echo json_encode($returnmessage);
+		return response()->json($returnmessage);
 	}
 
     /**

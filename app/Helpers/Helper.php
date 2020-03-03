@@ -103,8 +103,8 @@ if (!function_exists('car_model')) {
 	function car_model($input)
     {
 		// ->toArray()
-		$result = DB::table('car_models')->where('model_name',$input)->get()->toArray();
-		$key = array_search($input, array_column($result, 'model_name'));
+		$result = DB::table('car_brands')->where('brand_name',$input)->get()->toArray();
+		$key = array_search($input, array_column($result, 'brand_name'));
 		return $result[$key]['art_no'];
 		// return $result['art_no'];
     }

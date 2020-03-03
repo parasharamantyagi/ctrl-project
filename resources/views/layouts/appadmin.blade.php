@@ -75,9 +75,9 @@
 			<li class="nav-item {{ Request::segment(2) == 'owned' ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('owned')) }}">- Owned</a>
 			</li>
-			<li class="nav-item {{ Request::segment(2) == 'led-config' ? 'active': '' }}">
+			<!--li class="nav-item {{ Request::segment(2) == 'led-config' ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="#led-config">- Led Config</a>
-			</li>
+			</li -->
 		  </ul>
 		
 			
@@ -131,10 +131,9 @@
   
   
   
-  
   <script src="{{ url('/public/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url('/public/newbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url('/public/assets/jquery/actions.js') }}"></script>
+	<!-- <script type="text/javascript" src="{{ url('/public/assets/jquery/actions.js') }}"></script> -->
 	<script type="text/javascript" src="{{ url('/public/assets/jquery/custom.js') }}"></script>
   <!-- Plugin JavaScript -->
   <script src="{{ url('/public/newbootstrap/vendor/jquery-easing/jquery.easing.min.js') }}"></script>

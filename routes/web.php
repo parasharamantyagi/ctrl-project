@@ -91,6 +91,10 @@ Route::namespace('Admin')->prefix('manufacturer')->group(function () {
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
 		Route::get('owned','VehicleController@viewOwnedVehicleAll');
 		
+		Route::resource('edit-tables', 'EditTableController');
+		Route::resource('create-new-car', 'CreateNewCarController');
+		Route::get('create-excel-sheet', 'CreateNewCarController@createExcelSheet');
+		Route::post('create-excel-sheet','CreateNewCarController@createExcelSheetPost');
 	});
 });
 

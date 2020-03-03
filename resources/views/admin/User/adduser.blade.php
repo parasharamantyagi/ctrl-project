@@ -17,17 +17,26 @@
 			<div class="modal-body">
 			<div class="row">
 
-				<div class="col-sm-6 col-xs-12">
+				<div class="col-sm-12 col-xs-12">
 					<div class="form-group">
-						<input type="text" class="form-control" name="name" value="{{$userForm->name}}" id="name" placeholder="Name" required="">
+						<label>Name</label>
+						<input type="text" class="form-control" name="name" value="{{$userForm->name}}" id="name" required="">
 					</div>
 					
 					<div class="form-group">
-						<input type="password" class="form-control" name="password" value="" id="password" placeholder="Password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" value="" id="password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
 						<div id="passwordValidation"></div>
+					</div>
+					
+					<div class="form-group">
+						<label>Confirm password</label>
+						<input type="password" class="form-control" name="confirm_password" value="" id="confirm_password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
+						<div id="passwordcanformValidation"></div>
 					</div>
 					<?php if(user_role() === 'admin') { ?>
 					<div class="form-group">
+						<label>Select roll</label>
 						<select class="form-control" name="role_id" id="role_id">
 						  <option value="{{ my_role(3)}}">Select roll</option>
 						  <option value="{{ my_role(1)}}" <?php if($userForm->role_id == my_role(1)) { echo 'selected'; } ?>>Admin</option>
@@ -38,25 +47,23 @@
 					<?php } ?>
 
 					<div class="form-group">
-						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" placeholder="Phone no" id="phone_no" required="">
+						<label>Phone no</label>
+						<input type="text" class="form-control email" name="phone_no" value="{{$userForm->phone_no}}" id="phone_no" required="">
 						<div id="phone_noValidation"></div>
 					</div>
 				</div>
 		
 				<div id="ctrlscrolbar"></div>
 				
-				<div class="col-sm-6 col-xs-12">
+				<div class="col-sm-12 col-xs-12">
 	
 					<div class="form-group">
-						<input type="email" class="form-control email" name="email" value="{{$userForm->email}}" id="email" placeholder="Email" required="">
+						<label>Email</label>
+						<input type="email" class="form-control email" name="email" value="{{$userForm->email}}" id="email" required="">
 						<div id="publisherEmailValidation"></div>
 					</div>
 					
-					<div class="form-group">
-						<input type="password" class="form-control" name="confirm_password" value="" id="confirm_password" placeholder="Confirm password" <?php echo ($formaction == '/admin/users') ? 'required':''; ?>>
-						<div id="passwordcanformValidation"></div>
-					</div>
-
+				
 					<div class="form-group">
 						<input type="file" accept="image/*" onchange="loadFile(event)" id="upload_image_button" name="userimage" style="display: none;">
 						<img src="{{ url($userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">

@@ -20,9 +20,11 @@ class EditTableController extends Controller
 				$users = User::select('_id','name','email')->where('role_id', '!=' , '0')->get();
 			else
 				$users = User::select('_id','name','email')->where('parent_id',Auth::user()->id)->get();
-		$EditTable = EditTable::where('user_id',strval(Auth::user()->id))->first();
+		$editTable = EditTable::where('user_id',strval(Auth::user()->id))->first();
+		if(!$editTable)
+			$editTable = (object)array('_id'=>'','user_id'=>'','vehicle_id'=>'','users'=>'','specification'=>'');
 		$page_info['page_title'] = 'Manage Table';
-		return view('admin/Table/viewtable')->with('page_info', $page_info)->with('vichle_name', $vichle_name)->with('users', $users)->with('editTable', $EditTable);
+		return view('admin/Table/viewtable')->with('page_info', $page_info)->with('vichle_name', $vichle_name)->with('users', $users)->with('editTable', $editTable);
     }
 	
 	public function store(Request $request)

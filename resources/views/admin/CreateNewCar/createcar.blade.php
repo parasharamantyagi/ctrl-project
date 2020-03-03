@@ -8,7 +8,7 @@
 						background-color: #DFDBDB;
 						padding: 5%;
 						border: none;
-						height: 100%;
+						height: 80%;
 					}
 				td {
 						width: 50px;
@@ -34,11 +34,23 @@
 				.myTable tr td.child
 					{
 						border: none;
+						color: #696969;
 					}
 				select {
 					width: 50%;
 					border-radius: 0.25rem;
 				}
+
+				table {
+					background-color: #D3D3D3;
+					background: url("http://18.212.23.117/public/assets/ctrlImages/LED-config-tool.png") no-repeat;
+					background-size: 80%;
+				  background-position: 50%;
+				}
+
+				/* table.myTable {
+											background: url("http://18.212.23.117/public/assets/ctrlImages/LED-config-tool.png");
+							} */
 			</style>
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	</head>
@@ -56,12 +68,13 @@
 			  <div class="modal-content">
 				<div class="modal-header">
 				  <button type="button" class="close" data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title">Modal Header</h4>
+				  <h4 class="modal-title">LED configuration</h4>
 				</div>
 				<div class="modal-body">
 				  <p>
 					  <select class="color-select">
 						<option value="1">Select color</option>
+						<option style="background-color: white;" value="white">White</option>
 						<option style="background-color: yellow;" value="yellow">Yellow</option>
 						<option style="background-color: blue;" value="blue">Blue</option>
 						<option style="background-color: red;" value="red">Red</option>
@@ -70,7 +83,7 @@
 				  </p>
 				  <p>
 					  <select class="value-select">
-						<option value="0">Select Value</option>
+						<option value="0">Select pinout</option>
 						<?php for($val =0; $val<=23; $val++) { ?>
 							<option value="<?php echo $val; ?>"><?php echo $val; ?></option>
 						<?php } ?>
@@ -89,9 +102,9 @@
 				<tbody>
 					<tr>
 						<td class="parent plus">9</td>
-						<td class="child" data-color="white" data-position="F9" style="background-color: white;"></td><td class="child" data-color="white" data-position="G9"></td><td class="child" data-color="white" data-position="H9" style="background-color: white;"></td><td class="child" data-color="white" data-position="I9"></td><td class="child" data-color="white" data-position="J9"></td>
+						<td class="child" data-color="white" data-position="F9"></td><td class="child" data-color="white" data-position="G9"></td><td class="child" data-color="white" data-position="H9"></td><td class="child" data-color="white" data-position="I9"></td><td class="child" data-color="white" data-position="J9"></td>
 						<td class="child" data-color="white" data-position="K9"></td><td class="child" data-color="white" data-position="L9"></td><td class="child" data-color="white" data-position="M9"></td><td class="child" data-color="white" data-position="N9"></td><td class="child" data-color="white" data-position="O9"></td>
-						<td class="child" data-color="white" data-position="P9"></td><td class="child" data-color="white" data-position="Q9"></td><td class="child" data-color="white" data-position="R9" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="P9"></td><td class="child" data-color="white" data-position="Q9"></td><td class="child" data-color="white" data-position="R9"></td>
 						<td class="parent plus">9</td>
 					</tr>
 					<tr>
@@ -103,9 +116,9 @@
 					</tr>
 					<tr>
 						<td class="parent plus">7</td>
-						<td class="child" data-color="white" data-position="F7" style="background-color: white;"></td><td class="child" data-color="white" data-position="G7"></td><td class="child" data-color="white" data-position="H7"></td><td class="child" data-color="white" data-position="I7"></td><td class="child" data-color="white" data-position="J7"></td>
-						<td class="child" data-color="white" data-position="K7" style="background-color: white;"></td><td class="child" data-color="white" data-position="L7"></td><td class="child" data-color="white" data-position="M7" style="background-color: white;"></td><td class="child" data-color="white" data-position="N7"></td><td class="child" data-color="white" data-position="O7"></td>
-						<td class="child" data-color="white" data-position="P7"></td><td class="child" data-color="white" data-position="Q7"></td><td class="child" data-color="white" data-position="R7" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="F7"></td><td class="child" data-color="white" data-position="G7"></td><td class="child" data-color="white" data-position="H7"></td><td class="child" data-color="white" data-position="I7"></td><td class="child" data-color="white" data-position="J7"></td>
+						<td class="child" data-color="white" data-position="K7"></td><td class="child" data-color="white" data-position="L7"></td><td class="child" data-color="white" data-position="M7"></td><td class="child" data-color="white" data-position="N7"></td><td class="child" data-color="white" data-position="O7"></td>
+						<td class="child" data-color="white" data-position="P7"></td><td class="child" data-color="white" data-position="Q7"></td><td class="child" data-color="white" data-position="R7"></td>
 						<td class="parent plus">7</td>
 					</tr>
 					<tr>
@@ -117,9 +130,9 @@
 					</tr>
 					<tr>
 						<td class="parent plus">5</td>
-						<td class="child" data-color="white" data-position="F5" style="background-color: white;"></td><td class="child" data-color="white" data-position="G5"></td><td class="child" data-color="white" data-position="H5"></td><td class="child" data-color="white" data-position="I5"></td><td class="child" data-color="white" data-position="J5"></td>
+						<td class="child" data-color="white" data-position="F5"></td><td class="child" data-color="white" data-position="G5"></td><td class="child" data-color="white" data-position="H5"></td><td class="child" data-color="white" data-position="I5"></td><td class="child" data-color="white" data-position="J5"></td>
 						<td class="child" data-color="white" data-position="K5"></td><td class="child" data-color="white" data-position="L5"></td><td class="child" data-color="white" data-position="M5"></td><td class="child" data-color="white" data-position="N5"></td><td class="child" data-color="white" data-position="O5"></td>
-						<td class="child" data-color="white" data-position="P5"></td><td class="child" data-color="white" data-position="Q5"></td><td class="child" data-color="white" data-position="R5" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="P5"></td><td class="child" data-color="white" data-position="Q5"></td><td class="child" data-color="white" data-position="R5"></td>
 						<td class="parent plus">5</td>
 					</tr>
 					<tr>
@@ -138,9 +151,9 @@
 					</tr>
 					<tr>
 						<td class="parent plus">2</td>
-						<td class="child" data-color="white" data-position="F2" style="background-color: white;"></td><td class="child" data-color="white" data-position="G2"></td><td class="child" data-color="white" data-position="H2"></td><td class="child" data-color="white" data-position="I2"></td><td class="child" data-color="white" data-position="J2"></td>
+						<td class="child" data-color="white" data-position="F2"></td><td class="child" data-color="white" data-position="G2"></td><td class="child" data-color="white" data-position="H2"></td><td class="child" data-color="white" data-position="I2"></td><td class="child" data-color="white" data-position="J2"></td>
 						<td class="child" data-color="white" data-position="K2"></td><td class="child" data-color="white" data-position="L2"></td><td class="child" data-color="white" data-position="M2"></td><td class="child" data-color="white" data-position="N2"></td><td class="child" data-color="white" data-position="O2"></td>
-						<td class="child" data-color="white" data-position="P2"></td><td class="child" data-color="white" data-position="Q2"></td><td class="child" data-color="white" data-position="R2" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="P2"></td><td class="child" data-color="white" data-position="Q2"></td><td class="child" data-color="white" data-position="R2"></td>
 						<td class="parent plus">2</td>
 					</tr>
 					<tr>
@@ -166,9 +179,9 @@
 					</tr>
 					<tr>
 						<td class="parent">-2</td>
-						<td class="child" data-color="white" data-position="F-2" style="background-color: white;"></td><td class="child" data-color="white" data-position="G-2"></td><td class="child" data-color="white" data-position="H-2"></td><td class="child" data-color="white" data-position="I-2"></td><td class="child" data-color="white" data-position="J-2"></td>
+						<td class="child" data-color="white" data-position="F-2"></td><td class="child" data-color="white" data-position="G-2"></td><td class="child" data-color="white" data-position="H-2"></td><td class="child" data-color="white" data-position="I-2"></td><td class="child" data-color="white" data-position="J-2"></td>
 						<td class="child" data-color="white" data-position="K-2"></td><td class="child" data-color="white" data-position="L-2"></td><td class="child" data-color="white" data-position="M-2"></td><td class="child" data-color="white" data-position="N-2"></td><td class="child" data-color="white" data-position="O-2"></td>
-						<td class="child" data-color="white" data-position="P-2"></td><td class="child" data-color="white" data-position="Q-2"></td><td class="child" data-color="white" data-position="R-2" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="P-2"></td><td class="child" data-color="white" data-position="Q-2"></td><td class="child" data-color="white" data-position="R-2"></td>
 						<td class="parent">-2</td>
 					</tr>
 					<tr>
@@ -187,9 +200,9 @@
 					</tr>
 					<tr>
 						<td class="parent">-5</td>
-						<td class="child" data-color="white" data-position="F-5" style="background-color: white;"></td><td class="child" data-color="white" data-position="G-5"></td><td class="child" data-color="white" data-position="H-5"></td><td class="child" data-color="white" data-position="I-5"></td><td class="child" data-color="white" data-position="J-5"></td>
+						<td class="child" data-color="white" data-position="F-5"></td><td class="child" data-color="white" data-position="G-5"></td><td class="child" data-color="white" data-position="H-5"></td><td class="child" data-color="white" data-position="I-5"></td><td class="child" data-color="white" data-position="J-5"></td>
 						<td class="child" data-color="white" data-position="K-5"></td><td class="child" data-color="white" data-position="L-5"></td><td class="child" data-color="white" data-position="M-5"></td><td class="child" data-color="white" data-position="N-5"></td><td class="child" data-color="white" data-position="O-5"></td>
-						<td class="child" data-color="white" data-position="P-5"></td><td class="child" data-color="white" data-position="Q-5"></td><td class="child" data-color="white" data-position="R-5" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="P-5"></td><td class="child" data-color="white" data-position="Q-5"></td><td class="child" data-color="white" data-position="R-5"></td>
 						<td class="parent">-5</td>
 					</tr>
 					<tr>
@@ -201,9 +214,9 @@
 					</tr>
 					<tr>
 						<td class="parent">-7</td>
-						<td class="child" data-color="white" data-position="F-7" style="background-color: white;"></td><td class="child" data-color="white" data-position="G-7"></td><td class="child" data-color="white" data-position="H-7"></td><td class="child" data-color="white" data-position="I-7"></td><td class="child" data-color="white" data-position="J-7"></td>
-						<td class="child" data-color="white" data-position="K-7" style="background-color: white;"></td><td class="child" data-color="white" data-position="L-7"></td><td class="child" data-color="white" data-position="M-7" style="background-color: white;"></td><td class="child" data-color="white" data-position="N-7"></td><td class="child" data-color="white" data-position="O-7"></td>
-						<td class="child" data-color="white" data-position="P-7"></td><td class="child" data-color="white" data-position="Q-7"></td><td class="child" data-color="white" data-position="R-7" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="F-7"></td><td class="child" data-color="white" data-position="G-7"></td><td class="child" data-color="white" data-position="H-7"></td><td class="child" data-color="white" data-position="I-7"></td><td class="child" data-color="white" data-position="J-7"></td>
+						<td class="child" data-color="white" data-position="K-7"></td><td class="child" data-color="white" data-position="L-7"></td><td class="child" data-color="white" data-position="M-7"></td><td class="child" data-color="white" data-position="N-7"></td><td class="child" data-color="white" data-position="O-7"></td>
+						<td class="child" data-color="white" data-position="P-7"></td><td class="child" data-color="white" data-position="Q-7"></td><td class="child" data-color="white" data-position="R-7"></td>
 						<td class="parent">-7</td>
 					</tr>
 					<tr>
@@ -215,9 +228,9 @@
 					</tr>
 					<tr>
 						<td class="parent">-9</td>
-						<td class="child" data-color="white" data-position="F-9" style="background-color: white;"></td><td class="child" data-color="white" data-position="G-9"></td><td class="child" data-color="white" data-position="H-9" style="background-color: white;"></td><td class="child" data-color="white" data-position="I-9"></td><td class="child" data-color="white" data-position="J-9"></td>
+						<td class="child" data-color="white" data-position="F-9"></td><td class="child" data-color="white" data-position="G-9"></td><td class="child" data-color="white" data-position="H-9"></td><td class="child" data-color="white" data-position="I-9"></td><td class="child" data-color="white" data-position="J-9"></td>
 						<td class="child" data-color="white" data-position="K-9"></td><td class="child" data-color="white" data-position="L-9"></td><td class="child" data-color="white" data-position="M-9"></td><td class="child" data-color="white" data-position="N-9"></td><td class="child" data-color="white" data-position="O-9"></td>
-						<td class="child" data-color="white" data-position="P-9"></td><td class="child" data-color="white" data-position="Q-9"></td><td class="child" data-color="white" data-position="R-9" style="background-color: white;"></td>
+						<td class="child" data-color="white" data-position="P-9"></td><td class="child" data-color="white" data-position="Q-9"></td><td class="child" data-color="white" data-position="R-9"></td>
 						<td class="parent">-9</td>
 					</tr>
 					<tr>
@@ -253,16 +266,16 @@
 						cell_index.html($(this).children("option:selected").val());
 				});
 
-				function download(file, text) { 
-                    var element = document.createElement('a'); 
-                    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' 
-                                         + encodeURIComponent(text)); 
-                    element.setAttribute('download', file); 
-                    document.body.appendChild(element); 
-                    element.click(); 
-                    document.body.removeChild(element); 
-                } 
-				
+				function download(file, text) {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8, '
+                                         + encodeURIComponent(text));
+                    element.setAttribute('download', file);
+                    document.body.appendChild(element);
+                    element.click();
+                    document.body.removeChild(element);
+                }
+
 				$('input[type="submit"]').on("click", function(event){
 						 var row_1 = [];
 						 var row_2 = [];
@@ -281,33 +294,33 @@
 							 if(row <= 18 ) {
 								if(($(tr).find('td:eq(1)').text() != '' || $(tr).find('td:eq(1)').attr('data-color') != 'white'))
 										row_1[row] = {pin: ($(tr).find('td:eq(1)').text()) ? ($(tr).find('td:eq(1)').text()) : '0',color:$(tr).find('td:eq(1)').attr('data-color'),position:$(tr).find('td:eq(1)').attr('data-position')};
-								if(($(tr).find('td:eq(2)').text() != '' || $(tr).find('td:eq(2)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(2)').text() != '' || $(tr).find('td:eq(2)').attr('data-color') != 'white'))
 										row_2[row] = {pin: ($(tr).find('td:eq(2)').text()) ? ($(tr).find('td:eq(2)').text()) : '0',color:$(tr).find('td:eq(2)').attr('data-color'),position:$(tr).find('td:eq(2)').attr('data-position')};
-								if(($(tr).find('td:eq(3)').text() != '' || $(tr).find('td:eq(3)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(3)').text() != '' || $(tr).find('td:eq(3)').attr('data-color') != 'white'))
 										row_3[row] = {pin: ($(tr).find('td:eq(3)').text()) ? ($(tr).find('td:eq(3)').text()) : '0',color:$(tr).find('td:eq(3)').attr('data-color'),position:$(tr).find('td:eq(3)').attr('data-position')};
-								if(($(tr).find('td:eq(4)').text() != '' || $(tr).find('td:eq(4)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(4)').text() != '' || $(tr).find('td:eq(4)').attr('data-color') != 'white'))
 										row_4[row] = {pin: ($(tr).find('td:eq(4)').text()) ? ($(tr).find('td:eq(4)').text()) : '0',color:$(tr).find('td:eq(4)').attr('data-color'),position:$(tr).find('td:eq(4)').attr('data-position')};
-								if(($(tr).find('td:eq(5)').text() != '' || $(tr).find('td:eq(5)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(5)').text() != '' || $(tr).find('td:eq(5)').attr('data-color') != 'white'))
 										row_5[row] = {pin: ($(tr).find('td:eq(5)').text()) ? ($(tr).find('td:eq(5)').text()) : '0',color:$(tr).find('td:eq(5)').attr('data-color'),position:$(tr).find('td:eq(5)').attr('data-position')};
-								if(($(tr).find('td:eq(6)').text() != '' || $(tr).find('td:eq(6)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(6)').text() != '' || $(tr).find('td:eq(6)').attr('data-color') != 'white'))
 										row_6[row] = {pin: ($(tr).find('td:eq(6)').text()) ? ($(tr).find('td:eq(6)').text()) : '0',color:$(tr).find('td:eq(6)').attr('data-color'),position:$(tr).find('td:eq(6)').attr('data-position')};
-								if(($(tr).find('td:eq(7)').text() != '' || $(tr).find('td:eq(7)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(7)').text() != '' || $(tr).find('td:eq(7)').attr('data-color') != 'white'))
 										row_7[row] = {pin: ($(tr).find('td:eq(7)').text()) ? ($(tr).find('td:eq(7)').text()) : '0',color:$(tr).find('td:eq(7)').attr('data-color'),position:$(tr).find('td:eq(7)').attr('data-position')};
-								if(($(tr).find('td:eq(8)').text() != '' || $(tr).find('td:eq(8)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(8)').text() != '' || $(tr).find('td:eq(8)').attr('data-color') != 'white'))
 										row_8[row] = {pin: ($(tr).find('td:eq(8)').text()) ? ($(tr).find('td:eq(8)').text()) : '0',color:$(tr).find('td:eq(8)').attr('data-color'),position:$(tr).find('td:eq(8)').attr('data-position')};
-								if(($(tr).find('td:eq(9)').text() != '' || $(tr).find('td:eq(9)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(9)').text() != '' || $(tr).find('td:eq(9)').attr('data-color') != 'white'))
 										row_9[row] = {pin: ($(tr).find('td:eq(9)').text()) ? ($(tr).find('td:eq(9)').text()) : '0',color:$(tr).find('td:eq(9)').attr('data-color'),position:$(tr).find('td:eq(9)').attr('data-position')};
-								if(($(tr).find('td:eq(10)').text() != '' || $(tr).find('td:eq(10)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(10)').text() != '' || $(tr).find('td:eq(10)').attr('data-color') != 'white'))
 										row_10[row] = {pin: ($(tr).find('td:eq(10)').text()) ? ($(tr).find('td:eq(10)').text()) : '0',color:$(tr).find('td:eq(10)').attr('data-color'),position:$(tr).find('td:eq(10)').attr('data-position')};
-								if(($(tr).find('td:eq(11)').text() != '' || $(tr).find('td:eq(11)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(11)').text() != '' || $(tr).find('td:eq(11)').attr('data-color') != 'white'))
 										row_11[row] = {pin: ($(tr).find('td:eq(11)').text()) ? ($(tr).find('td:eq(11)').text()) : '0',color:$(tr).find('td:eq(11)').attr('data-color'),position:$(tr).find('td:eq(11)').attr('data-position')};
-								if(($(tr).find('td:eq(12)').text() != '' || $(tr).find('td:eq(12)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(12)').text() != '' || $(tr).find('td:eq(12)').attr('data-color') != 'white'))
 										row_12[row] = {pin: ($(tr).find('td:eq(12)').text()) ? ($(tr).find('td:eq(12)').text()) : '0',color:$(tr).find('td:eq(12)').attr('data-color'),position:$(tr).find('td:eq(12)').attr('data-position')};
-								if(($(tr).find('td:eq(13)').text() != '' || $(tr).find('td:eq(13)').attr('data-color') != 'white'))		
+								if(($(tr).find('td:eq(13)').text() != '' || $(tr).find('td:eq(13)').attr('data-color') != 'white'))
 										row_13[row] = {pin: ($(tr).find('td:eq(13)').text()) ? ($(tr).find('td:eq(13)').text()) : '0',color:$(tr).find('td:eq(13)').attr('data-color'),position:$(tr).find('td:eq(13)').attr('data-position')};
 								}
 						});
-						
+
 						function my_filter_array(myState_array) {
 							myState_array.filter(function (el) {
 									return el != null;
@@ -345,7 +358,7 @@
 								myState_array = myState_array.concat(my_fiter_array(row_12));
 							if(row_13.length >= 1 && row_13 != null)
 								myState_array = myState_array.concat(my_fiter_array(row_13));
-						
+
 						var myJSON = JSON.stringify({leds:myState_array});
 						download("data.json", myJSON);
 						$.ajax({

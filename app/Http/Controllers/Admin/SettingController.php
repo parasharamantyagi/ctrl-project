@@ -19,7 +19,7 @@ class SettingController extends Controller
 			else
 				$vichle_name =  Vehicle::select('_id','brand','model')->where('from_id',Auth::user()->id)->get();
 		$userForm = (object)array(
-								'_id'=>'','vehicle_id'=>'','background_color'=>'','pad_line_color'=>'','pad_background_color'=>'',
+								'_id'=>'','vehicle_id'=>'','background_color'=>'#ffffff','pad_line_color'=>'#ffffff','pad_background_color'=>'#ffffff',
 								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'',
 								'reverse_steer_motor'=>'','motor_off'=>'','steering_control_point'=>'',
 								'asset_folder'=>'','firmware'=>'','front_motor'=>'',
@@ -41,8 +41,9 @@ class SettingController extends Controller
 		$inputData['from_id'] = Auth::user()->id;
 		$inputData['setting_status'] = '1';
 		$inputData['asset_folder'] = 'mycar.png';
-		$inputData['setting_art_no'] = car_model(Vehicle::find($inputData['vehicle_id'])->model);
+		$inputData['setting_art_no'] = car_model($myVehicle->brand);
 		$inputData['setting_use_status'] = '0';
+		$inputData['brand_name'] = $myVehicle->brand;
 		$vichleSetting = VehicleSetting::insertGetId($inputData);
 		// $vichleSetting_image = 'http://18.212.23.117/blogs/post';
 		$vichleSetting_text = url('api/vehicle-setting/'.(string)$vichleSetting);
@@ -69,6 +70,7 @@ class SettingController extends Controller
 		$setting_id = $request->input('id');
 		unset($inputData["_token"]);
 		unset($inputData["id"]);
+		$inputData['brand_name'] = Vehicle::find($inputData['vehicle_id'])->brand;
 		VehicleSetting::where('_id',$setting_id)->update($inputData);
 		$returnmessage = array('status'=>true,'vehicle_id'=>$request->input('vehicle_id'),'action'=>'update_form','message'=>'Vehicle setting has been update');
 		echo json_encode($returnmessage);

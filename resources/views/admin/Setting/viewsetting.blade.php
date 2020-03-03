@@ -1,12 +1,16 @@
 @extends('layouts.appadmin')
 
 @section('content')
-	
-	<div class="page-content-wrap">
+	<style>
+	form {
+			background-color: #fff;
+	}
+	</style>
+	<div class="page-content-wrap updateuserSetting">
                     <!-- START ALERT BLOCKS -->
 
 <!-- END ALERT BLOCKS -->                    	
-		<form method="POST" action="{{ url($formaction) }}" id="Updateuser" enctype="multipart/form-data">
+		<form method="POST" action="{{ url($formaction) }}" id="UpdateuserSetting" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<input type="hidden" name="id" value="{{$userForm->_id}}" id="id">
 			<div class="modal-header">
@@ -15,8 +19,10 @@
 			
 			<div class="modal-body">
 				<div class="row">
+				<?php if(!isset($_GET['vehicle_id'])) { ?>
 				<div class="form-group">
 						<div class="col-sm-12 col-xs-12">
+							<label>Select vehicle</label><br>
 							<select class="form-control selectpicker" data-size="5" data-live-search="true" name="vehicle_id" id="vehicle_id" required="">
 							  <option value="2019">Select vehicle</option>
 							  @foreach($vichle_name as $vichle_name)
@@ -25,116 +31,199 @@
 							</select>
 						</div>
 				</div>
+				<?php }else{ ?>
+					<input type="hidden" name="vehicle_id"  value="<?php echo $_GET['vehicle_id']; ?>">
+				<?php } ?>
 				
-				  <div class="col-md-6">
+				  <div class="col-md-12">
 					<div class="form-group">
-						<input type="text" class="form-control" name="background_color" placeholder="Background color" value="{{$userForm->background_color}}" id="background_color" required="">
+						<label>Colors/Background color</label>
+						<input type="color" class="form-control" name="background_color" value="{{$userForm->background_color}}" id="background_color" required="">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="pad_background_color" placeholder="Pad background color" value="{{$userForm->pad_background_color}}" id="pad_background_color" required="">
+						<label>Colors/Pad line color</label>
+						<input type="color" class="form-control" name="pad_line_color" value="{{$userForm->pad_line_color}}" id="pad_line_color" required="">
+					</div>	
+					<div class="form-group">
+						<label>Pad background color</label>
+						<input type="color" class="form-control" name="pad_background_color" value="{{$userForm->pad_background_color}}" id="pad_background_color" required="">
 					</div>
-					
+					<!-- div class="form-group">
+						<label>Button style Future of "no to be used ?</label><br>
+						<input type="radio" class="" name="button_style" placeholder="Button style" value="true" id="button_style" required="">
+					</div -->
 					<div class="form-group">
+						<label>Daylight auto ON (if any)</label>
 						<select class="form-control" name="daylight_auto_on" id="daylight_auto_on" required="">
-							  <option value="on">Daylight auto ON (if any)</option>
-							  <option value="on" <?php echo ($userForm->daylight_auto_on === 'on') ? 'selected':''; ?>>on</option>
-							  <option value="off" <?php echo ($userForm->daylight_auto_on === 'off') ? 'selected':''; ?>>off</option>
+							  <option value="on" selected disabled>Daylight auto ON (if any)</option>
+							  <option value="on" <?php echo ($userForm->daylight_auto_on === 'on') ? 'selected':''; ?>>Yes</option>
+							  <option value="off" <?php echo ($userForm->daylight_auto_on === 'off') ? 'selected':''; ?>>No</option>
 						</select>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="motor_off" placeholder="Motor off" value="{{$userForm->motor_off}}" id="motor_off" required="">
+						<label>Reverse speed motor</label>
+						<select class="form-control" name="reverse_speed_motor" id="reverse_speed_motor" required="">
+							  <option value="on" selected disabled>Reverse speed motor</option>
+							  <option value="on" <?php echo ($userForm->reverse_speed_motor === 'on') ? 'selected':''; ?>>Yes</option>
+							  <option value="off" <?php echo ($userForm->reverse_speed_motor === 'off') ? 'selected':''; ?>>No</option>
+						</select>
 					</div>
-					
+					<div class="form-group">
+						<label>Reverse steer motor</label>
+						<select class="form-control" name="reverse_steer_motor" id="reverse_steer_motor" required="">
+							  <option value="on" selected disabled>Reverse steer motor</option>
+							  <option value="on">Yes</option>
+							  <option value="off">No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Steering control point</label>
+						<input type="text" class="form-control" name="steering_control_point" value="{{$userForm->steering_control_point}}" id="steering_control_point" required="">
+					</div>
 					<div class="form-group">
 						Asset folder(custom images) <input type="file" class="form-control" name="asset_folder" value="" id="asset_folder">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="front_motor" placeholder="Front motor" value="{{$userForm->front_motor}}" id="front_motor" required="">
+						<label>Firmware version (updated from car)</label>
+						<input type="text" class="form-control" name="firmware" value="{{$userForm->firmware}}" id="firmware" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="gearbox_amount_of_gears" placeholder="Gearbox amount of gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears" required="">
+						<label>Front motor resistor value</label>
+						<select class="form-control" name="front_motor_resistor_value" id="front_motor_resistor_value" required="">
+							  <option value="on" selected disabled>Select value</option>
+							  <?php for($front_motor = 20; $front_motor > 4; $front_motor--) { ?>
+								<option value="<?php echo $front_motor; ?>"><?php echo '0,'.$front_motor.'0'; ?></option>
+							  <?php } ?>
+						</select>
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="speed_curve" placeholder="Speed curve" value="{{$userForm->speed_curve}}" id="speed_curve" required="">
+						<label>Rear motor resistor value</label>
+						<select class="form-control" name="rear_motor_resistor_value" id="rear_motor_resistor_value" required="">
+							  <option value="on" selected disabled>Select value</option>
+							  <?php for($rear_motor = 20; $rear_motor > 4; $rear_motor--) { ?>
+								<option value="<?php echo $rear_motor; ?>"><?php echo '0,'.$rear_motor.'0'; ?></option>
+							  <?php } ?>
+						</select>
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="idle_rpm" placeholder="Idle rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm" required="">
+						<label>Motor off</label>
+						<input type="hidden" class="form-control" name="motor_off" value="true" id="motor_off">
+						<button type="button" class="btn btn-sm btn-secondary btn-toggle" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>
 					</div>
-					
-					<div class="form-group">
-						<input type="text" class="form-control" name="lower_gear_shift_value" placeholder="Lower gear shift value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value" required="">
+					<div class="form-group motor_off_status" style="display: none">
+						<label>Front motor resistor value</label>
+						<input type="text" class="form-control" name="front_motor" value="{{$userForm->front_motor}}" id="front_motor">
 					</div>
-					
-					<div class="form-group">
-						<input type="text" class="form-control" name="gear_retio" placeholder="Gear retio" value="{{$userForm->gear_retio}}" id="gear_retio" required="">
+					<div class="form-group motor_off_status" style="display: none">
+						<label>Rear motor resistor value</label>
+						<input type="text" class="form-control" name="rear_motor" value="{{$userForm->rear_motor}}" id="rear_motor">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="led_configuration" placeholder="LED configuration for each button" value="{{$userForm->led_configuration}}" id="led_configuration" required="">
+						<label>Gearbox amount of gears</label>
+						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears" required="">
 					</div>
-					
-					
-				  </div>
-				  
-				  
-				  
-					<!--       two way contant    -->
-					
-					
-				  
-				  <div class="col-md-6">
 					<div class="form-group">
-						<input type="text" class="form-control" name="pad_line_color" placeholder="Pad line color" value="{{$userForm->pad_line_color}}" id="pad_line_color" required="">
-					</div>	
-					
-					<div class="form-group">
-						<input type="text" class="form-control" name="button_style" placeholder="Button style" value="{{$userForm->button_style}}" id="button_style" required="">
+						<label>Max speed per gears</label>
+						<input type="text" class="form-control" name="max_speed_per_gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="reverse_speed_motor" placeholder="Reverse speed motor" value="{{$userForm->reverse_speed_motor}}" id="reverse_speed_motor" required="">
+						<label>Acc/dec speed curves</label>
+						<input type="text" class="form-control" name="speed_curve" value="{{$userForm->speed_curve}}" id="speed_curve" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="steering_control_point" placeholder="Steering control point" value="{{$userForm->steering_control_point}}" id="steering_control_point" required="">
+						<label>Max rpm</label>
+						<input type="text" class="form-control" name="max_rpm" value="{{$userForm->max_rpm}}" id="max_rpm" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="firmware" placeholder="Firmware (updated from car)" value="{{$userForm->firmware}}" id="firmware" required="">
+						<label>Idle rpm</label>
+						<input type="text" class="form-control" name="idle_rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="rear_motor" placeholder="Rear motor" value="{{$userForm->rear_motor}}" id="rear_motor" required="">
+						<label>Upper gear shift value</label>
+						<input type="text" class="form-control" name="upper_gear_shift_value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="max_speed_per_gears" placeholder="Max speed per gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears" required="">
+						<label>Lower gear shift value</label>
+						<input type="text" class="form-control" name="lower_gear_shift_value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="max_rpm" placeholder="Max rpm" value="{{$userForm->max_rpm}}" id="max_rpm" required="">
+						<label>Gear shift A value (ms)</label>
+						<input type="text" class="form-control" name="gear_shift_a_value" id="gear_shift_a_value" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="upper_gear_shift_value" placeholder="Upper gear shift value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value" required="">
+						<label>Gear shift B value (ms)</label>
+						<input type="text" class="form-control" name="gear_shift_b_value" id="gear_shift_b_value" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="cell_value_steer_pad" placeholder="Cell value steer pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad" required="">
+						<label>Gear shift A (rpm value)</label>
+						<input type="text" class="form-control" name="gear_shift_a_rpm_value" id="gear_shift_a_rpm_value" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<label for=""></label>
-						<input type="text" class="form-control" name="max_steering_angle" placeholder="Max steering angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle" required="">
+						<label>Cell value steer pad</label>
+						<input type="text" class="form-control" name="cell_value_steer_pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad" required="" onkeypress="javascript:return isNumeric(event)">
 					</div>
-					
 					<div class="form-group">
-						<input type="text" class="form-control" name="button_config_for_each_menu" placeholder="Button config for each menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu" required="">
+						<label>Car speed factor/Gear ratio</label>
+						<input type="text" class="form-control" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio" required="">
+					</div>
+					<div class="form-group">
+						<label for="">Max steering angle</label>
+						<input type="text" class="form-control" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle" required="">
+					</div>
+					<div class="form-group">
+						<label>LED configuration</label>
+						<input type="text" class="form-control" name="led_configuration" value="{{$userForm->led_configuration}}" id="led_configuration" required="">
+					</div>
+					<div class="form-group">
+						<label>Button config for each button</label>
+						<input type="text" class="form-control" name="button_config_for_each_menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu" required="">
+					</div>
+					<div class="form-group">
+						Sound file folder <input type="file" class="form-control" name="sound_file_folder" value="" id="sound_file_folder">
+					</div>
+					<div class="form-group">
+						<label>Hall sensor frequency</label>
+						<input type="text" class="form-control" name="hall_sensor_frequency" id="hall_sensor_frequency" required="" onkeypress="javascript:return isNumeric(event)">
+					</div>
+					<div class="form-group">
+						<label>Motor steps for max steering (see ID 76)</label>
+						<input type="text" class="form-control" name="motor_steps_for_max_steering" id="motor_steps_for_max_steering" required="" onkeypress="javascript:return isNumeric(event)">
+					</div>
+					<div class="form-group">
+						<label>Value</label>
+						<input type="text" class="form-control" name="Value" id="Value" required="">
+					</div>
+					<div class="form-group">
+						<label>Onboard sound</label>
+						<select class="form-control" name="onboard_sound" id="onboard_sound" required="">
+							  <option value="on" selected disabled>Onboard sound</option>
+							  <option value="on">Yes</option>
+							  <option value="off">No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Screen rotation landscape</label>
+						<select class="form-control" name="screen_rotation_landscape" id="screen_rotation_landscape" required="">
+							  <option value="on" selected disabled>Screen rotation landscape</option>
+							  <option value="on">Yes</option>
+							  <option value="off">No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Pad design 2-directional</label>
+						<select class="form-control" name="pad_design_2_directional" id="pad_design_2_directional" required="">
+							  <option value="on" selected disabled>Pad design 2-directional</option>
+							  <option value="on">Yes</option>
+							  <option value="off">No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Electric motor re-built</label>
+						<select class="form-control" name="electric_motor_re_built" id="electric_motor_re_built" required="">
+							  <option value="on" selected disabled>Electric motor re-built</option>
+							  <option value="on">Yes</option>
+							  <option value="off">No</option>
+						</select>
 					</div>
 				  </div>
 				  
@@ -158,82 +247,6 @@
 
 
 @section('script')
-	<script>
-				$(document).ready(function(){
-					$('#Updateuser').submit(function(event){
-						// $('#publisherEmailValidation').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
-						 $.ajax({
-						   type:this.method,
-						   url: this.action,
-						   contentType: false, 
-						   processData:false,   
-						   data: new FormData(this),
-						   success:function(response)
-						   {
-								var result = JSON.parse(response);
-								if(result.action === 'add_form')
-									// $("#Updateuser").trigger("reset");
-									window.location.href = "./redirect/view-vehicle?message="+result.message;
-								else
-									window.location.href = "../redirect/view-vehicle?message="+result.message;
-						   }
-						});
-						event.preventDefault();
-					});
-					
-					// $('select[name="vehicle_id"]').change(function(){
-						// $.ajax({
-							// type: 'GET',
-							// dataType : 'json',
-							// url: 'settings/'+$(this).val(),
-							// success: function (response) {
-								// if(response.data) {
-									// $('input[name="background_color"]').val(response.data.background_color);
-									// $('input[name="pad_line_color"]').val(response.data.pad_line_color);
-									// $('input[name="pad_background_color"]').val(response.data.pad_background_color);
-									// $('input[name="button_style"]').val(response.data.button_style);
-									
-									// $('input[name="daylight_auto_on"]').val(response.data.daylight_auto_on);
-									// $('input[name="reverse_speed_motor"]').val(response.data.reverse_speed_motor);
-									// $('input[name="reverse_steer_motor"]').val(response.data.reverse_steer_motor);
-									
-									// $('input[name="motor_off"]').val(response.data.motor_off);
-									// $('input[name="steering_control_point"]').val(response.data.steering_control_point);
-									// $('input[name="asset_folder"]').val(response.data.asset_folder);
-									
-									// $('input[name="firmware"]').val(response.data.firmware);
-									// $('input[name="front_motor"]').val(response.data.front_motor);
-									// $('input[name="rear_motor"]').val(response.data.rear_motor);
-									// $('input[name="gearbox_amount_of_gears"]').val(response.data.gearbox_amount_of_gears);
-									// $('input[name="max_speed_per_gears"]').val(response.data.max_speed_per_gears);
-									
-									// $('input[name="speed_curve"]').val(response.data.speed_curve);
-									// $('input[name="max_rpm"]').val(response.data.max_rpm);
-									// $('input[name="idle_rpm"]').val(response.data.idle_rpm);
-									// $('input[name="upper_gear_shift_value"]').val(response.data.upper_gear_shift_value);
-									
-									// $('input[name="lower_gear_shift_value"]').val(response.data.lower_gear_shift_value);
-									// $('input[name="cell_value_steer_pad"]').val(response.data.cell_value_steer_pad);
-									// $('input[name="gear_retio"]').val(response.data.gear_retio);
-									// $('input[name="max_steering_angle"]').val(response.data.max_steering_angle);
-									// $('input[name="led_configuration"]').val(response.data.led_configuration);
-									// $('input[name="button_config_for_each_menu"]').val(response.data.button_config_for_each_menu);
-								// }
-							// },
-							// error: function() {
-								 // console.log(response);
-							// }
-						// });
-					// });
-
-					
-				});
-				function form_return()
-					{
-						window.history.back();
-					}
-				
-	</script>
 	@if(session()->has('flash-message'))
 	  <script>
 		jQuery(document).ready(function () {
