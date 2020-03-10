@@ -29,7 +29,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-	   $userForm = (object)array('id'=>'','name'=>'','email'=>'','role_id'=>'','phone_no'=>'','image'=>'/public/assets/userimages/userdefault.png');
+	   $userForm = (object)array('id'=>'','name'=>'','email'=>'','role_id'=>'','phone_no'=>'','date_of_birth'=>'','image'=>'/public/assets/userimages/userdefault.png');
 	   $page_info['page_title'] = 'Add User';
 	   return view('admin/User/adduser')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/admin/users');
     }
@@ -93,7 +93,7 @@ class UsersController extends Controller
     public function show($id)
     {
        $userData = User::find($id);
-	   $userForm = (object)array('id'=>$id,'name'=>$userData->name,'email'=>$userData->email,'role_id'=>$userData->role_id,'phone_no'=>$userData->phone_no,'image'=>'/public/assets/userimages/'.$userData->image);
+	   $userForm = (object)array('id'=>$id,'name'=>$userData->name,'email'=>$userData->email,'role_id'=>$userData->role_id,'phone_no'=>$userData->phone_no,'date_of_birth'=>$userData->date_of_birth,'image'=>'/public/assets/userimages/'.$userData->image);
 	   $page_info['page_title'] = 'Update User';
 	   return view('admin/User/adduser')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/admin/usersUpdate');
     }
@@ -106,7 +106,7 @@ class UsersController extends Controller
 		if($countUser) {
 			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
 		}else{
-		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'));
+		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'),'date_of_birth'=>$request->input('date_of_birth'));
 		
 		if(user_role() == 'admin')
 			$resultArray = array_merge($resultArray,array('role_id'=>$request->input('role_id')));

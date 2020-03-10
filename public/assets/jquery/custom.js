@@ -416,6 +416,7 @@
 		/// view viewvehicleinfoall script end
 		
 	$('.updateuserSetting #UpdateuserSetting').submit(function(event){
+		$( "em" ).remove();
 		// $('#publisherEmailValidation').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
 		 $.ajax({
 		   type:this.method,
@@ -426,11 +427,15 @@
 		   success:function(response)
 		   {
 				var result = JSON.parse(response);
-				if(result.action === 'add_form')
-					// $("#UpdateuserSetting").trigger("reset");
-					window.location.href = "./redirect/view-vehicle?message="+result.message;
-				else
-					window.location.href = "../redirect/view-vehicle?message="+result.message;
+				if(result.status == true) {
+					if(result.action === 'add_form')
+						// $("#UpdateuserSetting").trigger("reset");
+						window.location.href = "./redirect/view-vehicle?message="+result.message;
+					else
+						window.location.href = "../redirect/view-vehicle?message="+result.message;
+				}else{
+					$('#password').after('<em class="error help-block">'+result.message+'</em>');
+				}
 		   }
 		});
 		event.preventDefault();
@@ -541,25 +546,26 @@
 			});
 		});
 		
-		
+			$( ".numeric-val" ).on('keypress blur', function (evt) {
+				// $('input[name="'+evt.srcElement.name+'"]')
+				// console.log(evt.srcElement);
+				var iKeyCode = (evt.which) ? evt.which : evt.keyCode;
+					if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+					{
+							$( "em" ).remove();
+							$(this).after('<em class="error help-block horse_power_numeric">Please add a numeric value.</em>');
+						return false;
+					}else{
+							$( "em" ).remove();
+						return true;
+					}
+				});
+				
 		function form_return()
 		{
 			window.history.back();
 		}
   });
   
-  function isNumeric(evt) {
-			var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-			var elementValue = document.querySelector('.'+evt.srcElement.name+"_numeric");
-			if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-			{
-				if(elementValue)
-					elementValue.innerText = 'Please add a numeric value.';
-				return false;
-			}else{
-				if(elementValue)
-					elementValue.innerText = '';
-				return true;
-			}
-		}
+  
 		

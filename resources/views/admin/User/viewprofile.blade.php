@@ -41,7 +41,7 @@
 					
 					<div class="form-group">
 						<label>Birth date</label>
-						<input type="text" class="form-control date-picker" name="birth_date" value="" id="birth_date">
+						<input type="text" class="form-control datetimepicker" name="birth_date" value="" id="birth_date">
 					</div>
 					
 					<div class="form-group">
@@ -82,7 +82,15 @@
 						<label>Company name</label>
 						<input type="text" class="form-control" name="company_name" value="{{$userForm->company_name}}" id="company_name">
 					</div>
-					
+					<div class="form-group">
+						<label>Language</label>
+						<select class="form-control" name="language" id="language">
+						  <option value="{{get_language('en')}}" selected disabled>Select language</option>
+						  @foreach(get_language() as $key => $language_val)
+						  <option value="{{ $key}}" <?php echo ($userForm->language === $key) ? 'selected':''; ?>>{{ $language_val}}</option>
+						  @endForeach
+						</select>
+					</div>
 					<div class="form-group">
 						<label>Address</label>
 						<input type="text" class="form-control" name="address" value="{{$userForm->address}}" id="address">

@@ -57,7 +57,7 @@
 					<div id="ctrlscrolbar"></div>
 					<div class="form-group">
 						<label>Birth date</label>
-						<input type="text" class="form-control date-picker" placeholder="Birth date" name="birth_date" value="" id="birth_date">
+						<input type="text" class="form-control datetimepicker" placeholder="Birth date" name="date_of_birth" value="{{$userForm->date_of_birth}}" id="date_of_birth">
 					</div>
 					
 					<div class="form-group">

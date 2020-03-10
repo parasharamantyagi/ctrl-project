@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/jquery-confirm.min.css') }}">
   <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/select2.min.css') }}">
-  <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/bootstrap-datetimepicker.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/public/newbootstrap/datetimepicker/jquery-ui.css') }}">
 </head>
 
 <body id="page-top">
@@ -97,20 +97,20 @@
 		  </ul>
 		
 		<li class="nav-item navbar-parent {{ Request::segment(2) == 'edit-tables' ? 'active': '' }}">
-			<a class="nav-link nav-link-main js-scroll-trigger" href="edit-tables">Maintenance</a>
+			<a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('edit-tables')) }}">Maintenance</a>
 		</li>
 		<ul class="navbar-nav">
 			<li class="nav-item {{ Request::segment(2) == 'edit-tables' ? 'active': '' }}">
-			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="edit-tables">- Edit tables</a>
+			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('edit-tables')) }}">- Edit tables</a>
 			</li>
 		</ul>
 		
 		<li class="nav-item navbar-parent">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="create-new-car" target="_blank">TOOL-1</a>
+          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('create-new-car')) }}" target="_blank">TOOL-1</a>
         </li>
 		
 		<li class="nav-item navbar-parent">
-          <a class="nav-link nav-link-main js-scroll-trigger" href="create-excel-sheet" target="_blank">TOOL-2</a>
+          <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('create-excel-sheet')) }}" target="_blank">TOOL-2</a>
         </li>
 		
         <li class="nav-item">
@@ -134,7 +134,6 @@
   <script src="{{ url('/public/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url('/public/newbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<!-- <script type="text/javascript" src="{{ url('/public/assets/jquery/actions.js') }}"></script> -->
-	<script type="text/javascript" src="{{ url('/public/assets/jquery/custom.js') }}"></script>
   <!-- Plugin JavaScript -->
   <script src="{{ url('/public/newbootstrap/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
   <script type='text/javascript' src="{{ url('/public/assets/jquery/jquery.dataTables.min.js') }}"></script>
@@ -143,8 +142,9 @@
   <script type="text/javascript" src="{{ url('/public/assets/jquery/jquery.toaster.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script type="text/javascript" src="{{ url('/public/assets/jquery/select2.min.js') }}"></script>
-  <script src="{{ url('/public/assets/bootstrap/bootstrap-datetimepicker.js') }}"></script>
   <script type='text/javascript' src="{{ url('/public/assets/jquery/jquery.validate.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/public/newbootstrap/datetimepicker/jquery-ui.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/public/assets/jquery/custom.js') }}"></script>
 	<script>
 		
 		
@@ -163,7 +163,14 @@
 					allowClear: true
 				});
 				
-				$(".date-picker").datetimepicker({format: 'yyyy-mm-dd'});
+				$(function() {
+					$(".datetimepicker").datepicker({
+					  changeMonth: true,
+					  changeYear: true,
+					  dateFormat: 'dd-mm-yy',
+					  yearRange: '-100y:c+nn'
+					});
+				  });
 	</script>
 	
 	@yield('script')

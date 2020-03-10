@@ -119,6 +119,9 @@ Route::namespace('User')->prefix('user')->group(function () {
 		Route::post('vehicle-setting-status', 'VehicleController@vehicleSettingStatus');
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
 		
+		Route::resource('create-new-car', 'CreateNewCarController');
+		Route::get('create-excel-sheet', 'CreateNewCarController@createExcelSheet');
+		Route::post('create-excel-sheet','CreateNewCarController@createExcelSheetPost');
 		// Route::get('view-vehicle','VehicleController@viewVehicleAll');
 		// Route::post('vehicle-table', 'VehicleController@vehicleTable');
 		

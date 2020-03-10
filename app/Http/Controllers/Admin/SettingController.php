@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Vehicle;
 use App\VehicleSetting;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 use QrCode;
 use Auth;
 
@@ -35,20 +37,26 @@ class SettingController extends Controller
 	public function store(Request $request)
     {
 		$inputData = $request->all();
-		$myVehicle = Vehicle::find($inputData['vehicle_id']);
-		unset($inputData["_token"]);
-		// $inputData['user_id'] = Auth::user()->id;
-		$inputData['from_id'] = Auth::user()->id;
-		$inputData['setting_status'] = '1';
-		$inputData['asset_folder'] = 'mycar.png';
-		$inputData['setting_art_no'] = car_model($myVehicle->brand);
-		$inputData['setting_use_status'] = '0';
-		$inputData['brand_name'] = $myVehicle->brand;
-		$vichleSetting = VehicleSetting::insertGetId($inputData);
-		// $vichleSetting_image = 'http://18.212.23.117/blogs/post';
-		$vichleSetting_text = url('api/vehicle-setting/'.(string)$vichleSetting);
-		QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($vichleSetting_text, public_path('qrcode/'.$vichleSetting.'png'));
-		$returnmessage = array('status'=>true,'action'=>'add_form','vehicle_id'=>$request->input('vehicle_id'),'message'=>'Vehicle setting has been save');
+		$hasher = app('hash');
+		if ($hasher->check($inputData['password'], Auth::user()->password)) {
+			$myVehicle = Vehicle::find($inputData['vehicle_id']);
+			unset($inputData["_token"]);
+			unset($inputData["password"]);
+			// $inputData['user_id'] = Auth::user()->id;
+			$inputData['from_id'] = Auth::user()->id;
+			$inputData['setting_status'] = '1';
+			$inputData['asset_folder'] = 'mycar.png';
+			$inputData['setting_art_no'] = car_model($myVehicle->brand);
+			$inputData['setting_use_status'] = '0';
+			$inputData['brand_name'] = $myVehicle->brand;
+			$vichleSetting = VehicleSetting::insertGetId($inputData);
+			// $vichleSetting_image = 'http://18.212.23.117/blogs/post';
+			$vichleSetting_text = url('api/vehicle-setting/'.(string)$vichleSetting);
+			QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($vichleSetting_text, public_path('qrcode/'.$vichleSetting.'png'));
+			$returnmessage = array('status'=>true,'action'=>'add_form','vehicle_id'=>$request->input('vehicle_id'),'message'=>'Vehicle setting has been save');
+		}else{
+			$returnmessage = array('status'=>false,'action'=>'password','vehicle_id'=>$request->input('vehicle_id'),'message'=>'Your password is incorrect');
+		}
 		echo json_encode($returnmessage);
     }
 	

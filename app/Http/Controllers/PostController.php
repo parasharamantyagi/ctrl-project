@@ -12,9 +12,10 @@ class PostController extends Controller
 {
     public function getpost()
     {
-      $userForm = (object)array('id'=>'','name'=>'','email'=>'','phone_no'=>'','image'=>'');
-      $page_info['page_title'] = 'Update User';
-      return view('post')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/user/profile');
+		pr(get_language('hi'));
+      // $userForm = (object)array('id'=>'','name'=>'','email'=>'','phone_no'=>'','image'=>'');
+      // $page_info['page_title'] = 'Update User';
+      // return view('post')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/user/profile');
     }
 
     public function createPost()

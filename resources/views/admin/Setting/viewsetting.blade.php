@@ -19,6 +19,11 @@
 			
 			<div class="modal-body">
 				<div class="row">
+				<div class="col-md-12">
+				<div class="form-group">
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" id="password" required="">
+				</div>
 				<?php if(!isset($_GET['vehicle_id'])) { ?>
 				<div class="form-group">
 						<div class="col-sm-12 col-xs-12">
@@ -34,19 +39,17 @@
 				<?php }else{ ?>
 					<input type="hidden" name="vehicle_id"  value="<?php echo $_GET['vehicle_id']; ?>">
 				<?php } ?>
-				
-				  <div class="col-md-12">
 					<div class="form-group">
 						<label>Colors/Background color</label>
-						<input type="color" class="form-control" name="background_color" value="{{$userForm->background_color}}" id="background_color" required="">
+						<input type="color" class="form-control" name="background_color" value="{{$userForm->background_color}}" id="background_color">
 					</div>
 					<div class="form-group">
 						<label>Colors/Pad line color</label>
-						<input type="color" class="form-control" name="pad_line_color" value="{{$userForm->pad_line_color}}" id="pad_line_color" required="">
+						<input type="color" class="form-control" name="pad_line_color" value="{{$userForm->pad_line_color}}" id="pad_line_color">
 					</div>	
 					<div class="form-group">
 						<label>Pad background color</label>
-						<input type="color" class="form-control" name="pad_background_color" value="{{$userForm->pad_background_color}}" id="pad_background_color" required="">
+						<input type="color" class="form-control" name="pad_background_color" value="{{$userForm->pad_background_color}}" id="pad_background_color">
 					</div>
 					<!-- div class="form-group">
 						<label>Button style Future of "no to be used ?</label><br>
@@ -54,7 +57,7 @@
 					</div -->
 					<div class="form-group">
 						<label>Daylight auto ON (if any)</label>
-						<select class="form-control" name="daylight_auto_on" id="daylight_auto_on" required="">
+						<select class="form-control" name="daylight_auto_on" id="daylight_auto_on">
 							  <option value="on" selected disabled>Daylight auto ON (if any)</option>
 							  <option value="on" <?php echo ($userForm->daylight_auto_on === 'on') ? 'selected':''; ?>>Yes</option>
 							  <option value="off" <?php echo ($userForm->daylight_auto_on === 'off') ? 'selected':''; ?>>No</option>
@@ -62,7 +65,7 @@
 					</div>
 					<div class="form-group">
 						<label>Reverse speed motor</label>
-						<select class="form-control" name="reverse_speed_motor" id="reverse_speed_motor" required="">
+						<select class="form-control" name="reverse_speed_motor" id="reverse_speed_motor">
 							  <option value="on" selected disabled>Reverse speed motor</option>
 							  <option value="on" <?php echo ($userForm->reverse_speed_motor === 'on') ? 'selected':''; ?>>Yes</option>
 							  <option value="off" <?php echo ($userForm->reverse_speed_motor === 'off') ? 'selected':''; ?>>No</option>
@@ -70,7 +73,7 @@
 					</div>
 					<div class="form-group">
 						<label>Reverse steer motor</label>
-						<select class="form-control" name="reverse_steer_motor" id="reverse_steer_motor" required="">
+						<select class="form-control" name="reverse_steer_motor" id="reverse_steer_motor">
 							  <option value="on" selected disabled>Reverse steer motor</option>
 							  <option value="on">Yes</option>
 							  <option value="off">No</option>
@@ -78,18 +81,18 @@
 					</div>
 					<div class="form-group">
 						<label>Steering control point</label>
-						<input type="text" class="form-control" name="steering_control_point" value="{{$userForm->steering_control_point}}" id="steering_control_point" required="">
+						<input type="text" class="form-control" name="steering_control_point" value="{{$userForm->steering_control_point}}" id="steering_control_point">
 					</div>
 					<div class="form-group">
 						Asset folder(custom images) <input type="file" class="form-control" name="asset_folder" value="" id="asset_folder">
 					</div>
 					<div class="form-group">
 						<label>Firmware version (updated from car)</label>
-						<input type="text" class="form-control" name="firmware" value="{{$userForm->firmware}}" id="firmware" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="firmware" value="{{$userForm->firmware}}" id="firmware">
 					</div>
 					<div class="form-group">
 						<label>Front motor resistor value</label>
-						<select class="form-control" name="front_motor_resistor_value" id="front_motor_resistor_value" required="">
+						<select class="form-control" name="front_motor_resistor_value" id="front_motor_resistor_value">
 							  <option value="on" selected disabled>Select value</option>
 							  <?php for($front_motor = 20; $front_motor > 4; $front_motor--) { ?>
 								<option value="<?php echo $front_motor; ?>"><?php echo '0,'.$front_motor.'0'; ?></option>
@@ -98,7 +101,7 @@
 					</div>
 					<div class="form-group">
 						<label>Rear motor resistor value</label>
-						<select class="form-control" name="rear_motor_resistor_value" id="rear_motor_resistor_value" required="">
+						<select class="form-control" name="rear_motor_resistor_value" id="rear_motor_resistor_value">
 							  <option value="on" selected disabled>Select value</option>
 							  <?php for($rear_motor = 20; $rear_motor > 4; $rear_motor--) { ?>
 								<option value="<?php echo $rear_motor; ?>"><?php echo '0,'.$rear_motor.'0'; ?></option>
@@ -120,82 +123,82 @@
 					</div>
 					<div class="form-group">
 						<label>Gearbox amount of gears</label>
-						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears" required="">
+						<input type="text" class="form-control" name="gearbox_amount_of_gears" value="{{$userForm->gearbox_amount_of_gears}}" id="gearbox_amount_of_gears">
 					</div>
 					<div class="form-group">
 						<label>Max speed per gears</label>
-						<input type="text" class="form-control" name="max_speed_per_gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="max_speed_per_gears" value="{{$userForm->max_speed_per_gears}}" id="max_speed_per_gears">
 					</div>
 					<div class="form-group">
 						<label>Acc/dec speed curves</label>
-						<input type="text" class="form-control" name="speed_curve" value="{{$userForm->speed_curve}}" id="speed_curve" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="speed_curve" value="{{$userForm->speed_curve}}" id="speed_curve">
 					</div>
 					<div class="form-group">
 						<label>Max rpm</label>
-						<input type="text" class="form-control" name="max_rpm" value="{{$userForm->max_rpm}}" id="max_rpm" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="max_rpm" value="{{$userForm->max_rpm}}" id="max_rpm">
 					</div>
 					<div class="form-group">
 						<label>Idle rpm</label>
-						<input type="text" class="form-control" name="idle_rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="idle_rpm" value="{{$userForm->idle_rpm}}" id="idle_rpm">
 					</div>
 					<div class="form-group">
 						<label>Upper gear shift value</label>
-						<input type="text" class="form-control" name="upper_gear_shift_value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="upper_gear_shift_value" value="{{$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value">
 					</div>
 					<div class="form-group">
 						<label>Lower gear shift value</label>
-						<input type="text" class="form-control" name="lower_gear_shift_value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="lower_gear_shift_value" value="{{$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value">
 					</div>
 					<div class="form-group">
 						<label>Gear shift A value (ms)</label>
-						<input type="text" class="form-control" name="gear_shift_a_value" id="gear_shift_a_value" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="gear_shift_a_value" id="gear_shift_a_value">
 					</div>
 					<div class="form-group">
 						<label>Gear shift B value (ms)</label>
-						<input type="text" class="form-control" name="gear_shift_b_value" id="gear_shift_b_value" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="gear_shift_b_value" id="gear_shift_b_value">
 					</div>
 					<div class="form-group">
 						<label>Gear shift A (rpm value)</label>
-						<input type="text" class="form-control" name="gear_shift_a_rpm_value" id="gear_shift_a_rpm_value" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="gear_shift_a_rpm_value" id="gear_shift_a_rpm_value">
 					</div>
 					<div class="form-group">
 						<label>Cell value steer pad</label>
-						<input type="text" class="form-control" name="cell_value_steer_pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="cell_value_steer_pad" value="{{$userForm->cell_value_steer_pad}}" id="cell_value_steer_pad">
 					</div>
 					<div class="form-group">
 						<label>Car speed factor/Gear ratio</label>
-						<input type="text" class="form-control" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio" required="">
+						<input type="text" class="form-control" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio">
 					</div>
 					<div class="form-group">
 						<label for="">Max steering angle</label>
-						<input type="text" class="form-control" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle" required="">
+						<input type="text" class="form-control" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle">
 					</div>
 					<div class="form-group">
 						<label>LED configuration</label>
-						<input type="text" class="form-control" name="led_configuration" value="{{$userForm->led_configuration}}" id="led_configuration" required="">
+						<input type="text" class="form-control" name="led_configuration" value="{{$userForm->led_configuration}}" id="led_configuration">
 					</div>
 					<div class="form-group">
 						<label>Button config for each button</label>
-						<input type="text" class="form-control" name="button_config_for_each_menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu" required="">
+						<input type="text" class="form-control" name="button_config_for_each_menu" value="{{$userForm->button_config_for_each_menu}}" id="button_config_for_each_menu">
 					</div>
 					<div class="form-group">
 						Sound file folder <input type="file" class="form-control" name="sound_file_folder" value="" id="sound_file_folder">
 					</div>
 					<div class="form-group">
 						<label>Hall sensor frequency</label>
-						<input type="text" class="form-control" name="hall_sensor_frequency" id="hall_sensor_frequency" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="hall_sensor_frequency" id="hall_sensor_frequency">
 					</div>
 					<div class="form-group">
 						<label>Motor steps for max steering (see ID 76)</label>
-						<input type="text" class="form-control" name="motor_steps_for_max_steering" id="motor_steps_for_max_steering" required="" onkeypress="javascript:return isNumeric(event)">
+						<input type="text" class="form-control numeric-val" name="motor_steps_for_max_steering" id="motor_steps_for_max_steering">
 					</div>
 					<div class="form-group">
 						<label>Value</label>
-						<input type="text" class="form-control" name="Value" id="Value" required="">
+						<input type="text" class="form-control" name="Value" id="Value">
 					</div>
 					<div class="form-group">
 						<label>Onboard sound</label>
-						<select class="form-control" name="onboard_sound" id="onboard_sound" required="">
+						<select class="form-control" name="onboard_sound" id="onboard_sound">
 							  <option value="on" selected disabled>Onboard sound</option>
 							  <option value="on">Yes</option>
 							  <option value="off">No</option>
@@ -203,7 +206,7 @@
 					</div>
 					<div class="form-group">
 						<label>Screen rotation landscape</label>
-						<select class="form-control" name="screen_rotation_landscape" id="screen_rotation_landscape" required="">
+						<select class="form-control" name="screen_rotation_landscape" id="screen_rotation_landscape">
 							  <option value="on" selected disabled>Screen rotation landscape</option>
 							  <option value="on">Yes</option>
 							  <option value="off">No</option>
@@ -211,7 +214,7 @@
 					</div>
 					<div class="form-group">
 						<label>Pad design 2-directional</label>
-						<select class="form-control" name="pad_design_2_directional" id="pad_design_2_directional" required="">
+						<select class="form-control" name="pad_design_2_directional" id="pad_design_2_directional">
 							  <option value="on" selected disabled>Pad design 2-directional</option>
 							  <option value="on">Yes</option>
 							  <option value="off">No</option>
@@ -219,7 +222,7 @@
 					</div>
 					<div class="form-group">
 						<label>Electric motor re-built</label>
-						<select class="form-control" name="electric_motor_re_built" id="electric_motor_re_built" required="">
+						<select class="form-control" name="electric_motor_re_built" id="electric_motor_re_built">
 							  <option value="on" selected disabled>Electric motor re-built</option>
 							  <option value="on">Yes</option>
 							  <option value="off">No</option>

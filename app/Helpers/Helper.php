@@ -110,6 +110,16 @@ if (!function_exists('car_model')) {
     }
 }
 
+if (!function_exists('language')) {
+	
+	function get_language($input = null)
+    {
+		$returnData = array('en'=>'english');
+		if($input)
+			$returnData = (array_key_exists($input,$returnData)) ? $returnData[$input] : $returnData['en'];
+		return $returnData;
+    }
+}
 
 if (!function_exists('pr')) {
 	

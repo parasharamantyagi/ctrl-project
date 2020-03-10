@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="_token" content="{{ csrf_token() }}" base_url="{{ url('') }}">
 
   <title>CTRL</title>
   
@@ -25,6 +26,7 @@
   <link href="{{ url('/public/newbootstrap/css/resume.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/jquery-confirm.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/public/newbootstrap/datetimepicker/jquery-ui.css') }}">
   <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/select2.min.css') }}">
 	
 </head>
@@ -59,6 +61,12 @@
         <li class="nav-item {{ Request::segment(2) == 'profile' ? 'active': '' }}">
           <a class="nav-link js-scroll-trigger" href="{{ url(user_role('profile')) }}">Profile</a>
         </li>
+		<li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('create-new-car')) }}" target="_blank">TOOL-1</a>
+        </li>
+		<li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="{{ url(user_role('create-excel-sheet')) }}" target="_blank">TOOL-2</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>
 			 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -90,6 +98,7 @@
   <script src="{{ url('/public/newbootstrap/js/resume.min.js') }}"></script>
   <script type="text/javascript" src="{{ url('/public/assets/jquery/jquery.toaster.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+  <script type="text/javascript" src="{{ url('/public/newbootstrap/datetimepicker/jquery-ui.js') }}"></script>
   <script type="text/javascript" src="{{ url('/public/assets/jquery/select2.min.js') }}"></script>
 	<script>
 		
@@ -108,6 +117,15 @@
 				$(".selectpicker").select2({
 					allowClear: true
 				});
+				
+				$(function() {
+					$(".datetimepicker").datepicker({
+					  changeMonth: true,
+					  changeYear: true,
+					  dateFormat: 'dd-mm-yy',
+					  yearRange: '-100y:c+nn'
+					});
+				  });
 	</script>
 	
 	@yield('script')
