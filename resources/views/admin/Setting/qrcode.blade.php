@@ -1,132 +1,124 @@
 @extends('layouts.appadmin')
 
 @section('content')
-	<div class="page-content-wrap">
-        
-		
-		
-		
-		
-		
-		<!-- Button trigger modal -->
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5>QR-CODE</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-			  <div class="modal-body">
-					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-					  <div class="carousel-inner">
-						<div class="carousel-item active">
-						  <img class="d-block w-100" src="{{ url('/public/qrcode/5dd2d7825da0ec04c20f9213png') }}" alt="First slide">
-						</div>
-						<div class="carousel-item">
-						  <img class="d-block w-100" src="{{ url('/public/qrcode/5dd2d7825da0ec04c20f9213png') }}" alt="Second slide">
-						</div>
-						<div class="carousel-item">
-						  <img class="d-block w-100" src="{{ url('/public/qrcode/5dd2d7825da0ec04c20f9213png') }}" alt="Third slide">
-						</div>
+<link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
+<style>
+		th.qr-code-code {
+			width: 290px !important;
+		}
+		// th.qr-code-Model {
+			// padding: 0px 20px;
+		// }
+		// th.qr-code-Brand {
+			// padding: 0px 20px;
+		// }
+		// th.qr-code-Art {
+			// padding: 0px 14px;
+		// }
+		// th.qr-code-Action {
+			// padding: 0px 47px;
+		// }
+		.dataTables_wrapper .table td, .dataTables_wrapper .table th {
+			text-align: center;
+		}
+		th {
+			width: 25%;
+		}
+</style>
+	<div class="page-content-wrap viewvehicleinfoall">
+
+
+<div class="col-md-12">
+
+
+		<!--      popup model start   -->
+				<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<h5>QR-CODE</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <span aria-hidden="true">&times;</span>
+						</button>
 					  </div>
-					  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					  </a>
-					  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					  </a>
-					</div>
-			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<!-- button type="button" class="btn btn-primary">Save changes</button -->
-			  </div>
-			</div>
-		  </div>
-		</div>
-
-
-		<form method="POST" action="{{ url($formaction) }}" id="Updateuser" enctype="multipart/form-data">
-			{{ csrf_field() }}
-			<div class="modal-header">
-				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">View Qr-code</button>
-			</div>
-			
-		  
-			<div class="modal-body">
-				<div class="row">
-					<div class="form-group">
-							<div class="col-sm-12 col-xs-12">
-								<label for="">Select car</label>
-								
-								<select class="form-control" name="vehicle_id" id="vehicle_id" required="">
-								  <option value="2019">Select vehicle</option>
-								  @foreach($vichle_name as $vichle_name)
-									  <option value="{{$vichle_name->_id}}">{{$vichle_name->brand .' ('.$vichle_name->model.')'}}</option>
-								  @endForeach;
-								</select>
+					  <div class="modal-body">
+							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
+							  <div class="carousel-inner">
+								<div class="carousel-item active">
+								  <img class="d-block w-100" src="{{ url('/public/qrcode/qrcode.png') }}" alt="First slide">
+								</div>
+							  </div>
 							</div>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<!-- button type="button" class="btn btn-primary">Save changes</button -->
+					  </div>
 					</div>
-					<div id="publisherEmailValidation"></div>
-					<div class="form-group">
-							<div class="col-sm-12 col-xs-12">
-								<label for="">Description</label>
-								<input type="text" class="form-control" name="description" value="" id="description">
-							</div>
-					</div>
+				  </div>
 				</div>
+		<!--      End   -->
+		
+		
+        <div class="panel panel-default">
+			<div class="modal-header">
+				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
 			</div>
-			<div class="modal-footer">
-				<input type="button" class="btn btn-secondary" onclick="form_return()" value="Back">
-				<input type="submit" class="btn btn-primary" value="Save">
+
+            <div class="panel-body">
+            <div id="example_wrapper" class="dataTables_wrapper no-footer">
+					<table id="exampleViewVehicleInfoAll-qr" class="table table-hover table-striped users-table">
+						<thead>
+							<tr role="row">
+								<th class="qr-code-code">QR code/Serial no</th>
+								<th class="qr-code-Brand">Brand name</th>
+								<th class="qr-code-Model">Car name</th>
+								<th class="qr-code-Art">Art No</th>
+								<th class="qr-code-Action">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+						@foreach($all_Vehicle as $all_Vehicle)
+							<tr role="row">
+								<td>{{ implode(str_split($all_Vehicle->_id,4),'-') }}</td>
+								<td>{{ $all_Vehicle->getvehicle->brand }}</td>
+								<td>{{ $all_Vehicle->getvehicle->model }}</td>
+								<td>{{ $all_Vehicle->getvehicle->art_no }}</td>
+								<td><a href="javascript::void(0)" class="qr-code" data-id="{{ $all_Vehicle->_id }}" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a></td>
+							</tr>
+						@endforeach
+						</tbody>
+					</table>
+
 			</div>
-		</form>
-    </div>
+			</div>
+		</div>
+</div>
 
 
 @endsection
 
-
 @section('script')
+<script>
 
-	<script>
-				$(document).ready(function(){
-					$('#Updateuser').submit(function(event){
-						$('#publisherEmailValidation').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
-						 $.ajax({
-						   type:this.method,
-						   url: this.action,
-						   contentType: false, 
-						   processData:false,   
-						   data: new FormData(this),
-						   success:function(response)
-						   {
-								$('#publisherEmailValidation').html('');
-								var result = JSON.parse(response);
-								$.toaster({ priority : 'success', title : 'Success', message : result.message });
-						   }
-						});
-						event.preventDefault();
-					});		
-
-					$('.carousel').carousel({
-						interval: false
-					}); 
-
-				});
-				function form_return()
-					{
-						window.history.back();
-					}
-				
-				
-					</script>
+</script>
+  <script>
+    
+	jQuery(document).ready(function () {
+		$('.viewvehicleinfoall #exampleViewVehicleInfoAll-qr').DataTable({
+		  "pageLength": 50,
+		  "scrollX": true,
+		  "bInfo" : false,
+		  "aaSorting": [[1, 'asc']],
+		  "fnDrawCallback":function(){
+			  if ($('#exampleViewVehicleInfoAll tr').length < 50) {
+				$('.dataTables_paginate').hide();
+			  }
+			}
+		  });
+      });
 	
+  </script>
+
+
 @endsection

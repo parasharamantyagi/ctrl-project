@@ -17,6 +17,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+		// $userrecord = User::select('name','email','phone_no','image','status','device_type');
 		$userData = User::all();
 		$page_info['page_title'] = 'All Users';
 		return view('admin/User/viewuser')->with('page_info', $page_info)->with('users', $userData);
@@ -53,7 +54,7 @@ class UsersController extends Controller
 				$inputData['password'] = Hash::make($inputData['password']);
 			}else if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] != $inputData['confirm_password']){
 				$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
-				echo json_encode($returnmessage);
+				return response()->json($returnmessage);
 				die;
 			}
 
@@ -81,7 +82,7 @@ class UsersController extends Controller
 			User::insert($inputData);
 			$returnmessage = array('status'=>true,'action'=>'storeUser','message'=>'User has been save');
 		}
-		echo json_encode($returnmessage);
+		return response()->json($returnmessage);
     }
 
     /**
@@ -118,7 +119,7 @@ class UsersController extends Controller
 			$resultArray['password'] = Hash::make($inputData['password']);
 		}else if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] != $inputData['confirm_password']){
 			$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
-			echo json_encode($returnmessage);
+			return response()->json($returnmessage);
 			die;
 		}
 		
@@ -132,7 +133,7 @@ class UsersController extends Controller
 		$userData = User::where('_id', $request->input('id'))->update($resultArray);
 		$returnmessage = array('status'=>true,'message'=>'User has been update');
 		}
-		echo json_encode($returnmessage);
+		return response()->json($returnmessage);
 	}
 	
 	public function userStatus(Request $request)
@@ -140,8 +141,7 @@ class UsersController extends Controller
 		$inputData = $request->all();
 		$status = ($request->input('status') == "true") ? '1':'0';
 		User::where('_id', $request->input('id'))->update(array("status"=>$status));
-		$returnmessage = array('status'=>true,'message'=>'User status has been update');
-		echo json_encode($returnmessage);
+		return response()->json(array('status'=>true,'message'=>'User status has been update'));
 	}
 	
 	public function userTable(Request $request)
@@ -199,8 +199,8 @@ class UsersController extends Controller
                     "recordsFiltered" => intval($totalFiltered), 
                     "data"            => $posts   
                     );
-            
-        echo json_encode($json_data);
+        
+		return response()->json($json_data);
 	}
 	
 	public function viewProfile()
@@ -221,13 +221,15 @@ class UsersController extends Controller
 			$hasher = app('hash');
 			if(!$hasher->check($inputData['old_password'],$user->password)){
 				$returnmessage = array('status'=>false,'type'=>'old_passwordValidation','message'=>'Your old password does not match');
-				die(json_encode($returnmessage));
+				return response()->json($returnmessage);
+				die();
 			}else if($inputData['new_password'] && $inputData['confirm_password'] && $inputData['new_password'] == $inputData['confirm_password']){
 				$updateData['password'] = Hash::make($inputData['new_password']);
 				$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
 			}else if($inputData['new_password'] && $inputData['confirm_password'] && $inputData['new_password'] != $inputData['confirm_password']){
 				$returnmessage = array('status'=>false,'type'=>'passwordcanformValidation','message'=>'Your confirm password does not match');
-				die(json_encode($returnmessage));
+				return response()->json($returnmessage);
+				die();
 			}
 		}
 		if ($request->hasFile('userimage')) {  //check the file present or not
@@ -283,10 +285,18 @@ class UsersController extends Controller
     }
 	
 	public function redirectUrl($url)
-	{
-		return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
+	{	
+		if(isset($_GET['vehicle_id'])){
+			$url = isset($_GET['vehicle_id']) ? $url.'?vehicle_id='.$_GET['vehicle_id'] : $url;
+			return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
+		}else if(isset($_GET['setting_id'])){
+			$url = isset($_GET['setting_id']) ? $url.'/'.$_GET['setting_id'] : $url;
+			return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
+		}else{
+			return redirect(user_role().'/'.$url)->with('flash-message',$_GET['message']);
+		}
 	}
-	
+
 	
 }
 

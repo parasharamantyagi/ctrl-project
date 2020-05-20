@@ -9,6 +9,10 @@ use App\User;
 use App\Vehicle;
 use App\Role;
 use App\VehicleSetting;
+// use App\UserVechileSetting;
+use App\UserSetting;
+use App\VehicleLogo;
+use App\CreateNewCar;
 use DB;
 
 
@@ -60,6 +64,16 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
         $user->save();
+		// $user_id = $user->_id;
+		$tokenResult = $user->createToken('Personal Access Token');
+		$token = $tokenResult->token;
+		
+		$user->access_token = $tokenResult->accessToken;
+		$user->token_type = 'Bearer';
+		$user->expires_at = Carbon::parse($tokenResult->token->expires_at)->toDateTimeString();
+		$user->bought_car = 0;
+		$user->setting_id = "";
+		
         return response()->json(api_response(1,"Successfully created user!",$user));
       }
     }
@@ -76,6 +90,8 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+		$bought_car = 0;
+		$setting_id = '';
 		if($request->input('social_type') == strtoupper('N'))
 		{
 			$request->validate([
@@ -93,6 +109,11 @@ class AuthController extends Controller
 			if ($request->remember_me)
 				$token->expires_at = Carbon::now()->addWeeks(1);
 			$token->save();
+			$UserSetting_count = UserSetting::select('_id','setting_id')->where('user_id', $user['_id'])->first();
+			if($UserSetting_count){
+				$bought_car = 1;
+				$setting_id = $UserSetting_count->setting_id;
+			}
 			return response()->json(api_response(1,"User login successfully",[
 				'access_token' => $tokenResult->accessToken,
 				'token_type' => 'Bearer',
@@ -100,7 +121,9 @@ class AuthController extends Controller
 					$tokenResult->token->expires_at
 				)->toDateTimeString(),
 				'name'=> $user['name'],
-				'email'=> $user['email']
+				'email'=> $user['email'],
+				'bought_car'=> $bought_car,
+				'setting_id'=> $setting_id
 			]));
 		}else if(count(array_filter($request->all())) === 5){
 
@@ -125,6 +148,11 @@ class AuthController extends Controller
 				$tokenResult = $user->createToken('Personal Access Token');
 				$token = $tokenResult->token;
 				$token->save();
+				$UserSetting_count = UserSetting::select('_id','setting_id')->where('user_id', $user['_id'])->first();
+				if($UserSetting_count){
+					$bought_car = 1;
+					$setting_id = $UserSetting_count->setting_id;
+				}
 				return response()->json(api_response(1,"User login successfully",[
 					'access_token' => $tokenResult->accessToken,
 					'token_type' => 'Bearer',
@@ -132,7 +160,9 @@ class AuthController extends Controller
 						$tokenResult->token->expires_at
 					)->toDateTimeString(),
 					'name'=> $user->name,
-					'email'=> $user->email
+					'email'=> $user->email,
+					'bought_car'=> $bought_car,
+					'setting_id'=> $setting_id
 				]));
 			}else{
 				$insertData = $request->all();
@@ -142,6 +172,11 @@ class AuthController extends Controller
 				$tokenResult = $user->createToken('Personal Access Token');
 				$token = $tokenResult->token;
 				$token->save();
+				$UserSetting_count = UserSetting::select('_id','setting_id')->where('user_id', $user['_id'])->first();
+				if($UserSetting_count){
+					$bought_car = 1;
+					$setting_id = $UserSetting_count->setting_id;
+				}
 				return response()->json(api_response(1,"User login successfully",[
 					'access_token' => $tokenResult->accessToken,
 					'token_type' => 'Bearer',
@@ -149,7 +184,9 @@ class AuthController extends Controller
 						$tokenResult->token->expires_at
 					)->toDateTimeString(),
 					'name'=> $user->name,
-					'email'=> $user->email
+					'email'=> $user->email,
+					'bought_car'=> $bought_car,
+					'setting_id'=> $setting_id
 				]));
 			}
 		}else{
@@ -179,6 +216,7 @@ class AuthController extends Controller
     {
 		$user_id = $request->user()->_id;
 		$userData = User::with('role')->where('_id',$user_id)->first();
+		$userData->bought_car = UserSetting::where(array('user_id' =>$user_id))->count();
         return response()->json($userData);
     }
 
@@ -212,51 +250,157 @@ class AuthController extends Controller
 											return $post->user_id > 3;
 										});
 					
-					// Vehicle::with(array('vehicle_setting'=>function($myQuery){
-						// return $myQuery->select('_id','vehicle_id');
-					// }))->where('user_id',$request->user()->_id)->get()->filter(function ($post) {
-						  // return $post->user_id > 500;
-						// });
+				
 		}
-		
-		
-		// if($useruserVehicles->toArray())
-			// foreach($useruserVehicles as $vehicle_settings) {
-				  // $vehicle_settings1 = $vehicle_settings;
-				  // $my_vehicle_setting_array = $vehicle_settings->vehicle_setting;
-				  // unset($vehicle_settings->vehicle_setting);
-				  // $my_vehicle_setting = array();
-				  // foreach($my_vehicle_setting_array as $vehicle_setting)
-					// {
-						// $vehicle_setting['qr_code'] = url('public/qrcode/'.$vehicle_setting->_id.'png');
-						// $my_vehicle_setting[] = $vehicle_setting;
-					// }
-				  
-				  // $vehicle_settings1['vehicle_setting'] = $my_vehicle_setting;
-		   
-				  // $useruserVehicle[] = $vehicle_settings1;
-			  // }
-		
 		
         return response()->json(api_response(1,"All vehicle",$useruserVehicles));
     }
 
-
-	public function vehicleSetting($id)
+	public function vehicleSettingUpdate(Request $request, $id)
     {
-		$vehicleSetting = VehicleSetting::find($id);
-			if($vehicleSetting->setting_status === "1") {
-				$vehicleSetting->update(array("setting_use_status"=>"1"));
-				$myVehicle = Vehicle::select('model_spec','moter_type','torque','manufacturer')->find($vehicleSetting->vehicle_id);
-				$myVehicle->vehicle_setting = $vehicleSetting;
-				$my_vehicleSetting = $myVehicle;
+		$user_id = $request->user()->_id;
+		$inputRequest = $request->all();
+		$vehicleAllInfo = VehicleSetting::with('getvehicle')->where('_id',$id)->orWhere('bar_code_id',(int)$id)->first();
+		$userVechile = $inputRequest;
+		$vehicleAllInfo_data = array();
+		$sequences = array("sequences"=>array());
+		$multimedia = array();
+		if($vehicleAllInfo->getvehicle){
+			$userVechile = array_filter($userVechile);
+			$userVechile['user_id'] = $user_id;
+			$userVechile['vehicle_id'] = $vehicleAllInfo->getvehicle->_id;
+			$userVechile['setting_id'] = $id;
+			$resultMy = UserSetting::updateOrCreate(array('user_id' =>$user_id,'setting_id' =>$id),$userVechile);
+			$resultMy = $this->typeChange($resultMy,'setting');
+			$vehicleAllInfo_data = $vehicleAllInfo->getvehicle;
+			$vehicleAllInfo_data = $this->typeChange($vehicleAllInfo_data,'vechile');
+			$createNewCar = CreateNewCar::select('data_leds','excel_leds')->where('vehicle_id',$vehicleAllInfo->getvehicle->_id)->first();
+				if($createNewCar){
+					$sequences = json_decode($createNewCar->excel_leds,true);
+				}
+			$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound')->where('vehicle_id',$vehicleAllInfo->getvehicle->_id)->first();
+				if($vehicleLogo){
+					$multimedia = $vehicleLogo;
+				}
+		}		
+		$status = 1;
+		$message = "Setting update successfully";
+		$my_vehicleSetting = array('vehicle_info'=>array_remove_null($vehicleAllInfo_data->toArray()),'vehicle_setting'=>array_remove_null($resultMy->toArray()),'led_config'=>$sequences,'multimedia'=>$multimedia);
+		return response()->json(api_response($status,$message,$my_vehicleSetting));
+	}
+	
+	public function typeChange($data,$type){
+		if($type == 'setting'){
+			$data->front_motor_resistor_value = (int)$data->front_motor_resistor_value;
+			$data->rear_motor_resistor_value = (int)$data->rear_motor_resistor_value;
+			$data->front_motor_off_ms = (int)$data->front_motor_off_ms;
+			$data->rear_motor_off_ms = (int)$data->rear_motor_off_ms;
+			$data->gearbox_amount_of_gears = (int)$data->gearbox_amount_of_gears;
+			$data->motor_trim_kit = (int)$data->motor_trim_kit;
+			$data->upper_gear_shift_value = (int)$data->upper_gear_shift_value;
+			$data->lower_gear_shift_value = (int)$data->lower_gear_shift_value;
+			$data->gear_shift_a_rpm_value = (int)$data->gear_shift_a_rpm_value;
+			$data->max_steering_angle = floatval($data->max_steering_angle);
+			$data->gear_shift_a_value = (int)$data->gear_shift_a_value;
+			$data->gear_shift_b_value = (int)$data->gear_shift_b_value;
+			$data->motor_steps_for_max_steering = "0";
+			return $data;
+		}else if($type == 'vechile'){
+			$data->release_year = (int)$data->release_year;
+			$data->horse_power = (int)$data->horse_power;
+			$data->torque = (int)$data->torque;
+			$data->km_h_0_100 = floatval($data->km_h_0_100);
+			$data->km_h_0_160 = floatval($data->km_h_0_160);
+			$data->deceleration_speed = (int)$data->deceleration_speed;
+			$data->distance = (int)$data->distance;
+			$data->weight = (int)$data->weight;
+			$data->max_weight = (int)$data->max_weight;
+			$data->lenght = (int)$data->lenght;
+			$data->length_front_of_car = (int)$data->length_front_of_car;
+			$data->wheelbase = (int)$data->wheelbase;
+			$data->track_width = (int)$data->track_width;
+			$data->width = (int)$data->width;
+			$data->wheel_diameter = floatval($data->wheel_diameter);
+			$data->height = (int)$data->height;
+			$data->max_rpm = (int)$data->max_rpm;
+			$data->idle_rpm = (int)$data->idle_rpm;
+			$data->gearbox_amount_of_gears = (int)$data->gearbox_amount_of_gears;
+			$data->config_url = url('/public/assets/excel_leds/'.$data->_id.'_file.json');
+			return $data;
+		}
+	}
+	
+	public function vehicleSetting(Request $request, $id)
+    {
+			$user_id = $request->user()->_id;
+			$UserSetting_vechile = UserSetting::where(array('user_id' =>$user_id,'setting_id' =>$id))->first();
+			if($UserSetting_vechile){
+				$vehicleSetting = $UserSetting_vechile;
+				$vehicleSetting->setting_status = "1";
+			}else{
+				$vehicleSetting = VehicleSetting::where('_id',$id)->orWhere('bar_code_id',(int)$id)->first();
+				if($vehicleSetting){
+					$userSetting = $vehicleSetting->toArray();
+					unset($userSetting['_id']);
+					unset($userSetting['id']);
+					$userSetting['user_id'] = $user_id;
+					$userSetting['vehicle_id'] = $vehicleSetting->vehicle_id;
+					$userSetting['setting_id'] = $id;
+					UserSetting::updateOrCreate(array('user_id' =>$user_id,'setting_id' =>$id),$userSetting);
+				}
+			}
+		
+			if($vehicleSetting && $vehicleSetting->setting_status === "1") {
+				VehicleSetting::where('_id',$id)->update(array("setting_use_status"=>"1"));
+				
+				$vehicleSetting = $this->typeChange($vehicleSetting,'setting');
+				
+				$myVehicle = Vehicle::find($vehicleSetting->vehicle_id);
+				
+				$myVehicle = $this->typeChange($myVehicle,'vechile');
+				
+				$sequences = array("sequences"=>array());
+				$createNewCar = CreateNewCar::select('data_leds','excel_leds')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
+				if($createNewCar){
+					$sequences = json_decode($createNewCar->excel_leds,true);
+					// $sequences['options']['blinkers_override_l'] = explode(",",$sequences['options']['blinkers_override_l']);
+					// $sequences['options']['blinkers_override_r'] = explode(",",$sequences['options']['blinkers_override_r']);
+				}
+				$multimedia = array();
+				$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
+				if($vehicleLogo){
+					$multimedia = $vehicleLogo;
+				}
+				$my_vehicleSetting = array(
+											'vehicle_info'=>array_remove_null($myVehicle->toArray()),
+											'vehicle_setting'=>array_remove_null($vehicleSetting->toArray()),
+											'led_config'=>$sequences,
+											'multimedia'=>$multimedia
+										);
+				$status = 1;
 				$message = "my vehicle setting";
 			} else {
+				$status = 0;
 				$my_vehicleSetting = array();
 				$message = "You can't access this setting";
 			}
-		return response()->json(api_response(1,$message,$my_vehicleSetting));
+		return response()->json(api_response($status,$message,$my_vehicleSetting));
     }
+	
+	public function getConfig($id)
+    {
+		$myVehicle = CreateNewCar::first();
+		if($myVehicle){
+			$status = 1;
+			$message = "Config leds data";
+			$excel_leds_decode = json_decode($myVehicle->excel_leds);
+		}else{
+			$status = 0;
+			$message = "No config leds";
+			$excel_leds_decode = array();
+		}
+		return response()->json($excel_leds_decode);
+	}
 
 	public function vehicleById($id)
 	{

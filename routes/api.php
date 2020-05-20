@@ -26,16 +26,18 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('user', 'Api\AuthController@user');
 		Route::post('vehicle', 'Api\AuthController@vehicle');
 		Route::post('userupdate','Api\AuthController@userUpdate');
-		
+		Route::get('vehicle-setting/{id}','Api\AuthController@vehicleSetting');
+		Route::post('vehicle-setting/{id}','Api\AuthController@vehicleSettingUpdate');
     });
 });
 
-Route::get('vehicle-setting/{id}','Api\AuthController@vehicleSetting');
+
+Route::get('get-config/{id}','Api\AuthController@getConfig');
 
 Route::get('vehicle/{id}','Api\AuthController@vehicleById');
 
 Route::get('roles','Api\ApiController@allRoles');
-Route::get('testing','Api\ApiController@testing');
+Route::post('testing','Api\ApiController@testing');
 
 Route::post('roles','Api\ApiController@addRoles');
 

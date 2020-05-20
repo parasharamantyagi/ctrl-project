@@ -189,12 +189,11 @@
 						$('#ctrlscrolbar').html('');
 						$('#publisherEmailValidation').html('');
 						$('#passwordcanformValidation').html('');
-						var result = JSON.parse(response);
-						if(result.status === false)
+						if(response.status === false)
 						{
-							$('#'+result.type).html('<font color="red">'+result.message+'</font>');
+							$('#'+response.type).html('<font color="red">'+response.message+'</font>');
 						}else{
-							window.location.href = "../redirect/users?message="+result.message;
+							window.location.href = "../redirect/users?message="+response.message;
 						}
 					}
 				});
@@ -233,35 +232,48 @@
         }
       },
       "columns": [
-        {"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
-            return data;
+        // {"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
+            // return data;
+        // }},
+		
+		{"data": "brand","sClass":"text_align", "render": function(data,type,full,meta){
+            return (data) ? data : '';
         }},
-        {"data": "getvehicle","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data) ? data.model : '';
+        {"data": "model","sClass":"text_align", "render": function(data,type,full,meta){
+            return (data) ? data : '';
         }},
-        {"data": "getvehicle","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data) ? data.brand : '';
+		{"data": "model_spec","sClass":"text_align", "render": function(data,type,full,meta){
+            return (data) ? data : '';
         }},
-        {"data": "getvehicle","sClass":"text_align release_year_text_align", "render": function(data,type,full,meta){
-            return (data) ? data.release_year : '';
+		{"data": "release_year","sClass":"text_align release_year_text_align", "render": function(data,type,full,meta){
+            return (data) ? data : '';
         }},
-        {"data": "setting_art_no","sClass":"text_align", "render": function(data,type,full,meta){
-            return data;
+		{"data": "art_no","sClass":"text_align", "render": function(data,type,full,meta){
+            return (data) ? data : '';
         }},
-        {"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
-        }},
-        {"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
-            if(data == "1")
-              var vechile_setting_status = 'active';
-            else
-              var vechile_setting_status = '';
-            return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+full._id+'" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
+        {"data": "vehicle_setting","sClass":"text_align", "render": function(data,type,full,meta){
+				var vechile_setting_status = '';
+				var vechile_setting__id = 0;
+							if(data && data[0]){
+								if(data[0]['setting_status'] == '1'){
+									var vechile_setting_status = 'active';
+								}
+								var vechile_setting__id = data[0]._id;
+							}
+            // if(data == "1")
+              // var vechile_setting_status = 'active';
+            // else
+              // var vechile_setting_status = '';
+            return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+vechile_setting__id+'" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
         }},
         {"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+			// <a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a>
+			var all_vall = '<a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a>';
+				all_vall += '<a href="#" class="delete-user" data-id="'+data+'"><i class="fa fa-trash" title="Delete vehicle"></i></a>';
+				// <a href="javascript::void(0)" class="qr-code" data-id="'+data+'" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>
 			// <a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a> 
 			// <a href="vehicle/'+full.vehicle_id+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Edit vehicle"></i></a>
-            return '<a href="#" class="delete-user" data-id="'+data+'"><i class="fa fa-trash" title="Delete vehicle"></i></a><a href="vehicle-view/'+full.vehicle_id+'" class="edit-user" data-id="'+full.vehicle_id+'"><i class="fa fa-eye" title="View"></i></a><a href="javascript::void(0)" class="qr-code" data-id="'+data+'" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>';
+            return all_vall;
         }},
       ]
     });
@@ -297,34 +309,40 @@
 					}
 				},
 				"columns": [
-					{"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
+					// {"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
+							// return data;
+					// }},
+					{"data": "brand","sClass":"text_align", "render": function(data,type,full,meta){
+						return (data) ? data : '';
 					}},
-					{"data": "getvehicle","sClass":"text_align", "render": function(data,type,full,meta){
-							return data.model;
+					{"data": "model","sClass":"text_align", "render": function(data,type,full,meta){
+						return (data) ? data : '';
 					}},
-					{"data": "getvehicle","sClass":"text_align", "render": function(data,type,full,meta){
-							return data.brand;
+					{"data": "model_spec","sClass":"text_align", "render": function(data,type,full,meta){
+						return (data) ? data : '';
 					}},
-					{"data": "daylight_auto_on","sClass":"text_align release_year_text_align", "render": function(data,type,full,meta){
-							return full.getvehicle.release_year;
+					{"data": "release_year","sClass":"text_align release_year_text_align", "render": function(data,type,full,meta){
+						return (data) ? data : '';
 					}},
-					{"data": "setting_art_no","sClass":"text_align", "render": function(data,type,full,meta){
-						return data;
+					{"data": "art_no","sClass":"text_align", "render": function(data,type,full,meta){
+						return (data) ? data : '';
 					}},
-					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
-							return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
-					}},
-					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
-							if(data == "1")
+					// {"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
+							// return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
+					// }},
+					{"data": "vehicle_setting","sClass":"text_align", "render": function(data,type,full,meta){
+							if(data && data[0] && data[0]['setting_status'] == '1'){
 								var vechile_setting_status = 'active';
-							else
+								var vechile_setting__id = data[0]['_id'];
+							}else{
 								var vechile_setting_status = '';
-							return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+full._id+'" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
+								var vechile_setting__id = 0;
+							}
+							return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+vechile_setting__id+'" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
 					}},
 					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
 						// return '<a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a> <a href="#" class="delete-user" data-id="'+data+'" data-token="{{ csrf_token() }}"><i class="fa fa-trash" title="Delete vehicle"></i></a><br /><a href="vehicle-view/'+full.vehicle_id+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a><a href="vehicle/'+full.vehicle_id+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Edit vehicle"></i></a>';
-						return '<a href="#" class="delete-user" data-id="'+data+'"><i class="fa fa-trash" title="Delete vehicle"></i></a>&nbsp;<a href="vehicle-view/'+full.vehicle_id+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a>';
+						return '<a href="#" class="delete-user" data-id="'+data+'"><i class="fa fa-trash" title="Delete vehicle"></i></a>&nbsp;<a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a>';
 					}},
 				]
 			});
@@ -432,7 +450,7 @@
 						// $("#UpdateuserSetting").trigger("reset");
 						window.location.href = "./redirect/view-vehicle?message="+result.message;
 					else
-						window.location.href = "../redirect/view-vehicle?message="+result.message;
+						window.location.href = "../redirect/settings?setting_id="+result.setting_id+"&message="+result.message;
 				}else{
 					$('#password').after('<em class="error help-block">'+result.message+'</em>');
 				}
@@ -441,15 +459,7 @@
 		event.preventDefault();
 	});
 	
-	$(document).on('click', '.updateuserSetting .btn.btn-sm.btn-secondary.btn-toggle', function(){
-			$('input[name="motor_off"]').val($(this).attr("aria-pressed"));
-			if($(this).attr("aria-pressed") == 'true')
-			{
-				$('div[class="form-group motor_off_status"]').show();
-			}else{
-				$('div[class="form-group motor_off_status"]').hide();
-			}
-	});
+	
 	
 	$('.viewtable #Updateuser').submit(function(event){
 		$('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/public/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
@@ -560,12 +570,39 @@
 						return true;
 					}
 				});
-				
+			
+			$('input[name="gearbox_amount_of_gears"]').on('keyup', function () {
+				var my_value = $(this).val();
+				if(my_value && my_value >= 4 && my_value <=8){
+					var length_input = $('input[name="max_speed_per_gears[]"]').length;
+					console.log(my_value+' || '+length_input);
+					if(my_value < 8){
+						$('input[id="max_speed_per_gears8"]').remove();
+					}
+					if(my_value < 7){
+						$('input[id="max_speed_per_gears7"]').remove();
+					}
+					if(my_value < 6){
+						$('input[id="max_speed_per_gears6"]').remove();
+					}
+					if(my_value < 5){
+						$('input[id="max_speed_per_gears5"]').remove();
+					}
+					if(my_value > length_input)
+					{
+						for(var i = length_input+1; i <= my_value; i++) {
+							$('input[id="max_speed_per_gears4"]').after('<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" id="max_speed_per_gears'+i+'">');
+						}
+					}
+						
+					
+					
+				}
+			});
+			
+		
+  });  
 		function form_return()
 		{
 			window.history.back();
 		}
-  });
-  
-  
-		

@@ -38,7 +38,7 @@
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
 							  <div class="carousel-inner">
 								<div class="carousel-item active">
-								  <img class="d-block w-100" src="{{ url('/public/qrcode/5dfa5f795da0ec0aa277de75png') }}" alt="First slide">
+								  <img class="d-block w-100" src="{{ url('/public/qrcode/qrcodepng') }}" alt="First slide">
 								</div>
 							  </div>
 							</div>

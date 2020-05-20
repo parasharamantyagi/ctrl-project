@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVehicleSettingTable extends Migration
+class CreateUserVehicleSettingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateVehicleSettingTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_settings', function (Blueprint $table) {
+        Schema::create('user_vehicle_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('vehicle_id');
             $table->string('background_color');

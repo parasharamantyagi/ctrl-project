@@ -53,8 +53,13 @@
 						<input type="text" class="form-control" name="state" value="{{$userForm->state}}" id="state">
 					</div>
 					<div class="form-group">
-						<label>Country</label>
-						<input type="text" class="form-control" name="country" value="{{$userForm->country}}" id="country">
+						<label>Country</label><br>
+						<select class="form-control selectpickerss" data-size="5" data-live-search="true" name="country" id="country" required="">
+								<option value="" selected disabled>Country</option>
+								@foreach(get_country() as $country)
+								  <option value="{{$country}}"  <?php echo ($userForm->country == $country) ? 'selected':''; ?>>{{$country}}</option>
+								@endForeach
+						</select>
 					</div>
 					
 				</div>
@@ -121,9 +126,9 @@
 
 @section('script')
 	<script>
-				// $(document).ready(function(){
-					
-				// });
+				$(document).ready(function(){
+					$(".selectpickerss").select2();
+				});
 				
 				
 		

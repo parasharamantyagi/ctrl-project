@@ -48,6 +48,10 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::post('get-vehicle-qrcode','VehicleController@getVehicleQrcode');
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
 		Route::get('owned','VehicleController@viewOwnedVehicleAll');
+		Route::get('get-vehicle-id/{id}','VehicleController@getVehicleId');
+		Route::get('multimedia','VehicleController@multimediaAction');
+		Route::post('multimedia','VehicleController@multimediaActionPost');
+		Route::get('car-button','VehicleController@carButton');
 		
 		Route::resource('edit-tables', 'EditTableController');
 		
@@ -90,6 +94,7 @@ Route::namespace('Admin')->prefix('manufacturer')->group(function () {
 		Route::get('vehicle-view/{id}','VehicleController@vehicleview');
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
 		Route::get('owned','VehicleController@viewOwnedVehicleAll');
+		Route::get('get-vehicle-id/{id}','VehicleController@getVehicleId');
 		
 		Route::resource('edit-tables', 'EditTableController');
 		Route::resource('create-new-car', 'CreateNewCarController');

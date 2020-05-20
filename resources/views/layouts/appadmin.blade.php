@@ -62,7 +62,7 @@
         <li class="nav-item {{ Request::segment(2) == 'settings' ? 'active': '' }}">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('settings')) }}">SETTINGS</a>
         </li -->
-        <li class="nav-item navbar-parent {{ Request::segment(2) == 'vehicle' || Request::segment(2) == 'view-vehicle' || Request::segment(2) == 'owned' ? 'active': '' }}">
+        <li class="nav-item navbar-parent {{ Request::segment(2) == 'vehicle' || Request::segment(2) == 'view-vehicle' || Request::segment(2) == 'qr-code' || Request::segment(2) == 'owned' ? 'active': '' }}">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('view-vehicle')) }}">Product</a>
         </li>
 		  <ul class="navbar-nav">
@@ -74,6 +74,9 @@
 			</li>
 			<li class="nav-item {{ Request::segment(2) == 'owned' ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('owned')) }}">- Owned</a>
+			</li>
+			<li class="nav-item {{ Request::segment(2) == 'qr-code' ? 'active': '' }}">
+			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="{{ url(user_role('qr-code')) }}">- qr-code</a>
 			</li>
 			<!--li class="nav-item {{ Request::segment(2) == 'led-config' ? 'active': '' }}">
 			  <a class="nav-link nav-link-submenu js-scroll-trigger" href="#led-config">- Led Config</a>
@@ -105,13 +108,13 @@
 			</li>
 		</ul>
 		
-		<li class="nav-item navbar-parent">
+		<!--li class="nav-item navbar-parent">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('create-new-car')) }}" target="_blank">TOOL-1</a>
         </li>
 		
 		<li class="nav-item navbar-parent">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url(user_role('create-excel-sheet')) }}" target="_blank">TOOL-2</a>
-        </li>
+        </li -->
 		
         <li class="nav-item">
           <a class="nav-link nav-link-main js-scroll-trigger" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>

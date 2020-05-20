@@ -10,8 +10,11 @@
 		a i.fa {
 			padding: 18px 4px 0px 0px;
 		}
-		td.text_align.release_year_text_align {
-			text-align: center;
+		// td.text_align.release_year_text_align {
+			// text-align: center;
+		// }
+		table.dataTable thead th {
+			padding: 3px 45px 3px 3px;
 		}
 </style>
 
@@ -46,7 +49,7 @@
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
 							  <div class="carousel-inner">
 								<div class="carousel-item active">
-								  <img class="d-block w-100" src="{{ url('/public/qrcode/5dfa5f795da0ec0aa277de75png') }}" alt="First slide">
+								  <img class="d-block w-100" src="{{ url('/public/qrcode/qrcodepng') }}" alt="First slide">
 								</div>
 							  </div>
 							</div>
@@ -94,13 +97,13 @@
 					<table id="exampleViewVehicleInfoAll" class="table table-hover table-striped users-table">
 						<thead>
               <tr role="row">
-								<!-- th>Sr No.</th -->
-								<th>Qr code</th>
-								<th>Model</th>
+								<!-- th>Sr No.</th>
+								<th>Qr code</th -->
 								<th>Brand name</th>
+								<th>Model</th>
+								<th>Model specification</th>
 								<th>Release year</th>
 								<th>Art&nbsp;No</th>
-								<th>Product status</th>
 								<th>Status</th>
 								<th>Action</th>
 							</tr>

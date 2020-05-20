@@ -39,7 +39,8 @@
 <script src="{{ url('/public/excel/jsuites.js') }}"></script>
 <script>
 	var resultDatas = '{{ $page_info["inputData"] }}';
-	var result_inputData_val = JSON.parse(('{{ $page_info["inputData_val"] }}').replace(/&quot;/g,'"')).leds;
+	var resultData = JSON.parse(resultDatas.replace(/&quot;/g,'"')).leds;
+	var result_inputData_val = resultData;
 
 	function inputDataGet(position_val) {
 			var found_val = "";
@@ -52,7 +53,7 @@
 		return found_val;
 }
 
-	var resultData = JSON.parse(resultDatas.replace(/&quot;/g,'"'));
+	
 
 	const allKey = Object.keys(resultData);
 	function download(file, text) {
@@ -66,10 +67,10 @@
                 }
 
 	var allBitVal = Object.values(resultData);
-	var bitVal = allBitVal.map(function(data) {
-			return data.bit.toString();
-	});
-	var pinData = result_inputData_val.map(function(data) {
+	// var bitVal = allBitVal.map(function(data) {
+			// return data.bit.toString();
+	// });
+	var pinData = resultData.map(function(data) {
 			return data.position;
 	});
 	var jsexcel_event = function(instance, cell, col, row, val) {
@@ -132,7 +133,7 @@
 			],
 		],
 		columns: [
-			{ type: 'autocomplete', width: 300, source:allKey },
+			{ type: 'autocomplete', width: 300, source:['X-Light','DayLight','Low beam','High beam','Biinkers left','Biinkers right','Rear Light'] },
 			{ type: 'autocomplete', width: 200, source:pinData },
 			{ type: 'text' },
 			{ type: 'text' }
@@ -146,6 +147,10 @@
 
 
 	$(document).ready(function(){
+		
+		
+		
+		var bit_position = { "X-Light": "12", "DayLight": "6", "Low beam": "7", "High beam": "8", "Biinkers left": "9", "Biinkers right": "10", "Rear Light": "11"};
 	  $('input[class="btn btn-primary save"]').click(function(){
 			var position = $('#spreadsheet').jexcel('getColumnData', 1);
 			var bits = $('#spreadsheet').jexcel('getColumnData', 0);
@@ -158,10 +163,10 @@
 			var val_stop_2 = $('#spreadsheet').jexcel('getColumnData', 7);
 
 			var final_data = position.map(function(currentValue, index, arr){
-				if(bits[index])
-				{
-					var index_bit_data = resultData[bits[index]].bit;
-				}
+				// if(bits[index])
+				// {
+					var index_bit_data = bit_position.currentValue;
+				// }
 				
 				var final_array_Pos = [];
 				if(val_t_1[index] || val_start_1[index])
@@ -180,9 +185,7 @@
 						};
 			});
 				
-			// console.log(JSON.stringify(final_data));
 			var final_array = [];
-			// var empty_array = [];
 			for (var i = 0; i < final_data.length; i++) {
 					if(final_data[i].bit && final_data[i].pin)
 					{
@@ -192,7 +195,6 @@
 
 			var myJSON = JSON.stringify({sequences:final_array});
 			download("data.json", myJSON);
-			// console.log(myJSON);
 	  });
 	  
 			$('body').click(function() {
@@ -203,18 +205,12 @@
 				var fileName = e.target.files[0]. type; //name
 				if(fileName === 'application/json')
 				{
-					// <label class="file_name"></label>
 					$('label[class="file_name"]').html(e.target.files[0].name);
 					$('label[class="uploded_file_error"]').html('');
-					// $("form").submit(function(){ return true; });
 				}else{
 					$('label[class="file_name"]').html('');
 					$('label[class="uploded_file_error"]').html('Sorry you can upload only json file!');
-					// $("#").submit(function(){ return false; });
 				}
-				// uploded_file_error
-				// console.log(fileName);
-			// alert('The file "' + fileName + '" has been selected.' );
 			});
 	
 	});

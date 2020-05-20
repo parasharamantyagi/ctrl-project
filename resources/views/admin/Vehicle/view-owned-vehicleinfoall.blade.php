@@ -13,8 +13,11 @@ th {
 a i.fa {
     padding: 16px 0px 0px 0px;
 }
-td.text_align.release_year_text_align {
-			text-align: center;
+// td.text_align.release_year_text_align {
+			// text-align: center;
+		// }
+		table.dataTable thead th {
+			padding: 3px 45px 3px 3px;
 		}
 </style>
 
@@ -35,13 +38,14 @@ td.text_align.release_year_text_align {
 					<table id="exampleViewOwnedVehicleInfoAll" class="table table-hover table-striped">
 						<thead>
 							<tr role="row">
-								<!-- th>Sr No.</th -->
-								<th>Qr code</th>
-								<th>Model</th>
+								<!-- th>Sr No.</th>
+								<th>Qr code</th -->
 								<th>Brand name</th>
+								<th>Model</th>
+								<th>Model specification</th>
 								<th>Release year</th>
 								<th>Art&nbsp;No</th>
-								<th>Product status</th>
+								<!-- th>Product status</th -->
 								<th>Status</th>
 								<th>Action</th>
 							</tr>
