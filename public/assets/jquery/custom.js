@@ -147,7 +147,7 @@
 		$('.adduser-parent #Updateuser').submit(function(event){
 			$('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/public/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
 				var val_return = true;
-				if($('input[name="phone_no"]').val().length < 10)
+				if($('input[name="phone_no"]').val() != "" && $('input[name="phone_no"]').val().length < 10)
 				{
 					$('#ctrlscrolbar').html('');
 					$('#phone_noValidation').html('<font color="red">Min 10 characters are required.</font>');
@@ -192,7 +192,7 @@
 						if(response.status === false)
 						{
 							$('#'+response.type).html('<font color="red">'+response.message+'</font>');
-						}else{
+						}else if(response.status === true){
 							window.location.href = "../redirect/users?message="+response.message;
 						}
 					}

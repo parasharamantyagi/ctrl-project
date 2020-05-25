@@ -20,4 +20,9 @@ class Vehicle extends Eloquent
         {
             return $this->hasMany('App\VehicleSetting');
         }
+		
+	public function vehicle_logo()
+        {
+            return $this->hasOne('App\VehicleLogo');
+        }
 }

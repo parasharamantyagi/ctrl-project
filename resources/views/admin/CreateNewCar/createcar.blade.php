@@ -9,6 +9,17 @@
 			.image-upload-img { width: 60px; cursor: pointer; margin-top: 0px; }
 	</style>
 			<style>
+			
+				.blink-bg{
+					animation: blinkingBackground 1s infinite;
+				}
+				@keyframes blinkingBackground{
+					0%		{ background-color: #cacce3;}
+					25%		{ background-color: #aaafe3;}
+					50%		{ background-color: #8d95eb;}
+					75%		{ background-color: #646fed;}
+					100%	{ background-color: #0013f0;}
+				}
 				.myTable
 					{
 						width: 1100px;
@@ -21,6 +32,11 @@
 						width: 50px;
 						text-align: center;
 					}
+				
+				// .myTable tbody tr td.child{
+						// border-radius: 37px;
+						// height: 70px;
+				// }
 				.container {
 						padding-top: 40px;
 					}
@@ -106,6 +122,7 @@
 					}
 				
 				
+									
 				select {
 					width: 50%;
 					border-radius: 0.25rem;
@@ -136,6 +153,20 @@
 					margin: 3px;
 					margin-right: 7px;
 				}
+				td.jexcel_dropdown {
+					font-size: 15px;
+				}
+				.pp_class {
+					font-size: 15px;
+				}
+				.excel_sav_button {
+					padding: 7px 84px;
+				}
+				// .my_progress_bar {
+				  // width: 1%;
+				  // height: 21px;
+				  // background-color: #4CAF50;
+				// }
 			</style>
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	</head>
@@ -555,27 +586,41 @@
 					<div class="modal-header">
 									<input type="submit" class="btn btn-primary car" value="Save changes">
 					</div>
-				
+					
 				<div class="modal-header">
-					<button type="button" data-id="X-Light" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="X-Light">X-Light</span>
-					<button type="button" data-id="DayLight" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="DayLight">DayLight</span>
+					<button type="button" data-id="Bluetooth connect" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Bluetooth connect">Bluetooth connect</span>
+					<button type="button" data-id="Lights (beam + rear)" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Lights (beam + rear)">Lights (beam + rear)</span>
+					<button type="button" data-id="Daylight left" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Daylight left">Daylight left</span>
+					<button type="button" data-id="Daylight right" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Daylight right">Daylight right</span>
 					<button type="button" data-id="Low beam" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Low beam">Low beam</span>
 					<button type="button" data-id="High beam" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="High beam">High beam</span>
 					<button type="button" data-id="Blinkers left" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Blinkers left">Blinkers left</span>
 					<button type="button" data-id="Blinkers right" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Blinkers right">Blinkers right</span>
 					<button type="button" data-id="Rear Light" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Rear Light">Rear Light</span>
+					<button type="button" data-id="Brake lights" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Brake lights">Brake lights</span>
+					<button type="button" data-id="X-Light" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="X-Light">X-Light</span>
+					<button type="button" data-id="Hazard light" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Hazard light">Hazard light</span>
+					<button type="button" data-id="Demo" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Demo">Demo</span>
+					<button type="button" data-id="Bluetooth advertising" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Bluetooth advertising">Bluetooth advertising</span>
+					<button type="button" data-id="Battery charging indication" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Battery charging indication">Battery charging indication</span>
+					<button type="button" data-id="Power ON indication" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Power ON indication">Power ON indication</span>
+					<button type="button" data-id="Power OFF indication" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Power OFF indication">Power OFF indication</span>
+					<button type="button" data-id="Bluetooth disconnect" class="btn btn-danger invalid">&nbsp;Test&nbsp;</button><span class="span invalid" data-id="Bluetooth disconnect">Bluetooth disconnect</span>
 				</div>
 				
 		</div>
 		<br>
-		<div class="container_check"><input type="checkbox" id="blinkers_override" name="blinkers_override" value="1" <?php echo (!empty($blinkers_override['blinkers_override_l']) || !empty($blinkers_override['blinkers_override_r'])) ? 'checked':''; ?>> Disable the following pins when blinkers are used: left <input type="text" id="blinkers_override_l" name="blinkers_override_l" value="{{ implode(',',$blinkers_override['blinkers_override_l']) }}"> right <input type="text" id="blinkers_override_r" name="blinkers_override_r" value="{{ implode(',',$blinkers_override['blinkers_override_r']) }}"> (if multiple values, use comma to separate)</div>
+		<div class="container_check"><p class="pp_class"><input type="checkbox" id="blinkers_override" name="blinkers_override" value="1" <?php echo (!empty($blinkers_override['blinkers_override_l']) || !empty($blinkers_override['blinkers_override_r'])) ? 'checked':''; ?>> Disable the following pins when blinkers are used: left <input type="text" id="blinkers_override_l" name="blinkers_override_l" value="{{ implode(',',$blinkers_override['blinkers_override_l']) }}"> right <input type="text" id="blinkers_override_r" name="blinkers_override_r" value="{{ implode(',',$blinkers_override['blinkers_override_r']) }}"> (if multiple values, use comma to separate)</p></div>
 		<br><br>
-			<label><a href='' onclick="$('#spreadsheet').jexcel('insertRow'); event.preventDefault(); return false;">Add row</a></label>
+		<div class="excel_sav_button">
+		<label><a href='' onclick="$('#spreadsheet').jexcel('insertRow'); event.preventDefault(); return false;">Add row</a></label>
+		<label><a href='javascript:void(0)' onclick="insertColumns()">Add column</a></label>
 		<br>
 		<div id="spreadsheet"></div>
 		<br><br>
 		<div class="modal-header">
 			<input type="submit" class="btn btn-primary save" value="Save changes">
+		</div>
 		</div>
 		
 	<script src="{{ url('/public/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
@@ -844,9 +889,13 @@
 	// var bitVal = allBitVal.map(function(data) {
 			// return data.bit.toString();
 	// });
-	var pinData = resultData.map(function(data) {
-			return data.position;
+	var pinDatas = resultData.map(function(data) {
+			return data.pin;
 	});
+	var pinData = pinDatas.sort((a,b)=>a-b);
+	
+	// console.log(pinData);
+	// console.log(resultData);
 	
 	function getKeyByValue(object, value) {
 	  return Object.keys(object).find(key => object[key] === value);
@@ -855,7 +904,7 @@
 	// var bit_position = { "X-Light": 12, "DayLight": 6, "Low beam": 7, "High beam": 8, "Blinkers left": 9, "Blinkers right": 10, "Rear Light": 11};
 	// var bit_position = { "X-Light": 10, "DayLight": 2, "Low beam": 4, "High beam": 5, "Blinkers left": 6, "Blinkers right": 7, "Rear Light": 8};
 	
-	var bit_position = { "Bluetooth connect": 0, "Lights (low beam + rear lights)": 1, "Daylight left": 2,"Daylight right": 3, "High beam": 5, "Blinkers left": 6, "Blinkers right": 7, "Rear Light": 8, "Brake lights": 9, "X-Light": 10, "Hazard light": 12, "Demo": 34,"Bluetooth advertising":35, "Battery charging indication": 36, "Power ON indication": 37, "Power OFF indication": 38, "Bluetooth disconnect": 39};
+	var bit_position = { "Bluetooth connect": 0, "Lights (beam + rear)": 1, "Daylight left": 2,"Daylight right": 3, "High beam": 5, "Blinkers left": 6, "Blinkers right": 7, "Rear Light": 8, "Brake lights": 9, "X-Light": 10, "Hazard light": 12, "Demo": 34,"Bluetooth advertising":35, "Battery charging indication": 36, "Power ON indication": 37, "Power OFF indication": 38, "Bluetooth disconnect": 39};
 	var jsexcel_event = function(instance, cell, col, row, val) {
 			var value_1 = $('#spreadsheet').jexcel('getColumnData', 2);
 			var value_2 = $('#spreadsheet').jexcel('getColumnData', 5);
@@ -920,6 +969,7 @@
 			var sum_var = Number(time_0) + Number(time_1) + Number(time_2) + Number(time_3) + Number(time_4);
 			
 			// console.log(getKeyByValue(bit_position,key.bit));
+			// console.log(getKeyByValue(bit_position,key.bit));
 			$('button[data-id="'+getKeyByValue(bit_position,key.bit)+'"]').removeClass("invalid");
 			$('span[data-id="'+getKeyByValue(bit_position,key.bit)+'"]').removeClass("invalid");
 			
@@ -933,9 +983,20 @@
 	
 	// var data1 = [excel_data];
 	
+	var imp = 0;
+	function insertColumns(){
+		// $('#spreadsheet').jexcel('insertColumn', 3, null, 2);
+		// event.preventDefault(); return false;
+		// console.log(imp);
+		return imp;
+		imp++;
+	}
+	
+	
+	
 	var table = jexcel(document.getElementById('spreadsheet'), {
 		data:data1,
-		colHeaders: [ 'Sequence','Position', 'T', 'Start', 'Stop' , 'T', 'Start', 'Stop', 'T', 'Start', 'Stop', 'T', 'Start', 'Stop', 'T', 'Start', 'Stop', 'ms' ],
+		colHeaders: [ 'Sequence','Pin number', 'T', 'Start', 'Stop' , 'T', 'Start', 'Stop', 'T', 'Start', 'Stop', 'T', 'Start', 'Stop', 'T', 'Start', 'Stop', 'ms' ],
 		nestedHeaders:[
 			[
 				{ title:''},
@@ -945,7 +1006,6 @@
 			[
 				{ title:''},
 				{ title:''},
-				// { title:' Other Information', colspan:'2' }
 				{ title:' 1',colspan:'3'},
 				{ title:' 2',colspan:'3'},
 				{ title:' 3',colspan:'3'},
@@ -955,8 +1015,8 @@
 			],
 		],
 		columns: [
-			{ type: 'autocomplete', width: 300, source:['Bluetooth connect','Lights (low beam + rear lights)','Daylight left','Daylight right','Low beam','High beam','Blinkers left','Blinkers right', 'Rear Light', 'Brake lights','X-Light','Hazard light','Demo','Bluetooth advertising','Battery charging indication','Power ON indication','Power OFF indication','Bluetooth disconnect'] },
-			{ type: 'autocomplete', width: 200, source:pinData },
+			{ type: 'autocomplete', width: 200, source:['Bluetooth connect','Lights (beam + rear)','Daylight left','Daylight right','Low beam','High beam','Blinkers left','Blinkers right', 'Rear Light', 'Brake lights','X-Light','Hazard light','Demo','Bluetooth advertising','Battery charging indication','Power ON indication','Power OFF indication','Bluetooth disconnect'] },
+			{ type: 'autocomplete', width: 120, source:pinData },
 			{ type: 'text' },
 			{ type: 'text' }
 		],
@@ -972,6 +1032,7 @@
 	  $('input[class="btn btn-primary save"]').click(function(){
 			var position = $('#spreadsheet').jexcel('getColumnData', 1);
 			var bits = $('#spreadsheet').jexcel('getColumnData', 0);
+			
 			var val_t_1 = $('#spreadsheet').jexcel('getColumnData', 2);
 			var val_start_1 = $('#spreadsheet').jexcel('getColumnData', 3);
 			var val_stop_1 = $('#spreadsheet').jexcel('getColumnData', 4);
@@ -979,6 +1040,18 @@
 			var val_t_2 = $('#spreadsheet').jexcel('getColumnData', 5);
 			var val_start_2 = $('#spreadsheet').jexcel('getColumnData', 6);
 			var val_stop_2 = $('#spreadsheet').jexcel('getColumnData', 7);
+			
+			var val_t_3 = $('#spreadsheet').jexcel('getColumnData', 8);
+			var val_start_3 = $('#spreadsheet').jexcel('getColumnData', 9);
+			var val_stop_3 = $('#spreadsheet').jexcel('getColumnData', 10);
+			
+			var val_t_4 = $('#spreadsheet').jexcel('getColumnData', 11);
+			var val_start_4 = $('#spreadsheet').jexcel('getColumnData', 12);
+			var val_stop_4 = $('#spreadsheet').jexcel('getColumnData', 13);
+			
+			var val_t_5 = $('#spreadsheet').jexcel('getColumnData', 14);
+			var val_start_5 = $('#spreadsheet').jexcel('getColumnData', 15);
+			var val_stop_5 = $('#spreadsheet').jexcel('getColumnData', 16);
 			
 			var final_data_position = position.map(function(currentValue, index, arr){
 				var index_bit_data = bit_position[bits[index]];
@@ -991,9 +1064,21 @@
 				{
 					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_2[index]),'start':Number(val_start_2[index]),'stop':Number(val_stop_2[index])});
 				}
+				if(val_t_3[index] || val_start_3[index])
+				{
+					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_3[index]),'start':Number(val_start_3[index]),'stop':Number(val_stop_3[index])});
+				}
+				if(val_t_4[index] || val_start_4[index])
+				{
+					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_4[index]),'start':Number(val_start_4[index]),'stop':Number(val_stop_4[index])});
+				}
+				if(val_t_5[index] || val_start_5[index])
+				{
+					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_5[index]),'start':Number(val_start_5[index]),'stop':Number(val_stop_5[index])});
+				}
 				return 	{
 							'bit':index_bit_data,
-							'pin':Number(inputDataGet(currentValue)),
+							'pin':Number(currentValue),
 							'position':currentValue,
 							'data': final_array_Pos
 						};
@@ -1014,7 +1099,7 @@
 				}
 				return 	{
 							'bit':index_bit_data,
-							'pin':Number(inputDataGet(currentValue)),
+							'pin':Number(currentValue),
 							'data': final_array_Pos
 						};
 			});
@@ -1100,20 +1185,54 @@
 		$('button[class="btn btn-danger"]').click(function(){
 			var val_ues = bit_position[$(this).data('id')];
 				var my_val_data_val_ues = inputDataReturn_key_all(val_ues);
-				
 				// console.log(my_val_data_val_ues);
+				// $('td[data-position="F6"]').css("transition", "all .6s ease-out");
+				// $('td[data-position="F8"]').addClass("green");
+	
 				
+				var i_v = Math.round(255 * 0.392156862745098);	
+				var time_end = (i_v * 10);
 				for(var i = 0; i < my_val_data_val_ues.length; i++) {
-					$('td[data-position="'+my_val_data_val_ues[i]+'"]').addClass("green");
-					apperance(my_val_data_val_ues[i]);
+					// console.log(inputDataReturn_key(my_val_data_val_ues[i]));
+					// $('td[data-position="'+inputDataReturn_key(my_val_data_val_ues[i])+'"]').text('');
+					$('td[data-position="'+inputDataReturn_key(my_val_data_val_ues[i])+'"]').addClass("blink-bg");
+					// append('<div class="my_progress_bar">'+my_val_data_val_ues[i]+'</div>');
+					// $('td[data-position="'+inputDataReturn_key(my_val_data_val_ues[i])+'"]').css("transition", "all .6s ease-out");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					// $('td[data-position="'+inputDataReturn_key(my_val_data_val_ues[i])+'"]').addClass("green");
+					
+					// ,my_val_data_val_ues[i]
+					apperance(inputDataReturn_key(my_val_data_val_ues[i]),time_end);
 				}
+			
 				
-				
-				function apperance(i) {
+				// console.log(time_end);
+				function apperance(i,time_end) {
 					setTimeout(function() {
-						$('td[data-position="'+i+'"]').removeClass("green");
-					}, 500);
+						// .children('div').remove();
+						$('td[data-position="'+i+'"]').removeClass('blink-bg');
+						// $('td[data-position="'+i+'"]').text(val);
+					}, time_end);
 				}
+				// var i = 0;
+				
+				// function move() {
+				  // if (i == 0) {
+					// i = 1;
+					// var elem = $('.myTable td div[class="my_progress_bar"]');
+					// var width = 1;
+					// var id = setInterval(frame, 10);
+					// function frame() {
+					  // if (width >= i_v) {
+						// clearInterval(id);
+						// i = 0;
+					  // } else {
+						// width++;
+						// elem.css({"width":width + "%","height":"100%"});
+					  // }
+					// }
+				  // }
+				// }
+				// move();
 				
 		});
 		$('span[class="span invalid"]').remove();

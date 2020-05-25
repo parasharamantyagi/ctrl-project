@@ -52,6 +52,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('multimedia','VehicleController@multimediaAction');
 		Route::post('multimedia','VehicleController@multimediaActionPost');
 		Route::get('car-button','VehicleController@carButton');
+		Route::post('car-button','VehicleController@carButtonPost');
 		
 		Route::resource('edit-tables', 'EditTableController');
 		

@@ -7,7 +7,7 @@
 			margin: 3px;
 		}
 		a i.fa {
-			padding: 0px 2px;
+			padding: 5px 2px;
 		}
 </style>
 

@@ -160,7 +160,7 @@
 						<input type="text" class="form-control numeric-val" name="lower_gear_shift_value" value="{{(int)$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value">
 					</div>
 					<div class="form-group">
-						<label>Gear shift A value (ms)</label>
+						<label>Gear shift A value (ms) + revving</label>
 						<input type="text" class="form-control numeric-val" name="gear_shift_a_value" value="{{(int)$userForm->gear_shift_a_value}}" id="gear_shift_a_value">
 					</div>
 					<div class="form-group">
@@ -168,7 +168,7 @@
 						<input type="text" class="form-control numeric-val" name="gear_shift_b_value" value="{{(int)$userForm->gear_shift_b_value}}" id="gear_shift_b_value">
 					</div>
 					<div class="form-group">
-						<label>Gear shift A (rpm value)</label>
+						<label>Gear shift A (rpm value) + revving</label>
 						<input type="text" class="form-control numeric-val" name="gear_shift_a_rpm_value" value="{{(int)$userForm->gear_shift_a_rpm_value}}" id="gear_shift_a_rpm_value">
 					</div>
 					<!-- div class="form-group">

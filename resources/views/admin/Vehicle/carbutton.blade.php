@@ -63,7 +63,7 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="1"></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -86,7 +86,7 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="2"></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -109,7 +109,7 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="3"></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -132,7 +132,7 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="4"></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -155,7 +155,7 @@
 							<td><img src="{{url('public/assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
 						</tr>
 					</tbody>	
-					<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+					<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="5"></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -183,7 +183,7 @@
 								
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="1"></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -207,7 +207,7 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/straight_reverse@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="table1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="2"></center></td></tr></tfoot>
 					</table>
 					
 				</div>

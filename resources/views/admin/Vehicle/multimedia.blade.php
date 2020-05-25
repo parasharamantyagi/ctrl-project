@@ -8,17 +8,18 @@
 		.column { float: left; width: 50%; padding: 10px;}
 			/* Clear floats after the columns */
 		.row:after { content: ""; display: table; clear: both; }
-		.form-control { width: 50% !important; }
+		.form-control { width: 65% !important; }
 		.pad3_image_image {width: 338px; height: 113px;}
-		.icone_image_image {width: 55px; height:58px; margin-left: 25px;}
-		.logo_image_image {width: 37.5px; height:55px;}
+		.icone_image_image {width: 55px; height:58px;}
+		.logo_image_image {width: 37.5px; height:40px;}
 		.pad2_image_image {width: 225px; height:225px}
-		
-		 
+		.div_logo_image_image {border: 2px solid #a4acb3; padding: 8px; width: 56px; height: 56px; }
+		.div_icone_image_image {border: 2px solid #a4acb3; width: 60px; height: 60px; margin-left: 67px; margin-top: -58px; }
+		.div_pad3_image_image { border: 2px solid #a4acb3; padding: 7px; width: 357px; height: 131px; }
+		.div_pad2_image_image { border: 2px solid #a4acb3; padding: 10px; width: 252px; height: 247px; }
 	</style>
 	<div class="page-content-wrap">
                     <!-- START ALERT BLOCKS -->
-	             
 <!-- END ALERT BLOCKS -->                    	
 		<form method="POST" action="" id="Updateuser" enctype="multipart/form-data">
 			{{ csrf_field() }}
@@ -46,20 +47,24 @@
 				<div class="column">
 					<div class="col-md-12">
 							<div class="form-group">
+								<label>Logo image (75x130 px)</label>
+								<input type="file" class="form-control" name="logo_image" id="logo_image">
+							</div>
+							<div class="form-group">
+								<label>Icon image (110x116 px)</label>
+								<input type="file" class="form-control" name="icone_image" id="icone_image">
+							</div>
+							<div class="form-group">
 								<label>Pad2 image (450×450 px)</label>
 								<input type="file" class="form-control" name="pad2_image" id="pad2_image">
 							</div>
 							<div class="form-group">
-								<label>Logo image (???×??? px)</label>
-								<input type="file" class="form-control" name="logo_image" id="logo_image">
-							</div>
-							<div class="form-group">
-								<label>Icon image (???×??? px)</label>
-								<input type="file" class="form-control" name="icone_image" id="icone_image">
-							</div>
-							<div class="form-group">
 								<label>Pad3 image (776×226 px)</label>
 								<input type="file" class="form-control" name="pad3_image" id="pad3_image">
+							</div>
+							<div class="form-group">
+								<label>Full screen movie links(separated with "?")</label>
+								<textarea class="form-control" name="full_screen_movie_links" id="full_screen_movie_links"></textarea>
 							</div>
 							<div class="form-group">
 								<label>Start engine sound</label>
@@ -99,14 +104,22 @@
 				<div class="column">
 					<div class="col-md-12">
 							<div class="form-group">
-								<img class="pad2_image_image" id="pad2_image_image" src="{{url('public/'.$userForm['pad2_image'])}}" alt="your image" />
+								<div class="div_logo_image_image">
+									<img class="logo_image_image" id="logo_image_image" src="{{url($userForm['logo_image'])}}" alt="your image" />
+								</div>
+								<div class="div_icone_image_image">
+									<img class="icone_image_image" id="icone_image_image" src="{{url($userForm['icone_image'])}}" alt="your image" />
+								</div>
 							</div>
 							<div class="form-group">
-								<img class="logo_image_image" id="logo_image_image" src="{{url('public/'.$userForm['logo_image'])}}" alt="your image" />
-								<img class="icone_image_image" id="icone_image_image" src="{{url('public/'.$userForm['icone_image'])}}" alt="your image" />
+								<div class="div_pad3_image_image">
+									<img class="pad3_image_image" id="pad3_image_image" src="{{url($userForm['pad3_image'])}}" alt="your image" />
+								</div>
 							</div>
 							<div class="form-group">
-								<img class="pad3_image_image" id="pad3_image_image" src="{{url('public/'.$userForm['pad3_image'])}}" alt="your image" />
+								<div class="div_pad2_image_image">
+									<img class="pad2_image_image" id="pad2_image_image" src="{{url($userForm['pad2_image'])}}" alt="your image" />
+								</div>
 							</div>
 					</div>
 				</div>

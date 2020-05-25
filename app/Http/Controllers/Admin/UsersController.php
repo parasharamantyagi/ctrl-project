@@ -15,6 +15,18 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	public function __construct(){
+		
+		$this->user_info = (object)array('id'=>'','name'=>'','email'=>'',
+								'first_name'=>'','last_name'=>'','parent_first_name'=>'','parent_last_name'=>'',
+								'role_id'=>'','phone_no'=>'','country'=>'',
+								'driver_name'=>'','unique_short_id'=>'',
+								'address'=>'','address_2'=>'','company_name'=>'',
+								'city'=>'','postal_code'=>'','state'=>'','language'=>'',
+								'date_of_birth'=>'','image'=>'/public/assets/userimages/userdefault.png'
+								);
+	}
+	
     public function index()
     {
 		// $userrecord = User::select('name','email','phone_no','image','status','device_type');
@@ -30,7 +42,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-	   $userForm = (object)array('id'=>'','name'=>'','email'=>'','role_id'=>'','phone_no'=>'','date_of_birth'=>'','image'=>'/public/assets/userimages/userdefault.png');
+	   $userForm = $this->user_info;
 	   $page_info['page_title'] = 'Add User';
 	   return view('admin/User/adduser')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/admin/users');
     }
@@ -93,8 +105,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-       $userData = User::find($id);
-	   $userForm = (object)array('id'=>$id,'name'=>$userData->name,'email'=>$userData->email,'role_id'=>$userData->role_id,'phone_no'=>$userData->phone_no,'date_of_birth'=>$userData->date_of_birth,'image'=>'/public/assets/userimages/'.$userData->image);
+       $userForm = User::find($id);
+	   // $userForm = (object)array('id'=>$id,'name'=>$userData->name,'email'=>$userData->email,'role_id'=>$userData->role_id,'phone_no'=>$userData->phone_no,'date_of_birth'=>$userData->date_of_birth,'image'=>'/public/assets/userimages/'.$userData->image);
 	   $page_info['page_title'] = 'Update User';
 	   return view('admin/User/adduser')->with('page_info', $page_info)->with('userForm', $userForm)->with('formaction','/admin/usersUpdate');
     }
@@ -107,7 +119,8 @@ class UsersController extends Controller
 		if($countUser) {
 			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
 		}else{
-		$resultArray = array('name'=>$request->input('name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'),'date_of_birth'=>$request->input('date_of_birth'));
+		$name_full = $request->input('first_name').' '.$request->input('last_name');
+		$resultArray = array('name'=>$name_full,'first_name'=>$request->input('first_name'),'last_name'=>$request->input('last_name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'),'date_of_birth'=>$request->input('date_of_birth'));
 		
 		if(user_role() == 'admin')
 			$resultArray = array_merge($resultArray,array('role_id'=>$request->input('role_id')));
@@ -130,6 +143,22 @@ class UsersController extends Controller
 				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
 				   $resultArray['image'] = $namefile;
 			   }
+		if($request->input('parent_first_name')){
+			$resultArray['parent_first_name'] = $request->input('parent_first_name');
+		}
+		if($request->input('parent_last_name')){
+			$resultArray['parent_last_name'] = $request->input('parent_last_name');
+		}
+		$resultArray['country'] = $request->input('country');
+		$resultArray['driver_name'] = $request->input('driver_name');
+		$resultArray['unique_short_id'] = $request->input('unique_short_id');
+		$resultArray['address'] = $request->input('address');
+		$resultArray['address_2'] = $request->input('address_2');
+		$resultArray['company_name'] = $request->input('company_name');
+		$resultArray['city'] = $request->input('city');
+		$resultArray['postal_code'] = $request->input('postal_code');
+		$resultArray['state'] = $request->input('state');
+		$resultArray['language'] = $request->input('language');
 		$userData = User::where('_id', $request->input('id'))->update($resultArray);
 		$returnmessage = array('status'=>true,'message'=>'User has been update');
 		}

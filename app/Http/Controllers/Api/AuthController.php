@@ -37,13 +37,14 @@ class AuthController extends Controller
           return response()->json(api_response(0,"This email is taken by another account!",(object)array()));
         }else{
         $request->validate([
-            'name' => 'required|string',
+            // 'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ]);
 		
 		$user_role_id = ($request->role_id) ? $request->role_id : strval(my_role(3));
 		$phone_no = ($request->phone_no) ? $request->phone_no : '';
+		$name = ($request->name) ? $request->name : '';
 		
 		if ($request->hasFile('image')) {  //check the file present or not
 				   $image = $request->file('image'); //get the file
@@ -55,7 +56,7 @@ class AuthController extends Controller
 				   $namefile = 'userdefault.png';
 		}
         $user = new User([
-            'name' => $request->name,
+            'name' => $name,
             'email' => $request->email,
             'role_id' => $user_role_id,
             'phone_no' => $phone_no,
@@ -214,24 +215,73 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
+		// with('role')->
 		$user_id = $request->user()->_id;
-		$userData = User::with('role')->where('_id',$user_id)->first();
-		$userData->bought_car = UserSetting::where(array('user_id' =>$user_id))->count();
-        return response()->json($userData);
+		$user = User::find($user_id);
+		if($user){
+		$bought_car = UserSetting::where(array('user_id' =>$user_id))->count();
+		$status = 1;
+		$message = "User detail";
+		$user_array = array_remove_null(array(
+							'_id'=>$user->_id,'name'=>$user->name,'email'=>$user->email,'phone_no'=>$user->phone_no,'date_of_birth'=>$user->date_of_birth,
+							'parent_first_name'=>$user->parent_first_name,'parent_last_name'=>$user->parent_last_name,
+							'country'=>$user->country,'image'=>$user->image,'address'=>$user->address,'address_2'=>$user->address_2,'city'=>$user->city,
+							'company_name'=>$user->company_name,'driver_name'=>$user->driver_name,'first_name'=>$user->first_name,'language'=>$user->language,'last_name'=>$user->last_name,
+							'postal_code'=>$user->postal_code,'state'=>$user->state,'unique_short_id'=>$user->unique_short_id,'train_direction'=>$user->train_direction,'bought_car'=>$bought_car
+						));
+		}else{
+			$status = 0;
+			$message = "No user found";
+			$user_array = array();
+		}
+        return response()->json(api_response($status,$message,$user_array));
     }
 
 	public function userUpdate(Request $request)
 	{
 		$user = $request->user();
-		if($request->input('name'))
-			$user->name = $request->input('name');
-		if($request->input('phone_no'))
-			$user->phone_no = $request->input('phone_no');
-		if($request->input('image'))
-			$user->image = $request->input('image');
-
+		if($request->input('first_name') && !empty($request->input('first_name')))
+			$user->first_name = $request->input('first_name');
+		if($request->input('last_name') && !empty($request->input('last_name')))
+			$user->last_name = $request->input('last_name');
+		if($request->input('country') && !empty($request->input('country')))
+			$user->country = $request->input('country');
+		if($request->input('driver_name') && !empty($request->input('driver_name')))
+			$user->driver_name = $request->input('driver_name');
+		if($request->input('unique_short_id') && !empty($request->input('unique_short_id')))
+			$user->unique_short_id = $request->input('unique_short_id');
+		if($request->input('address') && !empty($request->input('address')))
+			$user->address = $request->input('address');
+		if($request->input('address_2') && !empty($request->input('address_2')))
+			$user->address_2 = $request->input('address_2');
+		if($request->input('company_name') && !empty($request->input('company_name')))
+			$user->company_name = $request->input('company_name');
+		if($request->input('city') && !empty($request->input('city')))
+			$user->city = $request->input('city');
+		if($request->input('postal_code') && !empty($request->input('postal_code')))
+			$user->postal_code = $request->input('postal_code');
+		if($request->input('language') && !empty($request->input('language')))
+			$user->language = $request->input('language');
+		if($request->input('state') && !empty($request->input('state')))
+			$user->state = $request->input('state');
+		if($request->input('date_of_birth') && !empty($request->input('date_of_birth')))
+			$user->date_of_birth = $request->input('date_of_birth');
+		if($request->input('parent_first_name') && !empty($request->input('parent_first_name')))
+			$user->parent_first_name = $request->input('parent_first_name');
+		if($request->input('parent_last_name') && !empty($request->input('parent_last_name')))
+			$user->parent_last_name = $request->input('parent_last_name');
+		if($request->input('train_direction') && !empty($request->input('train_direction')))
+			$user->train_direction = $request->input('train_direction');
 		$user->save();
-		return response()->json(api_response(1,"User update successfully",$user));
+		
+		$user_array = array_remove_null(array(
+							'_id'=>$user->_id,'name'=>$user->name,'email'=>$user->email,'phone_no'=>$user->phone_no,'date_of_birth'=>$user->date_of_birth,
+							'parent_first_name'=>$user->parent_first_name,'parent_last_name'=>$user->parent_last_name,
+							'country'=>$user->country,'image'=>$user->image,'address'=>$user->address,'address_2'=>$user->address_2,'city'=>$user->city,
+							'company_name'=>$user->company_name,'driver_name'=>$user->driver_name,'first_name'=>$user->first_name,'language'=>$user->language,'last_name'=>$user->last_name,
+							'postal_code'=>$user->postal_code,'state'=>$user->state,'unique_short_id'=>$user->unique_short_id,'train_direction'=>$user->train_direction
+						));
+		return response()->json(api_response(1,"User update successfully",$user_array));
 	}
 
 	public function vehicle(Request $request)
@@ -367,7 +417,7 @@ class AuthController extends Controller
 					// $sequences['options']['blinkers_override_r'] = explode(",",$sequences['options']['blinkers_override_r']);
 				}
 				$multimedia = array();
-				$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
+				$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','full_screen_movie_links','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
 				if($vehicleLogo){
 					$multimedia = $vehicleLogo;
 				}
