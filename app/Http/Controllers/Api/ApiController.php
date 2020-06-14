@@ -66,10 +66,20 @@ class ApiController extends Controller
 	}
 	public function testing(Request $request)
 	{
-		$inputData = $request->all();
-		$bar_code_id = rand(111111,999999);
-		VehicleSetting::where('_id', $request->input('id'))->update(array("bar_code_id"=>$bar_code_id));
-		print_r($inputData);
+		$inputData = User::all();
+		foreach($inputData as $inputs){
+			$name = $inputs->first_name.' '.$inputs->last_name;
+			$update_data = array('name'=>$name,'driver_name'=>strtoupper($name),'short_id'=>str_replace(' ', '', $name));
+			User::where('_id',$inputs->_id)->update($update_data);
+			$result[] = $inputs;
+		}
+		return response()->json($result);
+		
+		
+		// $inputData = $request->all();
+		// $bar_code_id = rand(111111,999999);
+		// VehicleSetting::where('_id', $request->input('id'))->update(array("bar_code_id"=>$bar_code_id));
+		// print_r($inputData);
 		// $vichleSetting_text = (string)$inputData['id'];
 		// QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($vichleSetting_text, public_path('qrcode/'.$inputData['id'].'png'));
 		// pr($inputData);

@@ -76,11 +76,11 @@ class SettingController extends Controller
 			else
 				$vichle_name =  Vehicle::select('_id','brand','model')->where('from_id',Auth::user()->id)->get();
 		$vehicleSettingData = VehicleSetting::find($id);
-		$type_stting = '/admin/settings-edit';
-		if(isset($_GET['type']) && $_GET['type'] == 'update')
-		{
+		// $type_stting = '/admin/settings-edit';
+		// if(isset($_GET['type']) && $_GET['type'] == 'update')
+		// {
 			$type_stting = '/admin/settings-update';
-		}
+		// }
 		$page_info['page_title'] = 'Settings';
 		return view('admin/Setting/viewsetting')->with('userForm', $vehicleSettingData)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction',$type_stting);
     }
@@ -95,6 +95,9 @@ class SettingController extends Controller
 		$inputData['brand_name'] = $myVehicle->brand;
 		$inputData['setting_art_no'] = $myVehicle->art_no;
 		VehicleSetting::where('_id',$setting_id)->update($inputData);
+		$vichleSetting_text = "ctrl://setting_id=".$setting_id;
+		// json_encode(array("app_id"=>"","setting_id"=>$setting_id));
+		QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($vichleSetting_text, public_path('qrcode/'.$setting_id.'png'));
 		$returnmessage = array('status'=>true,'setting_id'=>$setting_id,'vehicle_id'=>$request->input('vehicle_id'),'action'=>'update_form','message'=>'Vehicle setting has been update');
 		echo json_encode($returnmessage);
 	}

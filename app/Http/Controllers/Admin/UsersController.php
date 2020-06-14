@@ -20,7 +20,7 @@ class UsersController extends Controller
 		$this->user_info = (object)array('id'=>'','name'=>'','email'=>'',
 								'first_name'=>'','last_name'=>'','parent_first_name'=>'','parent_last_name'=>'',
 								'role_id'=>'','phone_no'=>'','country'=>'',
-								'driver_name'=>'','unique_short_id'=>'',
+								'driver_name'=>'','short_id'=>'',
 								'address'=>'','address_2'=>'','company_name'=>'',
 								'city'=>'','postal_code'=>'','state'=>'','language'=>'',
 								'date_of_birth'=>'','image'=>'/public/assets/userimages/userdefault.png'
@@ -78,6 +78,9 @@ class UsersController extends Controller
 				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
 				   $imageName = $namefile;
 			   }
+			   
+			$name_full = $request->input('first_name').' '.$request->input('last_name');
+			$inputData['name'] = $name_full;
 			$inputData['image'] = $imageName;
 			$inputData['parent_id'] = Auth::user()->_id;
 			$inputData["status"] = '1';
@@ -151,7 +154,7 @@ class UsersController extends Controller
 		}
 		$resultArray['country'] = $request->input('country');
 		$resultArray['driver_name'] = $request->input('driver_name');
-		$resultArray['unique_short_id'] = $request->input('unique_short_id');
+		$resultArray['short_id'] = $request->input('short_id');
 		$resultArray['address'] = $request->input('address');
 		$resultArray['address_2'] = $request->input('address_2');
 		$resultArray['company_name'] = $request->input('company_name');

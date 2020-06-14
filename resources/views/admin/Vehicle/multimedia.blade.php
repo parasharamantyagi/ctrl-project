@@ -17,6 +17,8 @@
 		.div_icone_image_image {border: 2px solid #a4acb3; width: 60px; height: 60px; margin-left: 67px; margin-top: -58px; }
 		.div_pad3_image_image { border: 2px solid #a4acb3; padding: 7px; width: 357px; height: 131px; }
 		.div_pad2_image_image { border: 2px solid #a4acb3; padding: 10px; width: 252px; height: 247px; }
+		.form-border {border: 0.1px solid; border-radius: 0.25rem; padding: 2px;}
+		textarea.form-control {border: 0.1px solid;}
 	</style>
 	<div class="page-content-wrap">
                     <!-- START ALERT BLOCKS -->
@@ -47,56 +49,92 @@
 				<div class="column">
 					<div class="col-md-12">
 							<div class="form-group">
-								<label>Logo image (75x130 px)</label>
-								<input type="file" class="form-control" name="logo_image" id="logo_image">
+								<label>Logo image (75x130 px)</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="logo_image" value="Choose File" /> <span id="p_logo_image">{{$userForm['p_logo_image']}}</span>
+								<input type="file" class="form-control" name="logo_image" id="logo_image" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Icon image (110x116 px)</label>
-								<input type="file" class="form-control" name="icone_image" id="icone_image">
+								<label>Icon image (110x116 px)</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="icone_image" value="Choose File" /> <span id="p_icone_image">{{$userForm['p_icone_image']}}</span>
+								<input type="file" class="form-control" name="icone_image" id="icone_image" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Pad2 image (450×450 px)</label>
-								<input type="file" class="form-control" name="pad2_image" id="pad2_image">
+								<label>Pad2 image (450×450 px)</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="pad2_image" value="Choose File" /> <span id="p_pad2_image">{{$userForm['p_pad2_image']}}</span>
+								<input type="file" class="form-control" name="pad2_image" id="pad2_image" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Pad3 image (776×226 px)</label>
-								<input type="file" class="form-control" name="pad3_image" id="pad3_image">
+								<label>Pad3 image (776×226 px)</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="pad3_image" value="Choose File" /> <span id="p_pad3_image">{{$userForm['p_pad3_image']}}</span>
+								<input type="file" class="form-control" name="pad3_image" id="pad3_image" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
 								<label>Full screen movie links(separated with "?")</label>
-								<textarea class="form-control" name="full_screen_movie_links" id="full_screen_movie_links"></textarea>
+								<textarea class="form-control" name="full_screen_movie_links" id="full_screen_movie_links">{{$userForm['full_screen_movie_links']}}</textarea>
 							</div>
 							<div class="form-group">
-								<label>Start engine sound</label>
-								<input type="file" class="form-control" name="start_engine_sound" id="start_engine_sound">
+								<label>Start engine sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="start_engine_sound" value="Choose File" /> <span id="p_start_engine_sound">{{$userForm['p_start_engine_sound']}}</span>
+								<input type="file" class="form-control" name="start_engine_sound" id="start_engine_sound" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Idle motor sound</label>
-								<input type="file" class="form-control" name="idle_motor_sound" id="idle_motor_sound">
+								<label>Idle motor sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="idle_motor_sound" value="Choose File" /> <span id="p_idle_motor_sound">{{$userForm['p_idle_motor_sound']}}</span>
+								<input type="file" class="form-control" name="idle_motor_sound" id="idle_motor_sound" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Acceleration sound</label>
-								<input type="file" class="form-control" name="acceleration_sound" id="acceleration_sound">
+								<label>Acceleration sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="acceleration_sound" value="Choose File" /> <span id="p_acceleration_sound">{{$userForm['p_acceleration_sound']}}</span>
+								<input type="file" class="form-control" name="acceleration_sound" id="acceleration_sound" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Deceleration sound</label>
-								<input type="file" class="form-control" name="deceleration_sound" id="deceleration_sound">
+								<label>Deceleration sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="deceleration_sound" value="Choose File" /> <span id="p_deceleration_sound">{{$userForm['p_deceleration_sound']}}</span>
+								<input type="file" class="form-control" name="deceleration_sound" id="deceleration_sound" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Gear shift sound 1</label>
-								<input type="file" class="form-control" name="gear_shift_sound_1" id="gear_shift_sound_1">
+								<label>Gear shift sound 1</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="gear_shift_sound_1" value="Choose File" /> <span id="p_gear_shift_sound_1">{{$userForm['p_gear_shift_sound_1']}}</span>
+								<input type="file" class="form-control" name="gear_shift_sound_1" id="gear_shift_sound_1" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Gear shift sound 2</label>
-								<input type="file" class="form-control" name="gear_shift_sound_2" id="gear_shift_sound_2">
+								<label>Gear shift sound 2</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="gear_shift_sound_2" value="Choose File" /> <span id="p_gear_shift_sound_2">{{$userForm['p_gear_shift_sound_2']}}</span>
+								<input type="file" class="form-control" name="gear_shift_sound_2" id="gear_shift_sound_2" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Shut off sound</label>
-								<input type="file" class="form-control" name="shut_off_sound" id="shut_off_sound">
+								<label>Shut off sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="shut_off_sound" value="Choose File" /> <span id="p_shut_off_sound">{{$userForm['p_shut_off_sound']}}</span>
+								<input type="file" class="form-control" name="shut_off_sound" id="shut_off_sound" style="display: none">
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Blinkers sound</label>
-								<input type="file" class="form-control" name="blinkers_sound" id="blinkers_sound">
+								<label>Blinkers sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="blinkers_sound" value="Choose File" /> <span id="p_blinkers_sound">{{$userForm['p_blinkers_sound']}}</span>
+								<input type="file" class="form-control" name="blinkers_sound" id="blinkers_sound" style="display: none">
+								</div>
 							</div>
 					</div>
 				</div>
@@ -144,6 +182,13 @@
 		// pad2_image
 		// imgInp
 		$(document).ready(function(){
+			
+			function readNAME(input,id) {
+			  if (input.files && input.files[0]) {
+				  $("span[id='p_"+id+"']").text(input.files[0].name);
+			  }
+			}
+			
 			function readURL(input,id) {
 			  if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -154,18 +199,36 @@
 			  }
 			}
 			// pad2_image logo_image  icone_image pad3_image
-			$("#pad2_image").change(function() {
-			  readURL(this,'pad2_image_image');
+			// 
+			  // readNAME(this,'logo_image');
+			
+			var image_id = ['pad2_image','logo_image','icone_image','pad3_image'];
+			
+											// <input type="file" class="form-control" name="icone_image" 
+			 $('input[type="file"]').change(function() {
+				if(image_id.includes(this.name)){
+					readURL(this,this.name+'_image');
+				}
+				readNAME(this,this.id);
+			 });
+			// $("#pad2_image").change(function() {
+			  // readURL(this,'pad2_image_image');
+			// });
+			// $("#logo_image").change(function() {
+			  
+			  // readURL(this,'logo_image_image');
+			// });
+			// $("#icone_image").change(function() {
+			  // readURL(this,'icone_image_image');
+			// });
+			// $("#pad3_image").change(function() {
+			  // readURL(this,'pad3_image_image');
+			// });
+			
+			$("input[class='btn btn-light']").click(function() {
+				$("input[id='"+$(this).data('id')+"']").click();
 			});
-			$("#logo_image").change(function() {
-			  readURL(this,'logo_image_image');
-			});
-			$("#icone_image").change(function() {
-			  readURL(this,'icone_image_image');
-			});
-			$("#pad3_image").change(function() {
-			  readURL(this,'pad3_image_image');
-			});
+			
 	});
 </script>	
 

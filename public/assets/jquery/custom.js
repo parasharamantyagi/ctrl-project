@@ -157,7 +157,7 @@
 					val_return = true;
 				}
 						 
-				if($('input[name="password"]').val().length < 6 && "{{ $page_info['page_title'] }}" === "Add User")
+				if($('input[name="password"]').val().length < 6 && $('#page_title').text() === "Add User")
 				{
 					$('#ctrlscrolbar').html('');
 					$('#passwordValidation').html('<font color="red">Min 6 characters are required.</font>');
@@ -165,13 +165,22 @@
 				}else{
 					$('#passwordValidation').html('');
 				}
-				if($('input[name="confirm_password"]').val().length < 6 && "{{ $page_info['page_title'] }}" === "Add User")
+				if($('input[name="confirm_password"]').val().length < 6 && $('#page_title').text() === "Add User")
 				{
 					$('#ctrlscrolbar').html('');
 					$('#passwordcanformValidation').html('<font color="red">Min 6 characters are required.</font>');
 					val_return = false;
 				}else{
 					$('#passwordcanformValidation').html('');
+				}
+				
+				if($('input[name="unique_short_id"]').val().length < 4)
+				{
+					$('#ctrlscrolbar').html('');
+					$('#unique_short_idValidation').html('<font color="red">Min 4 characters are required.</font>');
+					val_return = false;
+				}else{
+					$('#unique_short_idValidation').html('');
 				}
 						
 				if(val_return === false)

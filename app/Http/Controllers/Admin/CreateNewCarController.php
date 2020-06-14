@@ -28,7 +28,8 @@ class CreateNewCarController extends Controller
 			$vehicle_id = $_GET['vehicle_id'];
 			$setting_page_id = "?vehicle_id={$vehicle_id}";
 			
-			$vehicleSetting_options = VehicleSetting::select('reverse_speed_motor','reverse_steer_motor','max_steering_angle','motor_steps_for_max_steering','gear_retio')->where('vehicle_id',$vehicle_id)->first();
+			// select('reverse_speed_motor','reverse_steer_motor','max_steering_angle','motor_steps_for_max_steering','gear_retio')->
+			$vehicleSetting_options = VehicleSetting::where('vehicle_id',$vehicle_id)->first();
 			if($vehicleSetting_options){
 					$vehicleSetting_options = $vehicleSetting_options->toArray();
 					$setting_page_id = "/{$vehicleSetting_options['_id']}";
@@ -43,8 +44,8 @@ class CreateNewCarController extends Controller
 					if(array_key_exists('options',$createNewCar_excel_leds_array)) {
 						if(isset($createNewCar_excel_leds_array->options->blinkers_override_l) && isset($createNewCar_excel_leds_array->options->blinkers_override_r)){
 						$blinkers_override = array(
-													'blinkers_override_l'=>($createNewCar_excel_leds_array->options->blinkers_override_l) ? $createNewCar_excel_leds_array->options->blinkers_override_l : array(),
-													'blinkers_override_r'=>($createNewCar_excel_leds_array->options->blinkers_override_r) ? $createNewCar_excel_leds_array->options->blinkers_override_r : array()
+													'blinkers_override_l'=>($createNewCar_excel_leds_array->options->blinkers_override_l) ?  array_map(function($value) { return intval($value); },$createNewCar_excel_leds_array->options->blinkers_override_l): array(),
+													'blinkers_override_r'=>($createNewCar_excel_leds_array->options->blinkers_override_r) ?  array_map(function($value) { return intval($value); }, $createNewCar_excel_leds_array->options->blinkers_override_r): array()
 												);
 						}
 						// pr($blinkers_override);
@@ -55,13 +56,21 @@ class CreateNewCarController extends Controller
 				}
 			$setting_id = (isset($vehicleSetting_options['_id'])) ? $vehicleSetting_options['_id'] : '';
 			}
-		// pr($vehicleSetting_options);
+		// pr($vehicleSetting_options); blinkers_override_l
 		$setting_option = json_encode(array(
 										'f-motor-mirror'=>(isset($vehicleSetting_options['reverse_speed_motor']) && $vehicleSetting_options['reverse_speed_motor'] == 'on') ? 1 : 0,
 										'r-motor-mirror'=>(isset($vehicleSetting_options['reverse_steer_motor']) && $vehicleSetting_options['reverse_steer_motor'] == 'on') ? 1 : 0,
-										'steering-angle'=>($vehicleSetting_options['max_steering_angle']) ? $vehicleSetting_options['max_steering_angle'] : 0,
-										'steering-steps'=>($vehicleSetting_options['motor_steps_for_max_steering']) ? $vehicleSetting_options['motor_steps_for_max_steering'] : 0,
-										'car-factor'=>($vehicleSetting_options['gear_retio']) ? $vehicleSetting_options['gear_retio'] : 0
+										'steering-angle'=>($vehicleSetting_options['max_steering_angle']) ? floatval($vehicleSetting_options['max_steering_angle']) : 0,
+										'steering-steps'=>($vehicleSetting_options['motor_steps_for_max_steering']) ? floatval($vehicleSetting_options['motor_steps_for_max_steering']) : 0,
+										'car-factor'=>($vehicleSetting_options['gear_retio']) ? floatval($vehicleSetting_options['gear_retio']) : 0,
+										'hall-sensor-hz'=>($vehicleSetting_options['hall_sensor_frequency']) ? (int)$vehicleSetting_options['hall_sensor_frequency'] : 0,
+										'auto-daylight'=>(isset($vehicleSetting_options['daylight_auto_on'])  && $vehicleSetting_options['daylight_auto_on'] == 'on') ? 1 : 0,
+										'brakelight-front'=>($vehicleSetting_options['brake_lights_1']) ? (int)$vehicleSetting_options['brake_lights_1'] : 0,
+										'brakelight-rev'=>($vehicleSetting_options['brake_lights_2']) ? (int)$vehicleSetting_options['brake_lights_2'] : 0,
+										'motion-1'=>($vehicleSetting_options['motion_sensor_level_1']) ? (int)$vehicleSetting_options['motion_sensor_level_1'] : 0,
+										'motion-2'=>($vehicleSetting_options['motion_sensor_level_2']) ? (int)$vehicleSetting_options['motion_sensor_level_2'] : 0,
+										'motion-3'=>($vehicleSetting_options['motion_sensor_theft']) ? (int)$vehicleSetting_options['motion_sensor_theft'] : 0,
+										'out-of-range'=>($vehicleSetting_options['out_of_range']) ? (int)$vehicleSetting_options['out_of_range'] : 0
 									));
 		$jsonData = '{"leds":[{"pin":"","color":"","position":""}]}';
 		$page_info['inputData'] = json_encode(json_decode($jsonData,true),true);
@@ -79,9 +88,9 @@ class CreateNewCarController extends Controller
 			if(!empty(json_decode($request->excel_leds)->sequences)){
 				$excel_leds = $request->excel_leds;
 			}
-			$file = $request->vehicle_id. '_file.json';
-			$destinationPath = public_path()."/assets/excel_leds/";
-			File::put($destinationPath.$file,$excel_leds);
+			// $file = $request->vehicle_id. '_file.json';
+			// $destinationPath = public_path()."/assets/excel_leds/";
+			// File::put($destinationPath.$file,$excel_leds);
 			CreateNewCar::updateOrCreate(array('vehicle_id' =>$request->vehicle_id),array('excel_leds'=>$excel_leds));
 			// $file = $request->vehicle_id. '_file.json';
 			// $destinationPath = public_path()."/assets/excel_leds/";

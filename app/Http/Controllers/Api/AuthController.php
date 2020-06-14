@@ -37,14 +37,15 @@ class AuthController extends Controller
           return response()->json(api_response(0,"This email is taken by another account!",(object)array()));
         }else{
         $request->validate([
-            // 'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ]);
 		
 		$user_role_id = ($request->role_id) ? $request->role_id : strval(my_role(3));
 		$phone_no = ($request->phone_no) ? $request->phone_no : '';
-		$name = ($request->name) ? $request->name : '';
+		$name = $request->first_name.' '.$request->last_name;
 		
 		if ($request->hasFile('image')) {  //check the file present or not
 				   $image = $request->file('image'); //get the file
@@ -57,9 +58,13 @@ class AuthController extends Controller
 		}
         $user = new User([
             'name' => $name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'role_id' => $user_role_id,
             'phone_no' => $phone_no,
+			'short_id'=>str_replace(' ', '', $name),
+			'driver_name'=>strtoupper($name),
             'image' => $namefile,
 			'status' => "1",
             'password' => bcrypt($request->password)
@@ -72,6 +77,7 @@ class AuthController extends Controller
 		$user->access_token = $tokenResult->accessToken;
 		$user->token_type = 'Bearer';
 		$user->expires_at = Carbon::parse($tokenResult->token->expires_at)->toDateTimeString();
+		$user->short_id = str_replace(' ', '', $name);
 		$user->bought_car = 0;
 		$user->setting_id = "";
 		
@@ -96,12 +102,19 @@ class AuthController extends Controller
 		if($request->input('social_type') == strtoupper('N'))
 		{
 			$request->validate([
-				'email' => 'required|string|email',
+				'email' => 'required|string',
 				'password' => 'required|string',
 				'remember_me' => 'boolean'
 			]);
-			$credentials = request(['email', 'password']);
-			if(!Auth::attempt($credentials))
+			$credentials_email = array('email'=>$request->input('email'),'password'=>$request->input('password'));
+			$credentials_short_id = array('short_id'=>$request->input('email'),'password'=>$request->input('password'));
+			
+			if(filter_var($request->input('email'), FILTER_VALIDATE_EMAIL)) {
+				Auth::attempt($credentials_email);
+			}else{
+				Auth::attempt($credentials_short_id);
+			}
+			if(!Auth::check())
 
 				return response()->json(api_response(0,"Invalid email or password",(object)array()));
 			$user = $request->user();
@@ -122,14 +135,18 @@ class AuthController extends Controller
 					$tokenResult->token->expires_at
 				)->toDateTimeString(),
 				'name'=> $user['name'],
+				'first_name'=> $user['first_name'],
+				'last_name'=> $user['last_name'],
 				'email'=> $user['email'],
+				'short_id'=> str_replace(' ', '', $user['name']),
 				'bought_car'=> $bought_car,
 				'setting_id'=> $setting_id
 			]));
-		}else if(count(array_filter($request->all())) === 5){
+		}else if(count(array_filter($request->all())) === 6){
 
 			$request->validate([
-				'name' => 'required|string',
+				'first_name' => 'required|string',
+				'last_name' => 'required|string',
 				'email' => 'required|string|email',
 				'device_type' => 'required|string',
 				'social_type' => 'required|string',
@@ -139,11 +156,16 @@ class AuthController extends Controller
 			$user = User::where('email', '=', $request->input('email'))->first();
 			if($user)
 			{
+				$full_name = $request->input('first_name').' '.$request->input('last_name');
+				
 				User::where('id', $user->_id)->update(array(
 													'device_type'=>strtoupper($request->input('social_type')),
 													'social_type'=>strtoupper($request->input('social_type')),
 													'social_token'=>$request->input('social_token'),
-													'name'=>$request->input('name'),
+													'name'=>$full_name,
+													'short_id'=>str_replace(' ', '', $full_name),
+													'first_name'=>$request->input('first_name'),
+													'last_name'=>$request->input('last_name'),
 													'role_id'=>'5ded4c225da0ec557c6efdc2'
 													));
 				$tokenResult = $user->createToken('Personal Access Token');
@@ -161,13 +183,22 @@ class AuthController extends Controller
 						$tokenResult->token->expires_at
 					)->toDateTimeString(),
 					'name'=> $user->name,
+					'first_name'=> $user->first_name,
+					'last_name'=> $user->last_name,
 					'email'=> $user->email,
+					'short_id'=> str_replace(' ', '', $user->name),
 					'bought_car'=> $bought_car,
 					'setting_id'=> $setting_id
 				]));
+				
 			}else{
 				$insertData = $request->all();
-				$insertData['role_id'] = '5ded4c225da0ec557c6efdc2';
+				$namme = $insertData['first_name'].' '.$insertData['last_name'];
+				$insertData['image'] = "userdefault.png";
+				$insertData['role_id'] = my_role(3);
+				$insertData['name'] = $namme;
+				$insertData['short_id'] = str_replace(' ', '', $namme);
+				$insertData['driver_name'] = strtoupper($namme);
 				$user_id = User::insertGetId($insertData);
 				$user = User::find($user_id);
 				$tokenResult = $user->createToken('Personal Access Token');
@@ -178,6 +209,7 @@ class AuthController extends Controller
 					$bought_car = 1;
 					$setting_id = $UserSetting_count->setting_id;
 				}
+								
 				return response()->json(api_response(1,"User login successfully",[
 					'access_token' => $tokenResult->accessToken,
 					'token_type' => 'Bearer',
@@ -185,15 +217,39 @@ class AuthController extends Controller
 						$tokenResult->token->expires_at
 					)->toDateTimeString(),
 					'name'=> $user->name,
+					'first_name'=> $user->first_name,
+					'last_name'=> $user->last_name,
 					'email'=> $user->email,
+					'short_id'=> $user->short_id,
 					'bought_car'=> $bought_car,
 					'setting_id'=> $setting_id
 				]));
 			}
 		}else{
-			return response()->json(api_response(0,"This is invalid entry",(object)array()));
+			return response()->json(api_response(0,"Something went wrong",(object)array()));
 		}
     }
+	
+	
+	public function userShortId(Request $request)
+	{
+		$user_id = $request->user()->_id;
+		$user = User::where('short_id',$request->short_id)->where('_id','!=',$user_id)->first();
+		if($user)
+		{
+			$status = 0;
+			$message = 'Sorry this is invalid short id';
+			$user_array = array();
+		}else{
+			$userData = User::updateOrCreate(array('_id' =>$user_id),array('short_id'=>$request->short_id));
+			$status = 1;
+			$message = 'Short id update successfully';
+			$user_array = $userData;
+		}
+		// where('email',$request->email)->first();
+		return response()->json(api_response($status,$message,$user_array));
+		
+	}
 
     /**
      * Logout user (Revoke the token)
@@ -219,7 +275,14 @@ class AuthController extends Controller
 		$user_id = $request->user()->_id;
 		$user = User::find($user_id);
 		if($user){
-		$bought_car = UserSetting::where(array('user_id' =>$user_id))->count();
+		
+		$bought_car = 0;
+		$setting_id = "";
+		$userSetting = UserSetting::select('setting_id')->where(array('user_id' =>$user_id))->first();
+		if($userSetting){
+			$setting_id = $userSetting->setting_id;
+			$bought_car = 1;
+		}
 		$status = 1;
 		$message = "User detail";
 		$user_array = array_remove_null(array(
@@ -227,7 +290,7 @@ class AuthController extends Controller
 							'parent_first_name'=>$user->parent_first_name,'parent_last_name'=>$user->parent_last_name,
 							'country'=>$user->country,'image'=>$user->image,'address'=>$user->address,'address_2'=>$user->address_2,'city'=>$user->city,
 							'company_name'=>$user->company_name,'driver_name'=>$user->driver_name,'first_name'=>$user->first_name,'language'=>$user->language,'last_name'=>$user->last_name,
-							'postal_code'=>$user->postal_code,'state'=>$user->state,'unique_short_id'=>$user->unique_short_id,'train_direction'=>$user->train_direction,'bought_car'=>$bought_car
+							'postal_code'=>$user->postal_code,'state'=>$user->state,'short_id'=>$user->short_id,'train_direction'=>$user->train_direction,'setting_id'=>$setting_id,'bought_car'=>$bought_car
 						));
 		}else{
 			$status = 0;
@@ -248,8 +311,8 @@ class AuthController extends Controller
 			$user->country = $request->input('country');
 		if($request->input('driver_name') && !empty($request->input('driver_name')))
 			$user->driver_name = $request->input('driver_name');
-		if($request->input('unique_short_id') && !empty($request->input('unique_short_id')))
-			$user->unique_short_id = $request->input('unique_short_id');
+		if($request->input('short_id') && !empty($request->input('short_id')))
+			$user->short_id = $request->input('short_id');
 		if($request->input('address') && !empty($request->input('address')))
 			$user->address = $request->input('address');
 		if($request->input('address_2') && !empty($request->input('address_2')))
@@ -274,12 +337,18 @@ class AuthController extends Controller
 			$user->train_direction = $request->input('train_direction');
 		$user->save();
 		
+		$setting_id = "";
+		$userSetting = UserSetting::select('setting_id')->where(array('user_id' =>$user->_id))->first();
+		if($userSetting){
+			$setting_id = $userSetting->setting_id;
+		}
+		
 		$user_array = array_remove_null(array(
 							'_id'=>$user->_id,'name'=>$user->name,'email'=>$user->email,'phone_no'=>$user->phone_no,'date_of_birth'=>$user->date_of_birth,
 							'parent_first_name'=>$user->parent_first_name,'parent_last_name'=>$user->parent_last_name,
 							'country'=>$user->country,'image'=>$user->image,'address'=>$user->address,'address_2'=>$user->address_2,'city'=>$user->city,
 							'company_name'=>$user->company_name,'driver_name'=>$user->driver_name,'first_name'=>$user->first_name,'language'=>$user->language,'last_name'=>$user->last_name,
-							'postal_code'=>$user->postal_code,'state'=>$user->state,'unique_short_id'=>$user->unique_short_id,'train_direction'=>$user->train_direction
+							'postal_code'=>$user->postal_code,'state'=>$user->state,'short_id'=>$user->short_id,'setting_id'=>$setting_id,'train_direction'=>$user->train_direction
 						));
 		return response()->json(api_response(1,"User update successfully",$user_array));
 	}
@@ -328,7 +397,7 @@ class AuthController extends Controller
 				if($createNewCar){
 					$sequences = json_decode($createNewCar->excel_leds,true);
 				}
-			$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound')->where('vehicle_id',$vehicleAllInfo->getvehicle->_id)->first();
+			$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound','car_button','train_button')->where('vehicle_id',$vehicleAllInfo->getvehicle->_id)->first();
 				if($vehicleLogo){
 					$multimedia = $vehicleLogo;
 				}
@@ -375,10 +444,61 @@ class AuthController extends Controller
 			$data->max_rpm = (int)$data->max_rpm;
 			$data->idle_rpm = (int)$data->idle_rpm;
 			$data->gearbox_amount_of_gears = (int)$data->gearbox_amount_of_gears;
-			$data->config_url = url('/public/assets/excel_leds/'.$data->_id.'_file.json');
+			$data->config_url = 'get-config/'.$data->_id;
 			return $data;
 		}
 	}
+	
+	public function vehicleSettingWithoutLogin($id)
+    {
+			
+			$vehicleSetting = VehicleSetting::where('_id',$id)->orWhere('bar_code_id',(int)$id)->first();
+			// if($vehicleSetting){
+				// $userSetting = $vehicleSetting->toArray();
+				// unset($userSetting['_id']);
+				// unset($userSetting['id']);
+				// $userSetting['vehicle_id'] = $vehicleSetting->vehicle_id;
+				// $userSetting['setting_id'] = $id;
+			// }
+		
+			if($vehicleSetting && $vehicleSetting->setting_status === "1") {
+				// VehicleSetting::where('_id',$id)->update(array("setting_use_status"=>"1"));
+				
+				$vehicleSetting = $this->typeChange($vehicleSetting,'setting');
+				
+				$myVehicle = Vehicle::find($vehicleSetting->vehicle_id);
+				
+				$myVehicle = $this->typeChange($myVehicle,'vechile');
+				
+				$sequences = array("sequences"=>array());
+				$createNewCar = CreateNewCar::select('data_leds','excel_leds')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
+				if($createNewCar){
+					$sequences = json_decode($createNewCar->excel_leds,true);
+					// $sequences['options']['blinkers_override_l'] = explode(",",$sequences['options']['blinkers_override_l']);
+					// $sequences['options']['blinkers_override_r'] = explode(",",$sequences['options']['blinkers_override_r']);
+				}
+				$multimedia = array();
+				$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','full_screen_movie_links','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound','car_button','train_button')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
+				if($vehicleLogo){
+					$multimedia = $vehicleLogo;
+				}
+				$my_vehicleSetting = array(
+											'vehicle_info'=>array_remove_null($myVehicle->toArray()),
+											'vehicle_setting'=>array_remove_null($vehicleSetting->toArray()),
+											'led_config'=>$sequences,
+											'multimedia'=>$multimedia
+										);
+				$status = 1;
+				$message = "my vehicle setting";
+			} else {
+				$status = 0;
+				$my_vehicleSetting = array();
+				$message = "You can't access this setting";
+			}
+		return response()->json(api_response($status,$message,$my_vehicleSetting));
+		
+	}
+	
 	
 	public function vehicleSetting(Request $request, $id)
     {
@@ -417,7 +537,7 @@ class AuthController extends Controller
 					// $sequences['options']['blinkers_override_r'] = explode(",",$sequences['options']['blinkers_override_r']);
 				}
 				$multimedia = array();
-				$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','full_screen_movie_links','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
+				$vehicleLogo = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','full_screen_movie_links','start_engine_sound','idle_motor_sound','acceleration_sound','deceleration_sound','gear_shift_sound_1','gear_shift_sound_2','shut_off_sound','blinkers_sound','car_button','train_button')->where('vehicle_id',$vehicleSetting->vehicle_id)->first();
 				if($vehicleLogo){
 					$multimedia = $vehicleLogo;
 				}

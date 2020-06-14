@@ -177,11 +177,11 @@
 					</div -->
 					<div class="form-group">
 						<label>Car speed factor/Gear ratio</label>
-						<input type="text" class="form-control" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio">
+						<input type="text" class="form-control numeric-val" name="gear_retio" value="{{$userForm->gear_retio}}" id="gear_retio">
 					</div>
 					<div class="form-group">
 						<label for="">Max steering angle</label>
-						<input type="text" class="form-control" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle">
+						<input type="text" class="form-control numeric-val" name="max_steering_angle" value="{{$userForm->max_steering_angle}}" id="max_steering_angle">
 					</div>
 					<!-- div class="form-group">
 						<label>LED configuration</label>

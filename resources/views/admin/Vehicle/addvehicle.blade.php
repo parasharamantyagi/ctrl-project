@@ -109,6 +109,10 @@
 						<input type="text" class="form-control" name="model_spec" value="{{$userForm->model_spec}}" id="model_spec">
 					</div>
 					<div class="form-group">
+						<label>Car quote</label>
+						<input type="text" class="form-control" name="car_quote" value="{{$userForm->car_quote}}" id="car_quote">
+					</div>
+					<div class="form-group">
 						<label>Release year *</label>
 						<select class="form-control" name="release_year" id="release_year" required="">
 						  <option value="">Release Year</option>
@@ -120,6 +124,10 @@
 					<div class="form-group">
 						<label>Art No *</label>
 						<input type="text" class="form-control" name="art_no" value="{{$userForm->art_no}}" id="art_no" required="">
+					</div>
+					<div class="form-group">
+						<label>License plate</label>
+						<input type="text" class="form-control" name="license_plate" value="{{$userForm->license_plate}}" id="license_plate">
 					</div>
 					<div class="form-group">
 						<label>Engine type</label>

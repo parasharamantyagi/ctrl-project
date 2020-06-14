@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
     // return $request->user();
 // });
 
+Route::get('vehicle-setting/{id}','Api\AuthController@vehicleSettingWithoutLogin');
+
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'Api\AuthController@login');
     Route::post('signup', 'Api\AuthController@signup');
@@ -24,6 +26,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'Api\AuthController@logout');
         Route::get('user', 'Api\AuthController@user');
+        Route::post('user-short-id', 'Api\AuthController@userShortId');
 		Route::post('vehicle', 'Api\AuthController@vehicle');
 		Route::post('userupdate','Api\AuthController@userUpdate');
 		Route::get('vehicle-setting/{id}','Api\AuthController@vehicleSetting');

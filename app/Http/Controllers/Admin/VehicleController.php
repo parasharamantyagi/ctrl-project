@@ -16,8 +16,8 @@ class VehicleController extends Controller
 {
 	public function __construct(){
 		$this->vechile_info = (object)array(
-									'id'=>'','brand'=>'','model'=>'','model_spec'=>'',
-									'release_year'=>'','art_no'=>'','moter_type'=>'','horse_power'=>'',
+									'id'=>'','brand'=>'','model'=>'','model_spec'=>'','car_quote'=>'',
+									'release_year'=>'','art_no'=>'','license_plate'=>'','moter_type'=>'','horse_power'=>'',
 									'torque'=>'','km_h_0_100'=>'','km_h_0_160'=>'','deceleration_speed'=>'','distance'=>'',
 									'km_h_100_0'=>'','weight'=>'','max_weight'=>'',
 									'manufacturer'=>'','scale'=>'1:87','vehicle_type'=>'',
@@ -76,7 +76,10 @@ class VehicleController extends Controller
 	{
 		$vechileForm_1 = array(
 								'vehicle_id'=>'','brand'=>'','pad2_image'=>'assets/ctrlImages/multimedia/default/white.jpg','logo_image'=>'assets/ctrlImages/multimedia/default/white.jpg',
-								'icone_image'=>'assets/ctrlImages/multimedia/default/white.jpg','pad3_image'=>'assets/ctrlImages/multimedia/default/white.jpg'
+								'icone_image'=>'assets/ctrlImages/multimedia/default/white.jpg','pad3_image'=>'assets/ctrlImages/multimedia/default/white.jpg',
+								'p_pad2_image'=>'No file chosen','full_screen_movie_links'=>'','p_logo_image'=>'No file chosen','p_icone_image'=>'No file chosen','p_pad3_image'=>'No file chosen',
+								'p_start_engine_sound'=>'No file chosen','p_idle_motor_sound'=>'No file chosen','p_acceleration_sound'=>'No file chosen','p_deceleration_sound'=>'No file chosen',
+								'p_gear_shift_sound_1'=>'No file chosen','p_gear_shift_sound_2'=>'No file chosen','p_shut_off_sound'=>'No file chosen','p_blinkers_sound'=>'No file chosen'
 							);
 		$vechileForm_2 = array();
 		$setting_id = '';
@@ -90,9 +93,9 @@ class VehicleController extends Controller
 			$vechile_db = Vehicle::select('brand')->find($_GET['vehicle_id']);
 			if($vechile_db){
 				$brand_name = strtolower(str_replace(' ', '', $vechile_db->brand));
-				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image')->where('brand',$brand_name)->first();
+				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','p_pad2_image','full_screen_movie_links','p_logo_image','p_icone_image','p_pad3_image','p_start_engine_sound','p_idle_motor_sound','p_acceleration_sound','p_deceleration_sound','p_gear_shift_sound_1','p_gear_shift_sound_2','p_shut_off_sound','p_blinkers_sound')->where('brand',$brand_name)->first();
 			}else{
-				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image')->where('vehicle_id',$_GET['vehicle_id'])->first();
+				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','p_pad2_image','full_screen_movie_links','p_logo_image','p_icone_image','p_pad3_image','p_start_engine_sound','p_idle_motor_sound','p_acceleration_sound','p_deceleration_sound','p_gear_shift_sound_1','p_gear_shift_sound_2','p_shut_off_sound','p_blinkers_sound')->where('vehicle_id',$_GET['vehicle_id'])->first();
 			}
 			if($vechileForm_db){
 				$vechileForm_2 = $vechileForm_db->toArray();
@@ -115,122 +118,151 @@ class VehicleController extends Controller
 		}
 		$saveData['brand'] = $brand_name;
 		$saveData['pad2_image'] = '';
+		// $saveData['p_pad2_image'] = 'No file chosen';
 		if ($request->hasFile('pad2_image')) {
 				   $pad2_image = $request->file('pad2_image'); //get the file
 				   $namefile = $brand_name.'-pad2_image' . rand(1,999999) .time() . '.' . $pad2_image->getClientOriginalExtension();
+				   $p_pad2_image = $pad2_image->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $pad2_image->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['pad2_image'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_pad2_image'] = $p_pad2_image;
 			}
 		$saveData['logo_image'] = '';
+		// $saveData['p_logo_image'] = 'No file chosen';
 		if ($request->hasFile('logo_image')) {
 				   $logo_image = $request->file('logo_image'); //get the file
 				   $namefile = $brand_name.'-logo_image' . rand(1,999999) .time() . '.' . $logo_image->getClientOriginalExtension();
+				   $p_logo_image = $logo_image->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $logo_image->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['logo_image'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_logo_image'] = $p_logo_image;
 			}
 		$saveData['icone_image'] = '';
+		// $saveData['p_icone_image'] = 'No file chosen';
 		if ($request->hasFile('icone_image')) {
 				   $icone_image = $request->file('icone_image'); //get the file
 				   $namefile = $brand_name.'-icone_image' . rand(1,999999) .time() . '.' . $icone_image->getClientOriginalExtension();
+				   $p_icone_image = $icone_image->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $icone_image->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['icone_image'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_icone_image'] = $p_icone_image;
 			}
 		$saveData['pad3_image'] = '';
+		// $saveData['p_pad3_image'] = 'No file chosen';
 		if ($request->hasFile('pad3_image')) {
 				   $pad3_image = $request->file('pad3_image'); //get the file
 				   $namefile = $brand_name.'-pad3_image' . rand(1,999999) .time() . '.' . $pad3_image->getClientOriginalExtension();
+				   $p_pad3_image = $pad3_image->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $pad3_image->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['pad3_image'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_pad3_image'] = $p_pad3_image;
 			}
-		$saveData['start_engine_sound'] = '';
+		// $saveData['start_engine_sound'] = '';
 		if ($request->hasFile('start_engine_sound')) {
 				   $start_engine_sound = $request->file('start_engine_sound'); //get the file
 				   $namefile = $brand_name.'-start_engine_sound' . rand(1,999999) .time() . '.' . $start_engine_sound->getClientOriginalExtension();
+				   $p_start_engine_sound = $start_engine_sound->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $start_engine_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['start_engine_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_start_engine_sound'] = $p_start_engine_sound;
 			}
-		$saveData['idle_motor_sound'] = '';
+		// $saveData['idle_motor_sound'] = '';
 		if ($request->hasFile('idle_motor_sound')) {
 				   $idle_motor_sound = $request->file('idle_motor_sound'); //get the file
 				   $namefile = $brand_name.'-idle_motor_sound' . rand(1,999999) .time() . '.' . $idle_motor_sound->getClientOriginalExtension();
+				   $p_idle_motor_sound = $idle_motor_sound->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $idle_motor_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['idle_motor_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_idle_motor_sound'] = $p_idle_motor_sound;
 			}
-		$saveData['acceleration_sound'] = '';
+		// $saveData['acceleration_sound'] = '';
 		if ($request->hasFile('acceleration_sound')) {
 				   $acceleration_sound = $request->file('acceleration_sound'); //get the file
 				   $namefile = $brand_name.'-acceleration_sound' . rand(1,999999) .time() . '.' . $acceleration_sound->getClientOriginalExtension();
+				   $p_acceleration_sound = $acceleration_sound->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $acceleration_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['acceleration_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_acceleration_sound'] = $p_acceleration_sound;
 			}
-		$saveData['deceleration_sound'] = '';
+		// $saveData['deceleration_sound'] = '';
 		if ($request->hasFile('deceleration_sound')) {
 				   $deceleration_sound = $request->file('deceleration_sound'); //get the file
 				   $namefile = $brand_name.'-deceleration_sound' . rand(1,999999) .time() . '.' . $deceleration_sound->getClientOriginalExtension();
+				   $p_deceleration_sound = $deceleration_sound->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $deceleration_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['deceleration_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_deceleration_sound'] = $p_deceleration_sound;
 			}
-		$saveData['gear_shift_sound_1'] = '';
+		// $saveData['gear_shift_sound_1'] = '';
 		if ($request->hasFile('gear_shift_sound_1')) {
 				   $gear_shift_sound_1 = $request->file('gear_shift_sound_1'); //get the file
 				   $namefile = $brand_name.'-gear_shift_sound_1' . rand(1,999999) .time() . '.' . $gear_shift_sound_1->getClientOriginalExtension();
+				   $p_gear_shift_sound_1 = $gear_shift_sound_1->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $gear_shift_sound_1->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['gear_shift_sound_1'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_gear_shift_sound_1'] = $p_gear_shift_sound_1;
 			}
-		$saveData['gear_shift_sound_2'] = '';
+		// $saveData['gear_shift_sound_2'] = '';
 		if ($request->hasFile('gear_shift_sound_2')) {
 				   $gear_shift_sound_2 = $request->file('gear_shift_sound_2'); //get the file
 				   $namefile = $brand_name.'-gear_shift_sound_2' . rand(1,999999) .time() . '.' . $gear_shift_sound_2->getClientOriginalExtension();
+				   $p_gear_shift_sound_2 = $gear_shift_sound_2->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $gear_shift_sound_2->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['gear_shift_sound_2'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_gear_shift_sound_2'] = $p_gear_shift_sound_2;
 			}
-		$saveData['shut_off_sound'] = '';
+		// $saveData['shut_off_sound'] = '';
 		if ($request->hasFile('shut_off_sound')) {
 				   $shut_off_sound = $request->file('shut_off_sound'); //get the file
 				   $namefile = $brand_name.'-shut_off_sound' . rand(1,999999) .time() . '.' . $shut_off_sound->getClientOriginalExtension();
+				   $p_shut_off_sound = $shut_off_sound->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $shut_off_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['shut_off_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_shut_off_sound'] = $p_shut_off_sound;
 			}
-		$saveData['blinkers_sound'] = '';
+		// $saveData['blinkers_sound'] = '';
 		if ($request->hasFile('blinkers_sound')) {
 				   $blinkers_sound = $request->file('blinkers_sound'); //get the file
 				   $namefile = $brand_name.'-blinkers_sound' . rand(1,999999) .time() . '.' . $blinkers_sound->getClientOriginalExtension();
+				   $p_blinkers_sound = $blinkers_sound->getClientOriginalName();
 				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
 				   $blinkers_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
 				   $saveData['blinkers_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_blinkers_sound'] = $p_blinkers_sound;
 			}
 		$saveData['full_screen_movie_links'] = $request->full_screen_movie_links;
 		// $VehicleLogo_data = array();
-		$VehicleLogo_data = $vechileForm_db['vehicle_logo']->toArray();
-		if(!empty($VehicleLogo_data)){
-			unset($VehicleLogo_data['_id']);
-			unset($VehicleLogo_data['brand']);
-			unset($VehicleLogo_data['vehicle_id']);
-			unset($VehicleLogo_data['updated_at']);
-			unset($VehicleLogo_data['created_at']);
-			$VehicleLogo_data = array_filter($VehicleLogo_data);
-		}
-		$saveData = array_merge($saveData,$VehicleLogo_data);
+		// $VehicleLogo_data = $vechileForm_db['vehicle_logo']->toArray();
+		// if(!empty($VehicleLogo_data)){
+			// unset($VehicleLogo_data['_id']);
+			// unset($VehicleLogo_data['brand']);
+			// unset($VehicleLogo_data['vehicle_id']);
+			// unset($VehicleLogo_data['updated_at']);
+			// unset($VehicleLogo_data['created_at']);
+			// $VehicleLogo_data = array_filter($VehicleLogo_data);
+		// }
+		// $saveData = array_merge($saveData,$VehicleLogo_data);
+		$saveData = array_filter($saveData);
 		VehicleLogo::updateOrCreate(array('vehicle_id' =>$inputData["vehicle_id"]),$saveData);
 		return redirect(user_role().'/multimedia?vehicle_id='.$inputData['vehicle_id'])->with('flash-message','Data update successfully');
 	}
 	
 	public function carButton()
 	{
-		$vechileForm_1 = array('vehicle_id'=>'','brand'=>'','pad2_image'=>'default/pad_2@2x.png','logo_image'=>'default/white.jpg','icone_image'=>'default/white.jpg','pad3_image'=>'default/pad_3@2x.png');
-		$vechileForm_2 = array();
 		$setting_id = '';
+		$car_button = array();
+		$train_button = array();
 		if(isset($_GET['vehicle_id']) && !empty($_GET['vehicle_id'])) {
 			$setting_id = '?vehicle_id='.$_GET['vehicle_id'];
 			$vechile_setting = VehicleSetting::select('_id')->where('vehicle_id',$_GET['vehicle_id'])->first();
@@ -238,26 +270,34 @@ class VehicleController extends Controller
 				$setting_id = '/'.$vechile_setting->_id;
 			}
 			
-			$vechile_db = Vehicle::select('brand')->find($_GET['vehicle_id']);
-			if($vechile_db){
-				$brand_name = strtolower(str_replace(' ', '', $vechile_db->brand));
-				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image')->where('brand',$brand_name)->first();
-			}else{
-				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image')->where('vehicle_id',$_GET['vehicle_id'])->first();
-			}
-			if($vechileForm_db){
-				$vechileForm_2 = $vechileForm_db->toArray();
+			$vechileForm_db = VehicleLogo::select('car_button','train_button')->where('vehicle_id',$_GET['vehicle_id'])->first();
+			if($vechileForm_db)
+			{
+				$vechileForm_db =	$vechileForm_db->toArray();
+				$car_button = (array_key_exists('car_button',$vechileForm_db)) ? $vechileForm_db['car_button'] : array();
+				$train_button = (array_key_exists('train_button',$vechileForm_db)) ? $vechileForm_db['train_button'] : array();
 			}
 		}
-		$result = array_merge($vechileForm_1, $vechileForm_2);
 		$page_info['page_title'] = 'Buttons';
-		return view('admin/Vehicle/carbutton')->with('userForm', $result)->with('setting_id', $setting_id)->with('page_info', $page_info);
+		return view('admin/Vehicle/carbutton')->with('setting_id', $setting_id)->with('car_button', $car_button)->with('train_button', $train_button)->with('page_info', $page_info);
 	}
 	
 	public function carButtonPost(Request $request)
 	{
-		$inputData = $request->all();
-		pr($inputData);
+		// $inputData = $request->all();
+		$inputData = array();
+		$inputData['car_button'] = array();
+		$inputData['train_button'] = array();
+		if($request->car_button && !empty($request->car_button)){
+			$inputData['car_button'] = $request->car_button;
+		}
+		if($request->train_button && !empty($request->train_button)){
+			$inputData['train_button'] = $request->train_button;
+		}
+		VehicleLogo::updateOrCreate(array('vehicle_id' =>$request->vehicle_id),$inputData);
+		
+		return redirect(user_role().'/car-button?vehicle_id='.$request->vehicle_id)->with('flash-message','Data update successfully');
+		// return redirect(user_role().'/car-button?vehicle_id='.$inputData['vehicle_id'])->with('flash-message','Data update successfully');
 	}
 	
 	public function show($id)

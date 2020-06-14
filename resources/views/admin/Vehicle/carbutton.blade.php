@@ -46,6 +46,7 @@
 			<div class="row">
 				<div class="col-md-2">
 					<table class="table1">
+						<thead><tr><td colspan="3"><center><b>Default</b></center></td></tr></thead>
 						<tbody>
 							<tr>
 								<td><img src="{{url('public/assets/ctrlImages/car-button/left_search_led@2x.png')}}"></td>
@@ -63,12 +64,13 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="default" <?php echo (in_array('default',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>
 				<div class="col-md-2">
 					<table class="table2">
+						<thead><tr><td colspan="3"><center><b>Bluelight</b></center></td></tr></thead>
 						<tbody>
 							<tr>
 								<td><img src="{{url('public/assets/ctrlImages/car-button/police_led@2x.png')}}"></td>
@@ -86,12 +88,13 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="2"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="bluelight" <?php echo (in_array('bluelight',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>
 				<div class="col-md-2">
 					<table class="table3">
+						<thead><tr><td colspan="3"><center><b>Race</b></center></td></tr></thead>
 						<tbody>
 							<tr>
 								<td><img src="{{url('public/assets/ctrlImages/car-button/Race_car@2x.png')}}"></td>
@@ -109,12 +112,13 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="3"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="race" <?php echo (in_array('race',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>
 				<div class="col-md-2">
 					<table class="table4">
+						<thead><tr><td colspan="3"><center><b>Trailer connect</b></center></td></tr></thead>
 						<tbody>
 							<tr>
 								<td><img src="{{url('public/assets/ctrlImages/car-button/left_search_led@2x.png')}}"></td>
@@ -132,12 +136,13 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="4"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="trailer connect" <?php echo (in_array('trailer connect',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>
 				<div class="col-md-2">
 					<table class="table5">
+					<thead><tr><td colspan="3"><center><b>Motor contoller</b></center></td></tr></thead>
 					<tbody>
 						<tr>
 							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_right_turn@2x.png')}}"></td>
@@ -155,7 +160,7 @@
 							<td><img src="{{url('public/assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
 						</tr>
 					</tbody>	
-					<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="5"></center></td></tr></tfoot>
+					<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="motor contoller" <?php echo (in_array('motor contoller',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>
@@ -165,6 +170,7 @@
 			<div class="row">
 				<div class="col-md-2">
 					<table class="table1">
+						<thead><tr><td colspan="3"><center><b>Default</b></center></td></tr></thead>
 						<tbody>
 							<tr>
 								<td><img src="{{url('public/assets/ctrlImages/car-button/railSound@2px.jpeg')}}"></td>
@@ -183,13 +189,14 @@
 								
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="1"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="default" <?php echo (in_array('default',$train_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>
 				
 				<div class="col-md-2">
 					<table class="table2">
+						<thead><tr><td colspan="3"><center><b>Shunting</b></center></td></tr></thead>
 						<tbody>
 							<tr>
 								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
@@ -207,7 +214,7 @@
 								<td><img src="{{url('public/assets/ctrlImages/car-button/straight_reverse@2x.png')}}"></td>
 							</tr>
 						</tbody>
-						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="2"></center></td></tr></tfoot>
+						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="shunting" <?php echo (in_array('shunting',$train_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
 					</table>
 					
 				</div>

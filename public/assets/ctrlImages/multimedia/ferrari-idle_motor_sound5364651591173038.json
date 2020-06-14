@@ -1,0 +1,11 @@
+{
+  "Biinkers left" : {
+	"bit" : 9
+  },
+  "Biinkers right" : {
+	"bit" : 10
+  },
+  "Rear Light" : {
+	"bit" : 11
+  }
+}

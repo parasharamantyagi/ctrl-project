@@ -1076,10 +1076,10 @@
 				{
 					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_5[index]),'start':Number(val_start_5[index]),'stop':Number(val_stop_5[index])});
 				}
+				// 'position':currentValue,
 				return 	{
 							'bit':index_bit_data,
 							'pin':Number(currentValue),
-							'position':currentValue,
 							'data': final_array_Pos
 						};
 			});
@@ -1092,11 +1092,25 @@
 				{
 					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_1[index]),'start':Number(val_start_1[index]),'stop':Number(val_stop_1[index])});
 				}
-				
 				if(val_t_2[index] || val_start_2[index])
 				{
 					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_2[index]),'start':Number(val_start_2[index]),'stop':Number(val_stop_2[index])});
 				}
+				
+				if(val_t_3[index] || val_start_3[index])
+				{
+					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_3[index]),'start':Number(val_start_3[index]),'stop':Number(val_stop_3[index])});
+				}
+				if(val_t_4[index] || val_start_4[index])
+				{
+					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_4[index]),'start':Number(val_start_4[index]),'stop':Number(val_stop_4[index])});
+				}
+				if(val_t_5[index] || val_start_5[index])
+				{
+					var final_array_Pos = final_array_Pos.concat({'time':Number(val_t_5[index]),'start':Number(val_start_5[index]),'stop':Number(val_stop_5[index])});
+				}
+				
+				
 				return 	{
 							'bit':index_bit_data,
 							'pin':Number(currentValue),
@@ -1127,18 +1141,22 @@
 			var myJSON_option = "{{ $setting_option }}";
 			var myJSON_option_option = JSON.parse(myJSON_option.replace(/&quot;/g,'"'));
 			
+			// var result = a.map(function (x) { 
+			  // return parseInt(x, 10); 
+			// });
+			
 			if($('input[name="blinkers_override"]:checked').val()){
-				myJSON_option_option.blinkers_override_l = $('input[name="blinkers_override_l"]').val().split(',');
-				myJSON_option_option.blinkers_override_r = $('input[name="blinkers_override_r"]').val().split(',');
+				myJSON_option_option.blinkers_override_l = $('input[name="blinkers_override_l"]').val().split(',').map(function (x) { return parseInt(x, 10); });
+				myJSON_option_option.blinkers_override_r = $('input[name="blinkers_override_r"]').val().split(',').map(function (y) { return parseInt(y, 10); });
 			}else{
 				myJSON_option_option.blinkers_override_l = [];
 				myJSON_option_option.blinkers_override_r = [];
 			}
 			
-			
+			// console.log(myJSON_option_option.blinkers_override_l);
 			var myJSON = JSON.stringify({sequences:final_array,options:myJSON_option_option});
 			var myJSON_db = JSON.stringify({sequences:final_data_position_array,options:myJSON_option_option});
-			// console.log(myJSON);
+			
 			download("data.json", myJSON);
 			$.ajax({
 							url: "create-new-car",

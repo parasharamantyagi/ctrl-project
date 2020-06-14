@@ -13,7 +13,7 @@
 		<form method="POST" action="{{ url($formaction) }}" id="Updateuser" enctype="multipart/form-data">
 			{{ csrf_field() }}
 		  <div class="modal-header">
-			<h5>{{ $page_info['page_title'] }}</h5>
+			<h5 id="page_title">{{ $page_info['page_title'] }}</h5>
 		  </div>
 			<input type="hidden" name="id" value="{{$userForm->id}}" id="id">
 			<div class="modal-body">
@@ -45,20 +45,21 @@
 						<div id="passwordcanformValidation"></div>
 					</div>
 					<div class="form-group">
-						<label>First name(if user is under agged)</label>
+						<label>First name (if user is under aged)</label>
 						<input type="text" class="form-control" name="parent_first_name" value="{{$userForm->parent_first_name}}" id="parent_first_name">
 					</div>
 					<div class="form-group">
-						<label>Last name(if user is under agged)</label>
+						<label>Last name (if user is under aged)</label>
 						<input type="text" class="form-control" name="parent_last_name" value="{{$userForm->parent_last_name}}" id="parent_last_name">
 					</div>
 					<div class="form-group">
-						<label>Driver's name**</label>
+						<label>On screen name</label>
 						<input type="text" class="form-control" name="driver_name" value="{{$userForm->driver_name}}" id="driver_name" required="">
 					</div>
 					<div class="form-group">
-						<label>Unique short ID</label>
-						<input type="text" class="form-control" name="unique_short_id" value="{{$userForm->unique_short_id}}" id="unique_short_id" required="">
+						<label>Short ID (unique)</label>
+						<input type="text" class="form-control" name="short_id" value="{{$userForm->short_id}}" id="short_id" required="">
+						<div id="unique_short_idValidation"></div>
 					</div>
 					<div class="form-group">
 						<label>First name</label>
@@ -123,7 +124,7 @@
 						  <option value="{{ my_role(3)}}">Select roll</option>
 						  <option value="{{ my_role(1)}}" <?php if($userForm->role_id == my_role(1)) { echo 'selected'; } ?>>Admin</option>
 						  <option value="{{ my_role(2)}}" <?php if($userForm->role_id == my_role(2)) { echo 'selected'; } ?>>Manufacturer</option>
-						  <option value="{{ my_role(3)}}" <?php if($userForm->role_id == my_role(3)) { echo 'selected'; } ?>>Users</option>
+						  <option value="{{ my_role(3)}}" <?php if($userForm->role_id == my_role(3)) { echo 'selected'; } ?>>User</option>
 						</select>
 					</div>
 				<?php } ?>
