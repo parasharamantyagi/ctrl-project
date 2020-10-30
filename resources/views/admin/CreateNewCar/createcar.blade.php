@@ -973,7 +973,7 @@
 			$('button[data-id="'+getKeyByValue(bit_position,key.bit)+'"]').removeClass("invalid");
 			$('span[data-id="'+getKeyByValue(bit_position,key.bit)+'"]').removeClass("invalid");
 			
-			return [getKeyByValue(bit_position,key.bit), key.position, time_0, start_0, stop_0,time_1,start_1,stop_1,time_2,start_2,stop_2,time_3,start_3,stop_3,time_4,start_4,stop_4,sum_var];
+			return [getKeyByValue(bit_position,key.bit), key.pin, time_0, start_0, stop_0,time_1,start_1,stop_1,time_2,start_2,stop_2,time_3,start_3,stop_3,time_4,start_4,stop_4,sum_var];
 		});
 		var data1 = excel_final_array;
 	}else{

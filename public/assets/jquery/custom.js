@@ -263,11 +263,11 @@
         {"data": "vehicle_setting","sClass":"text_align", "render": function(data,type,full,meta){
 				var vechile_setting_status = '';
 				var vechile_setting__id = 0;
-							if(data && data[0]){
-								if(data[0]['setting_status'] == '1'){
+							if(data){
+								if(data['setting_status'] == '1'){
 									var vechile_setting_status = 'active';
 								}
-								var vechile_setting__id = data[0]._id;
+								var vechile_setting__id = data._id;
 							}
             // if(data == "1")
               // var vechile_setting_status = 'active';
@@ -276,10 +276,11 @@
             return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+vechile_setting__id+'" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
         }},
         {"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+			// console.log(full.vehicle_setting._id);
 			// <a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a>
 			var all_vall = '<a href="vehicle-view/'+data+'" class="edit-user" data-id="'+data+'"><i class="fa fa-eye" title="View"></i></a>';
 				all_vall += '<a href="#" class="delete-user" data-id="'+data+'"><i class="fa fa-trash" title="Delete vehicle"></i></a>';
-				// <a href="javascript::void(0)" class="qr-code" data-id="'+data+'" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>
+				// all_vall += '<a href="javascript::void(0)" class="qr-code" data-id="'+full.vehicle_setting._id+'" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a>';
 			// <a href="settings/'+data+'"><i class="fa fa-pencil-square-o" title="Edit setting"></i></a> 
 			// <a href="vehicle/'+full.vehicle_id+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Edit vehicle"></i></a>
             return all_vall;
@@ -424,14 +425,15 @@
 			$.ajax({
 				url: "./get-vehicle-qrcode",
 				type: 'POST',
-				dataType: "JSON",
+				// dataType: "JSON",
 				data: {
 					"id": $(this).data('id'),
 					"_token": $('meta[name="_token"]').attr('content'),
 				},
 				success: function (response)
 				{
-					$('img[class="d-block w-100"]').attr('src',response);
+					$('#image_item_active').html(response);
+					// $('img[class="d-block w-100"]').attr('src',response);
 				}
 			});
 	});
@@ -584,27 +586,30 @@
 				var my_value = $(this).val();
 				if(my_value && my_value >= 4 && my_value <=8){
 					var length_input = $('input[name="max_speed_per_gears[]"]').length;
-					console.log(my_value+' || '+length_input);
 					if(my_value < 8){
 						$('input[id="max_speed_per_gears8"]').remove();
+						$('input[id="transmission_ratios8"]').remove();
 					}
 					if(my_value < 7){
 						$('input[id="max_speed_per_gears7"]').remove();
+						$('input[id="transmission_ratios7"]').remove();
 					}
 					if(my_value < 6){
 						$('input[id="max_speed_per_gears6"]').remove();
+						$('input[id="transmission_ratios6"]').remove();
 					}
 					if(my_value < 5){
 						$('input[id="max_speed_per_gears5"]').remove();
+						$('input[id="transmission_ratios5"]').remove();
 					}
+					
 					if(my_value > length_input)
 					{
 						for(var i = length_input+1; i <= my_value; i++) {
 							$('input[id="max_speed_per_gears4"]').after('<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" id="max_speed_per_gears'+i+'">');
+							$('input[id="transmission_ratios4"]').after('<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" id="transmission_ratios'+i+'">');
 						}
 					}
-						
-					
 					
 				}
 			});

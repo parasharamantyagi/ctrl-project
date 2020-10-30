@@ -8,6 +8,7 @@ use App\Vehicle;
 use App\VehicleSetting;
 use App\User;
 // use App\CarModel;
+use App\CreateNewCar;
 use App\CarBrand;
 use App\VehicleLogo;
 use Auth;
@@ -25,6 +26,7 @@ class VehicleController extends Controller
 									'wheelbase'=>'','track_width'=>'','width'=>'',
 									'max_rpm'=>0,'idle_rpm'=>800,'gearbox_amount_of_gears'=>0,'max_speed_per_gears'=>'',
 									'wheel_diameter'=>'','height'=>'',
+									'transmission_ratios'=>'','reverse_gear_ratio'=>'','top_speed'=>'',
 									);
 	}
 	
@@ -50,9 +52,32 @@ class VehicleController extends Controller
 		return view('admin/Vehicle/addvehicle')->with('all_user', $user_all)->with('all_Vehicle', $all_Vehicle)->with('userForm', $userForm)->with('carBrand', $carBrand)->with('page_info', $page_info)->with('formaction',$formaction);
     }
 	
+	public function clones($clone_id,$vehicle_id)
+	{
+		$vechile_setting = VehicleSetting::where('vehicle_id',$clone_id)->first()->toArray();
+		unset($vechile_setting['_id']);
+		unset($vechile_setting['id']);
+		unset($vechile_setting['updated_at']);
+		unset($vechile_setting['created_at']);
+		$vechile_setting['vehicle_id'] = $vehicle_id;
+		VehicleSetting::insert($vechile_setting);
+		$vehicleLogo = VehicleLogo::where('vehicle_id',$clone_id)->first()->toArray();
+		unset($vehicleLogo['_id']);
+		unset($vehicleLogo['updated_at']);
+		unset($vehicleLogo['created_at']);
+		$vehicleLogo['vehicle_id'] = $vehicle_id;
+		VehicleLogo::insert($vehicleLogo);
+		
+		$createNewCar = CreateNewCar::select('data_leds','excel_leds')->where('vehicle_id',$clone_id)->first()->toArray();
+		$createNewCar['vehicle_id'] = $vehicle_id;
+		CreateNewCar::insert($createNewCar);
+		return true;
+	}
+	
 	public function store(Request $request)
     {
         $inputData = $request->all();
+		
 		unset($inputData["id"]);
 		unset($inputData["_token"]);
 		$inputData["from_id"] = Auth::user()->id;
@@ -61,7 +86,11 @@ class VehicleController extends Controller
 			CarBrand::updateOrCreate(array('brand_name' =>$inputData["brand"]),array('brand_name'=>$inputData["brand"],'art_no'=>rand(111111,999999)));
 		}
 		$inputData['max_speed_per_gears'] = implode(",",$inputData['max_speed_per_gears']);
+		$inputData['transmission_ratios'] = implode(",",$inputData['transmission_ratios']);
 		$insertId = Vehicle::insertGetId($inputData);
+		if(!empty($request->id) && strpos($request->id,'clone') == true){
+			$this->clones(rtrim($request->id,'-clone'),strval($insertId));
+		}
 		$returnmessage = array('status'=>true,'action'=>'storeVehicle','insert_id'=>strval($insertId),'message'=>'Vehicle has been save');
 		echo json_encode($returnmessage);
     }
@@ -79,7 +108,7 @@ class VehicleController extends Controller
 								'icone_image'=>'assets/ctrlImages/multimedia/default/white.jpg','pad3_image'=>'assets/ctrlImages/multimedia/default/white.jpg',
 								'p_pad2_image'=>'No file chosen','full_screen_movie_links'=>'','p_logo_image'=>'No file chosen','p_icone_image'=>'No file chosen','p_pad3_image'=>'No file chosen',
 								'p_start_engine_sound'=>'No file chosen','p_idle_motor_sound'=>'No file chosen','p_acceleration_sound'=>'No file chosen','p_deceleration_sound'=>'No file chosen',
-								'p_gear_shift_sound_1'=>'No file chosen','p_gear_shift_sound_2'=>'No file chosen','p_shut_off_sound'=>'No file chosen','p_blinkers_sound'=>'No file chosen'
+								'p_gear_shift_sound_1'=>'No file chosen','p_gear_shift_sound_2'=>'No file chosen','p_shut_off_sound'=>'No file chosen','p_blinkers_sound'=>'No file chosen','p_horn_sound'=>'No file chosen'
 							);
 		$vechileForm_2 = array();
 		$setting_id = '';
@@ -93,15 +122,16 @@ class VehicleController extends Controller
 			$vechile_db = Vehicle::select('brand')->find($_GET['vehicle_id']);
 			if($vechile_db){
 				$brand_name = strtolower(str_replace(' ', '', $vechile_db->brand));
-				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','p_pad2_image','full_screen_movie_links','p_logo_image','p_icone_image','p_pad3_image','p_start_engine_sound','p_idle_motor_sound','p_acceleration_sound','p_deceleration_sound','p_gear_shift_sound_1','p_gear_shift_sound_2','p_shut_off_sound','p_blinkers_sound')->where('brand',$brand_name)->first();
+				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','p_pad2_image','full_screen_movie_links','p_logo_image','p_icone_image','p_pad3_image','p_start_engine_sound','p_idle_motor_sound','p_acceleration_sound','p_deceleration_sound','p_gear_shift_sound_1','p_gear_shift_sound_2','p_shut_off_sound','p_blinkers_sound','p_horn_sound')->where('brand',$brand_name)->first();
 			}else{
-				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','p_pad2_image','full_screen_movie_links','p_logo_image','p_icone_image','p_pad3_image','p_start_engine_sound','p_idle_motor_sound','p_acceleration_sound','p_deceleration_sound','p_gear_shift_sound_1','p_gear_shift_sound_2','p_shut_off_sound','p_blinkers_sound')->where('vehicle_id',$_GET['vehicle_id'])->first();
+				$vechileForm_db = VehicleLogo::select('pad2_image','logo_image','icone_image','pad3_image','p_pad2_image','full_screen_movie_links','p_logo_image','p_icone_image','p_pad3_image','p_start_engine_sound','p_idle_motor_sound','p_acceleration_sound','p_deceleration_sound','p_gear_shift_sound_1','p_gear_shift_sound_2','p_shut_off_sound','p_blinkers_sound','p_horn_sound')->where('vehicle_id',$_GET['vehicle_id'])->first();
 			}
 			if($vechileForm_db){
 				$vechileForm_2 = $vechileForm_db->toArray();
 			}
 		}
 		$result = array_merge($vechileForm_1, $vechileForm_2);
+		$result['logo_image_size'] = getimagesize(url($result['logo_image']));
 		$page_info['page_title'] = 'Multimedia';
 		return view('admin/Vehicle/multimedia')->with('userForm', $result)->with('setting_id', $setting_id)->with('page_info', $page_info);
 	}
@@ -241,6 +271,15 @@ class VehicleController extends Controller
 				   $saveData['blinkers_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
 				   $saveData['p_blinkers_sound'] = $p_blinkers_sound;
 			}
+		if ($request->hasFile('horn_sound')) {
+				   $horn_sound = $request->file('horn_sound'); //get the file
+				   $namefile = $brand_name.'-horn_sound' . rand(1,999999) .time() . '.' . $horn_sound->getClientOriginalExtension();
+				   $p_horn_sound = $horn_sound->getClientOriginalName();
+				   $destinationPath = public_path('/assets/ctrlImages/multimedia'); //public path folder dir
+				   $horn_sound->move($destinationPath, $namefile);  //mve to destination you mentioned
+				   $saveData['horn_sound'] = 'public/assets/ctrlImages/multimedia/'.$namefile;
+				   $saveData['p_horn_sound'] = $p_horn_sound;
+		}
 		$saveData['full_screen_movie_links'] = $request->full_screen_movie_links;
 		// $VehicleLogo_data = array();
 		// $VehicleLogo_data = $vechileForm_db['vehicle_logo']->toArray();
@@ -334,6 +373,7 @@ class VehicleController extends Controller
 			CarBrand::updateOrCreate(array('brand_name' =>$inputData["brand"]),array('brand_name'=>$inputData["brand"],'art_no'=>rand(111111,999999)));
 		}
 		$inputData['max_speed_per_gears'] = implode(",",$inputData['max_speed_per_gears']);
+		$inputData['transmission_ratios'] = implode(",",$inputData['transmission_ratios']);
 		Vehicle::where('_id', $vehicle_id)->update($inputData);
 		$returnmessage = array('status'=>true,'action'=>'updateVehicle','vehicle_id'=>$vehicle_id,'message'=>'Vehicle has been update');
 		echo json_encode($returnmessage);
@@ -342,8 +382,8 @@ class VehicleController extends Controller
 	public function viewVehicleAll()
 	{
 		$page_info['page_title'] = 'All product';
-		$vichleData = Vehicle::all();
-		return view('admin/Vehicle/viewvehicleinfoall')->with('page_info', $page_info)->with('all_Vehicle', $vichleData);
+		// $vichleData = Vehicle::all();
+		return view('admin/Vehicle/viewvehicleinfoall')->with('page_info', $page_info);
 	}
 	
 	public function viewOwnedVehicleAll()
@@ -467,10 +507,12 @@ class VehicleController extends Controller
 	
 	public function getVehicleQrcode(Request $request)
 	{
-		if(file_exists(public_path('/qrcode/'.$request->id.'png')))
-			echo json_encode(url('/public/qrcode/'.$request->id.'png'));
-		else
+		if(file_exists(public_path('/qrcode/'.$request->id.'png'))){
+			// echo json_encode(url('/public/qrcode/'.$request->id.'png'));
+			echo '<img class="d-block w-100" src="'.url('/public/qrcode/'.$request->id.'png').'" alt="First slide">';
+		}else{
 			echo json_encode(url('/public/qrcode/qrcode.png'));
+		}
 	}
 
 	public function redirectUrl($url)

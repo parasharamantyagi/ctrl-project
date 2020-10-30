@@ -44,7 +44,7 @@
 					  <div class="modal-body">
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
 							  <div class="carousel-inner">
-								<div class="carousel-item active">
+								<div class="carousel-item active" id="image_item_active">
 								  <img class="d-block w-100" src="{{ url('/public/qrcode/qrcode.png') }}" alt="First slide">
 								</div>
 							  </div>

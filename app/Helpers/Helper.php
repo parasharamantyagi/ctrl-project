@@ -412,6 +412,14 @@ if (!function_exists('get_country')) {
     }
 }
 
+if (!function_exists('vehicle_type')) {
+	
+	function vehicle_type()
+    {
+		return array('car','light_truck','heavy_truck','trailer','bus','aircraft','tram','crane','electric_loco','steam_loco','diesel_loco');
+    }
+}
+
 if (!function_exists('pr')) {
 	
 	function pr($value)

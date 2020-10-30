@@ -13,11 +13,11 @@ use Auth;
 
 class SettingController extends Controller
 {
-	// max_speed_per_gears
+	// max_speed_per_gears onboard_sound train_view screen_rotation_landscape
 	public function __construct(){
 		$this->vechile_setting = (object)array(
 								'_id'=>'','vehicle_id'=>'','background_color'=>'#181921','pad_line_color'=>'#ffffff','pad_background_color'=>'#000000',
-								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'off','brake_lights_1'=>'0','brake_lights_2'=>'0',
+								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'off','speed_motor_ma_limitation'=>'25 %','steer_motor_ma_limitation'=>'25 %','brake_lights_1'=>'0','brake_lights_2'=>'0',
 								'motion_sensor_level_1'=>'0','motion_sensor_level_2'=>'0','motion_sensor_theft'=>'0','out_of_range'=>'0 sec',
 								'reverse_steer_motor'=>'off','motor_off'=>'off','steering_control_point'=>'0','front_motor_off_ms'=>0,'rear_motor_off_ms'=>0,
 								'asset_folder'=>'','firmware'=>'1.0','front_motor'=>'','front_motor_resistor_value'=>80,'rear_motor_resistor_value'=>80,
@@ -25,7 +25,8 @@ class SettingController extends Controller
 								'acceleration_curve'=>'','motor_trim_kit'=>0,'gear_shift_a_rpm_value'=>200,
 								'upper_gear_shift_value'=>3000,'lower_gear_shift_value'=>1800,'cell_value_steer_pad'=>'0.25','sound_file_folder'=>'','hall_sensor_frequency'=>'10',
 								'gear_retio'=>'','max_steering_angle'=>'','led_configuration'=>'','button_config_for_each_menu'=>'','motor_steps_for_max_steering'=>'','onboard_sound'=>'off',
-								'screen_rotation_landscape'=>'on','pad_design_2_directional'=>'on','electric_motor_re_built'=>'off'
+								'zoom_factor_speed'=>'','zoom_factor_steer'=>'','train_view'=>'',
+								'screen_rotation_landscape'=>'','pad_design_2_directional'=>'on','motor_configuration'=>'','electric_motor_re_built'=>'off'
 								);
 	}
 	
@@ -60,6 +61,7 @@ class SettingController extends Controller
 			
 			$vichleSetting = VehicleSetting::insertGetId($inputData);
 			$vichleSetting_text = (string)$vichleSetting;
+			$vichleSetting_text = "ctrl://setting_id=".$vichleSetting_text;
 			QrCode::encoding('UTF-8')->format('png')->margin(1)->size(220)->generate($vichleSetting_text, public_path('qrcode/'.$vichleSetting.'png'));
 			$returnmessage = array('status'=>true,'action'=>'add_form','vehicle_id'=>$request->input('vehicle_id'),'message'=>'Vehicle setting has been save');
 		// }else{

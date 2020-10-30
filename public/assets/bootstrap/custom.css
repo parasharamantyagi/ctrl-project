@@ -696,6 +696,10 @@ em.error.help-block {
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+img.img-fluid.img-profile.mx-auto.mb-2.brakelights-threshold {
+	width: 155px;
+    border-radius: 0.25rem;
+}
 
 /* width: 43%; */
     /* margin-left: 0%;

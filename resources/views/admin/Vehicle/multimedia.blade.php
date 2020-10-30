@@ -9,14 +9,21 @@
 			/* Clear floats after the columns */
 		.row:after { content: ""; display: table; clear: both; }
 		.form-control { width: 65% !important; }
+		
+		.div_logo_image_image_130 { border: 2px solid #a4acb3; }
+		.logo_image_image {width: 100%; height: 100%;}
+		.div_logo_image_image {padding: 10px; margin: 10px; max-width: 117px; height: 51.5px; background-color: black;}
+		
+		.div_icone_image_image_130 { width: 130px; height: 148px; border: 2px solid #a4acb3;}
+		.icone_image_image {width: 100%; height: 100%;}
+		.div_icone_image_image {padding: 10px; max-width: 117px; height: 123.4px; margin: 10px; background-color: black;}
+		
+		
 		.pad3_image_image {width: 338px; height: 113px;}
-		.icone_image_image {width: 55px; height:58px;}
-		.logo_image_image {width: 37.5px; height:40px;}
-		.pad2_image_image {width: 225px; height:225px}
-		.div_logo_image_image {border: 2px solid #a4acb3; padding: 8px; width: 56px; height: 56px; }
-		.div_icone_image_image {border: 2px solid #a4acb3; width: 60px; height: 60px; margin-left: 67px; margin-top: -58px; }
 		.div_pad3_image_image { border: 2px solid #a4acb3; padding: 7px; width: 357px; height: 131px; }
+		.pad2_image_image {width: 225px; height:225px}
 		.div_pad2_image_image { border: 2px solid #a4acb3; padding: 10px; width: 252px; height: 247px; }
+		
 		.form-border {border: 0.1px solid; border-radius: 0.25rem; padding: 2px;}
 		textarea.form-control {border: 0.1px solid;}
 	</style>
@@ -49,14 +56,14 @@
 				<div class="column">
 					<div class="col-md-12">
 							<div class="form-group">
-								<label>Logo image (75x130 px)</label><br>
+								<label>Logo image (max 130x75 px, left aligned)</label><br>
 								<div class="form-border">
 								<input type="button" class="btn btn-light" data-id="logo_image" value="Choose File" /> <span id="p_logo_image">{{$userForm['p_logo_image']}}</span>
 								<input type="file" class="form-control" name="logo_image" id="logo_image" style="display: none">
 								</div>
 							</div>
 							<div class="form-group">
-								<label>Icon image (110x116 px)</label><br>
+								<label>Icon image (130x148 px)</label><br>
 								<div class="form-border">
 								<input type="button" class="btn btn-light" data-id="icone_image" value="Choose File" /> <span id="p_icone_image">{{$userForm['p_icone_image']}}</span>
 								<input type="file" class="form-control" name="icone_image" id="icone_image" style="display: none">
@@ -136,17 +143,38 @@
 								<input type="file" class="form-control" name="blinkers_sound" id="blinkers_sound" style="display: none">
 								</div>
 							</div>
+							<div class="form-group">
+								<label>Horn sound</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="horn_sound" value="Choose File" /> <span id="p_horn_sound">{{$userForm['p_horn_sound']}}</span>
+								<input type="file" class="form-control" name="horn_sound" id="horn_sound" style="display: none">
+								</div>
+							</div>
 					</div>
 				</div>
 				
 				<div class="column">
 					<div class="col-md-12">
 							<div class="form-group">
-								<div class="div_logo_image_image">
-									<img class="logo_image_image" id="logo_image_image" src="{{url($userForm['logo_image'])}}" alt="your image" />
-								</div>
-								<div class="div_icone_image_image">
-									<img class="icone_image_image" id="icone_image_image" src="{{url($userForm['icone_image'])}}" alt="your image" />
+								<div class="row">
+									<div class="column col-md-4">
+										<div class="div_logo_image_image_130">
+											<center>
+											<div class="div_logo_image_image" style="max-width: {{$userForm['logo_image_size'][0]}}px; height: {{$userForm['logo_image_size'][1]}}px;">
+												<img class="logo_image_image" id="logo_image_image" src="{{url($userForm['logo_image'])}}" alt="your image" />
+											</div>
+											</center>
+										</div>
+									</div>
+									<div class="column col-md-2">
+										<div class="div_icone_image_image_130">
+											<center>
+											<div class="div_icone_image_image">
+												<img class="icone_image_image" id="icone_image_image" src="{{url($userForm['icone_image'])}}" alt="your image" />
+											</div>
+											</center>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group">

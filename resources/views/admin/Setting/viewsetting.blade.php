@@ -72,12 +72,34 @@
 							  <option value="off" <?php echo ($userForm->reverse_speed_motor === 'off') ? 'selected':''; ?>>No</option>
 						</select>
 					</div>
+
+					<div class="form-group">
+						<label>Speed motor mA limitation</label>
+						<select class="form-control" name="speed_motor_ma_limitation" id="speed_motor_ma_limitation">
+							@for($speedma=25; $speedma<=100; $speedma++)
+								@if($speedma%5 == 0)
+								<option value="{{$speedma}} %" <?php echo ($userForm->speed_motor_ma_limitation === $speedma.' %') ? 'selected':''; ?>>{{$speedma}} %</option>
+								@endIf
+							@endFor
+						</select>
+					</div>
+					
 					<div class="form-group">
 						<label>Reverse steer motor</label>
 						<select class="form-control" name="reverse_steer_motor" id="reverse_steer_motor">
 							  <option value="on" selected disabled>Reverse steer motor</option>
 							  <option value="on" <?php echo ($userForm->reverse_steer_motor === 'on') ? 'selected':''; ?>>Yes</option>
 							  <option value="off" <?php echo ($userForm->reverse_steer_motor === 'off') ? 'selected':''; ?>>No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Steer motor mA limitation</label>
+						<select class="form-control" name="steer_motor_ma_limitation" id="steer_motor_ma_limitation">
+							@for($steerma=25; $steerma<=100; $steerma++)
+								@if($steerma%5 == 0)
+								<option value="{{$steerma}} %" <?php echo ($userForm->steer_motor_ma_limitation === $steerma.' %') ? 'selected':''; ?>>{{$steerma}} %</option>
+								@endIf
+							@endFor
 						</select>
 					</div>
 					<!-- div class="form-group">
@@ -152,12 +174,12 @@
 					</div>
 					
 					<div class="form-group">
-						<label>Upper gear shift value</label>
+						<label>Shift value</label>
 						<input type="text" class="form-control numeric-val" name="upper_gear_shift_value" value="{{(int)$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value">
 					</div>
 					<div class="form-group">
-						<label>Lower gear shift value</label>
-						<input type="text" class="form-control numeric-val" name="lower_gear_shift_value" value="{{(int)$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value">
+						<label>Brake threshold value</label>
+						<input type="number" class="form-control numeric-val" min="10" max="50" name="lower_gear_shift_value" value="{{(int)$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value">
 					</div>
 					<div class="form-group">
 						<label>Gear shift A value (ms) + revving</label>
@@ -217,6 +239,8 @@
 					</div>
 					<div class="form-group">
 						<label>Brakelights threshold</label>
+						<br/>
+						<img class="img-fluid img-profile mx-auto mb-2 brakelights-threshold" src="{{ url('/public/assets/ctrlImages/imgpsh_fullsize_anim.png') }}" alt="">
 					</div>
 					<div class="form-group row margin-max-speed">
 							<select class="form-control select-box-1" name="brake_lights_1" id="brake_lights_1">
@@ -273,11 +297,27 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<label>Screen rotation landscape</label>
+						<label>Zoom factor - Speed</label>
+						<input type="text" class="form-control numeric-val" name="zoom_factor_speed" value="{{$userForm->zoom_factor_speed}}" id="zoom_factor_speed">
+					</div>
+					<div class="form-group">
+						<label>Zoom factor - Steer</label>
+						<input type="text" class="form-control numeric-val" name="zoom_factor_steer" value="{{$userForm->zoom_factor_steer}}" id="zoom_factor_steer">
+					</div>
+					<div class="form-group">
+						<label>Screen rotation</label>
 						<select class="form-control" name="screen_rotation_landscape" id="screen_rotation_landscape">
-							  <option value="on" selected disabled>Screen rotation landscape</option>
-							  <option value="on" <?php echo ($userForm->screen_rotation_landscape == 'on') ? 'selected':''; ?>>Yes</option>
-							  <option value="off" <?php echo ($userForm->screen_rotation_landscape == 'off') ? 'selected':''; ?>>No</option>
+							  <option value="Car view" selected disabled>Screen rotation landscape</option>
+							  <option value="Car view" <?php echo ($userForm->screen_rotation_landscape == 'Car view') ? 'selected':''; ?>>Car view</option>
+							  <option value="Train view" <?php echo ($userForm->screen_rotation_landscape == 'Train view') ? 'selected':''; ?>>Train view</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Train view (Option: Left/right)</label>
+						<select class="form-control" name="train_view" id="train_view">
+							  <option value="Left" selected disabled>Train view (Option: Left/right)</option>
+							  <option value="Left" <?php echo ($userForm->train_view == 'Left') ? 'selected':''; ?>>Left</option>
+							  <option value="Right" <?php echo ($userForm->train_view == 'Right') ? 'selected':''; ?>>Right</option>
 						</select>
 					</div>
 					<div class="form-group">
@@ -286,6 +326,14 @@
 							  <option value="on" selected disabled>Pad design 2-directional</option>
 							  <option value="on" <?php echo ($userForm->pad_design_2_directional == 'on') ? 'selected':''; ?>>Yes</option>
 							  <option value="off" <?php echo ($userForm->pad_design_2_directional == 'off') ? 'selected':''; ?>>No</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Motor configuration</label>
+						<select class="form-control" name="motor_configuration" id="motor_configuration">
+							  <option value="Speed + Steer" selected disabled>Motor configuration</option>
+							  <option value="Speed + Steer" <?php echo ($userForm->motor_configuration == 'Speed + Steer') ? 'selected':''; ?>>Speed + Steer</option>
+							  <option value="Speed + Speed" <?php echo ($userForm->motor_configuration == 'Speed + Speed') ? 'selected':''; ?>>Speed + Speed</option>
 						</select>
 					</div>
 					<div class="form-group">

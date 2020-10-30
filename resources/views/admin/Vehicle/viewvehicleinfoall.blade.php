@@ -69,12 +69,7 @@
 				<h5 class="modal-title" id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
 
 				<input type="hidden" class="brand_name" value="<?php echo (isset($_GET['brand_name'])) ? $_GET['brand_name']:''; ?>">
-        <!--select class="form-control selectpicker viewvechile_select" name="vehicle_id" id="vehicle_id">
-						  <option value="0">Select vehicle</option>
-						  @foreach($all_Vehicle as $all_Vehicle)
-								<option value="{{$all_Vehicle->_id}}">{{ ucfirst($all_Vehicle->brand.' ('.$all_Vehicle->model.')') }}</option>
-						  @endforeach
-				</select -->
+       
 
 				<a href="{{ url('/admin/vehicle') }}"><button type="submit" class="btn btn-primary">Add product</button></a>
 			</div>

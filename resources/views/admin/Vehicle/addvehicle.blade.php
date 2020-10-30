@@ -197,6 +197,30 @@
 							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="" id="max_speed_per_gears4">
 					<?php } ?>
 					</div>
+					
+					<div class="form-group">
+						<label>Transmission ratios</label>
+					</div>
+					<div class="form-group row margin-max-speed">
+						<?php if(count(explode(',',$userForm->transmission_ratios)) > 3) { ?>
+						@foreach(explode(',',$userForm->transmission_ratios) as $key => $transmission_ratios)
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="{{$transmission_ratios}}" id="transmission_ratios{{$key+1}}">
+						@endForeach
+						<?php }else{ ?>
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios1">
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios2">
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios3">
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios4">
+						<?php } ?>
+					</div>
+					<div class="form-group">
+						<label>Reverse gear ratio</label>
+						<input type="text" class="form-control numeric-val" name="reverse_gear_ratio" value="{{(int)$userForm->reverse_gear_ratio}}" id="reverse_gear_ratio">
+					</div>
+					<div class="form-group">
+						<label>Top speed</label>
+						<input type="text" class="form-control numeric-val" name="top_speed" value="{{(int)$userForm->top_speed}}" id="top_speed">
+					</div>
 					<div class="form-group">
 						<label>Max rpm</label>
 						<input type="text" class="form-control numeric-val" name="max_rpm" value="{{(int)$userForm->max_rpm}}" id="max_rpm">
@@ -411,17 +435,37 @@
 								dataType: "JSON",
 								success: function (response)
 								{
-									$("input[name='moter_type']").val(response.moter_type);
+									// console.log(response);
+									// <input type="hidden" name="id" value="{{$userForm->id}}" id="id">
+									$("input[name='id']").val(response._id+'-clone');
+									$("input[name='license_plate']").val(response.license_plate);
+									$("select[name='moter_type']").val(response.moter_type);
 									$("input[name='horse_power']").val(response.horse_power);
 									$("input[name='torque']").val(response.torque);
 									$("input[name='km_h_0_100']").val(response.km_h_0_100);
 									$("input[name='km_h_0_160']").val(response.km_h_0_160);
-									$("input[name='km_h_100_0']").val(response.km_h_100_0);
+									$("input[name='deceleration_speed']").val(response.deceleration_speed);
+									$("input[name='distance']").val(response.distance);
 									$("input[name='weight']").val(response.weight);
 									$("input[name='max_weight']").val(response.max_weight);
-									// $("select[name='manufacturer']").val(response.max_weight);
-									// console.log(response);
-									// $('img[class="d-block w-100"]').attr('src',response);
+									$("input[name='gearbox_amount_of_gears']").val(response.gearbox_amount_of_gears);
+									
+									const usingSplit = response.max_speed_per_gears.split(',');
+									for(var i = 1; i <= response.gearbox_amount_of_gears; i++){
+										$("input[id='max_speed_per_gears"+i+"']").val(usingSplit[i+1]);
+									}
+									$("input[name='max_rpm']").val(response.max_rpm);
+									$("select[name='manufacturer']").val(response.manufacturer);
+									$("select[name='scale']").val(response.scale);
+									$("select[name='vehicle_type']").val(response.vehicle_type);
+									$("select[name='special_car_specialization']").val(response.special_car_specialization);
+									$("input[name='lenght']").val(response.lenght);
+									$("input[name='length_front_of_car']").val(response.length_front_of_car);
+									$("input[name='wheelbase']").val(response.wheelbase);
+									$("input[name='track_width']").val(response.track_width);
+									$("input[name='width']").val(response.width);
+									$("input[name='wheel_diameter']").val(response.wheel_diameter);
+									$("input[name='height']").val(response.height);
 								}
 							});
 						}
