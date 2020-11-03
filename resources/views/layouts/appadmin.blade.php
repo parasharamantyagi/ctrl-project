@@ -13,21 +13,21 @@
   
 
   <!-- Bootstrap core CSS -->
-  <link href="{{ url('/public/newbootstrap/vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet">  
-  <link rel="stylesheet" type="text/css" href="{{ url('/public/assets/bootstrap/jquery.dataTables.css') }}">
-  <link rel="stylesheet" type="text/css" id="a" href="{{ url('/public/assets/bootstrap/custom.css') }}"/>
+  <link href="{{ url('/newbootstrap/vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet">  
+  <link rel="stylesheet" type="text/css" href="{{ url('/assets/bootstrap/jquery.dataTables.css') }}">
+  <link rel="stylesheet" type="text/css" id="a" href="{{ url('/assets/bootstrap/custom.css') }}"/>
   
   
   <!-- Custom fonts for this template -->
   <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
-  <link href="{{ url('/public/newbootstrap/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href="{{ url('/newbootstrap/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="{{ url('/public/newbootstrap/css/resume.min.css') }}" rel="stylesheet">
+  <link href="{{ url('/newbootstrap/css/resume.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/jquery-confirm.min.css') }}">
-  <link rel="stylesheet" href="{{ url('/public/assets/bootstrap/select2.min.css') }}">
-  <link rel="stylesheet" href="{{ url('/public/newbootstrap/datetimepicker/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ url('/assets/bootstrap/jquery-confirm.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/assets/bootstrap/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/newbootstrap/datetimepicker/jquery-ui.css') }}">
 </head>
 
 <body id="page-top">
@@ -40,7 +40,7 @@
     <a class="navbar-brand js-scroll-trigger" href="{{ url(user_role('dashboard')) }}">
       <span class="d-block d-lg-none">CTRL</span>
       <span class="d-none d-lg-block">
-        <img class="img-fluid img-profile mx-auto mb-2" src="{{ url('/public/ctrl-icon/ctrl_title3x.png') }}" alt="">
+        <img class="img-fluid img-profile mx-auto mb-2" src="{{ url('/ctrl-icon/ctrl_title3x.png') }}" alt="">
       </span>
     </a>
 	
@@ -134,20 +134,20 @@
   
   
   
-  <script src="{{ url('/public/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ url('/public/newbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url('/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url('/newbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<!-- <script type="text/javascript" src="{{ url('/public/assets/jquery/actions.js') }}"></script> -->
   <!-- Plugin JavaScript -->
-  <script src="{{ url('/public/newbootstrap/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-  <script type='text/javascript' src="{{ url('/public/assets/jquery/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url('/newbootstrap/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+  <script type='text/javascript' src="{{ url('/assets/jquery/jquery.dataTables.min.js') }}"></script>
   <!-- Custom scripts for this template -->
-  <script src="{{ url('/public/newbootstrap/js/resume.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('/public/assets/jquery/jquery.toaster.js') }}"></script>
+  <script src="{{ url('/newbootstrap/js/resume.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/assets/jquery/jquery.toaster.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-  <script type="text/javascript" src="{{ url('/public/assets/jquery/select2.min.js') }}"></script>
-  <script type='text/javascript' src="{{ url('/public/assets/jquery/jquery.validate.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('/public/newbootstrap/datetimepicker/jquery-ui.js') }}"></script>
-  <script type="text/javascript" src="{{ url('/public/assets/jquery/custom.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/assets/jquery/select2.min.js') }}"></script>
+  <script type='text/javascript' src="{{ url('/assets/jquery/jquery.validate.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/newbootstrap/datetimepicker/jquery-ui.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/assets/jquery/custom.js') }}"></script>
 	<script>
 		
 		

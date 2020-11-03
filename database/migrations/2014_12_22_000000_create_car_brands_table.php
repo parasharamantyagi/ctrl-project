@@ -13,7 +13,7 @@ class CreateCarBrandsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_logos', function (Blueprint $table) {
+        Schema::create('car_brands', function (Blueprint $table) {
             $table->string('vehicle_id');
 			$table->string('pad2_image');
 			$table->string('logo_image');

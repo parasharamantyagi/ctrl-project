@@ -23,12 +23,12 @@
 	
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<!-- Stylesheets -->
-		<link href="{{ url('/public/assets/bootstrap/bootstrap.min.css') }}" rel="stylesheet"><!-- Bootstrap core CSS -->
+		<link href="{{ url('/assets/bootstrap/bootstrap.min.css') }}" rel="stylesheet"><!-- Bootstrap core CSS -->
 		<link href="https://ebookbazaar.com/style/font-awesome.min.css" rel="stylesheet"><!-- font-awesome Bootstrap core CSS -->
-		<link href="{{ url('/public/assets/login/style.css') }}" rel="stylesheet"><!-- Custom CSS -->
-		<link href="{{ url('/public/assets/login/responsive.css') }}" rel="stylesheet"><!-- Custom responsive CSS --> 
-		<link href="{{ url('/public/assets/login/font-awesome.min.css') }}" rel="stylesheet"><!-- Custom responsive CSS --> 
-		<link href="{{ url('/public/assets/login/animate.min.css') }}" rel="stylesheet"><!-- Custom responsive CSS --> 
+		<link href="{{ url('/assets/login/style.css') }}" rel="stylesheet"><!-- Custom CSS -->
+		<link href="{{ url('/assets/login/responsive.css') }}" rel="stylesheet"><!-- Custom responsive CSS --> 
+		<link href="{{ url('/assets/login/font-awesome.min.css') }}" rel="stylesheet"><!-- Custom responsive CSS --> 
+		<link href="{{ url('/assets/login/animate.min.css') }}" rel="stylesheet"><!-- Custom responsive CSS --> 
 		<link rel="stylesheet" type="text/css" href="{{ url('/public/assets/login/toastr.css') }}">
 		<!-- Favicon and Apple Icons -->
 		<link rel="shortcut icon" href="{{ url('public/ctrl-icon/ctrl_title3x.png') }}">
@@ -87,7 +87,7 @@
 
 
 <!-- JavaScript -->
-<script src="{{ url('/public/assets/jquery/jquery/jquery.min.js') }}"></script>
+<script src="{{ url('/assets/jquery/jquery/jquery.min.js') }}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 

@@ -1,7 +1,7 @@
 <?php
 
-use Auth;
-use DB;
+#use Auth;
+#use DB;
 // namespace App\Helpers; 
 if (!function_exists('human_file_size')) {
     function human_file_size($image_name)

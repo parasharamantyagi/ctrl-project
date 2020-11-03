@@ -13,9 +13,10 @@
         "intervention/image": "^2.5",
         "jenssegers/mongodb": "^3.6",
         "laravel/framework": "^6.0",
-        "laravel/passport": "^8.0",
+        "laravel/passport": "^9.3",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.1",
+        "mongodb/mongodb": "^1.7",
         "simplesoftwareio/simple-qrcode": "^2.0"
     },
     "require-dev": {
