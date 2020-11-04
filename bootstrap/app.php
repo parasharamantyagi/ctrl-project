@@ -41,7 +41,7 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+$app->register(DesignMyNight\Mongodb\MongodbPassportServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Return The Application

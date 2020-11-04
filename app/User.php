@@ -2,19 +2,15 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+use Jenssegers\Mongodb\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Eloquent implements Authenticatable
 {
-    use Notifiable;
-    use AuthenticableTrait;
-	use HasApiTokens;
-
+    use Notifiable, AuthenticableTrait, HasApiTokens;
 
     // public function post()
         // {

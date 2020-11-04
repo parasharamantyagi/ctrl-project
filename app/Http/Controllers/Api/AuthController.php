@@ -124,6 +124,8 @@ class AuthController extends Controller
 				return response()->json(api_response(0,"Invalid email or password",(object)array()));
 			$user = $request->user();
 			$tokenResult = $user->createToken('Personal Access Token');
+			print_r($tokenResult);
+			die;
 			$token = $tokenResult->token;
 			if ($request->remember_me)
 				$token->expires_at = Carbon::now()->addWeeks(1);
