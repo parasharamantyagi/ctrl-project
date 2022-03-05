@@ -420,12 +420,70 @@ if (!function_exists('vehicle_type')) {
     }
 }
 
+if (!function_exists('sequence_led_motor_config')) {
+	
+	function sequence_led_motor_config($inputData,$name)
+    {
+		// sequence_text 
+		$key = array_search($name, array_column($inputData, 'sequence_key'));
+		if ($key !== FALSE){
+			if($inputData[$key]['led_motor_config'] && $inputData[$key]['led_motor_config'] == 'on'){
+				$resultData = array(
+								'sequence_name'=>$inputData[$key]['sequence_name'],
+								'on_mode_color_2'=>$inputData[$key]['on_mode_color_2'],
+								'on_mode_align_text'=>array_key_exists('on_mode_align_text',$inputData[$key]) ? $inputData[$key]['on_mode_align_text'] : ''
+							);
+				if(array_key_exists('on_sequence_text_name',$inputData[$key]) && $inputData[$key]['on_sequence_text_name']){
+					$resultData['sequence_text'] = $inputData[$key]['on_sequence_text_name'];
+				}else{
+					$resultData['sequence_text'] = "";
+				}
+				if(array_key_exists('on_mode_image',$inputData[$key]) && $inputData[$key]['on_mode_image']){
+					$resultData['on_mode_image'] = $inputData[$key]['on_mode_image'];
+				}
+				return $resultData;
+			}else{
+				$resultData = array(
+								'sequence_name'=>$inputData[$key]['sequence_name'],
+								'on_mode_color_2'=>$inputData[$key]['off_mode_color_2'],
+								'on_mode_align_text'=>array_key_exists('off_mode_align_text',$inputData[$key]) ? $inputData[$key]['off_mode_align_text'] : ''
+							);
+				if(array_key_exists("off_mode_image",$inputData[$key]) && $inputData[$key]['off_mode_image']){
+					$resultData['on_mode_image'] = $inputData[$key]['off_mode_image'];
+				}else{
+					$resultData['on_mode_image'] = 'assets/ctrlImages/entrance-west-building/imgpsh_fullsize_anim_13.png';
+				}
+				if(array_key_exists("off_sequence_text_name",$inputData[$key]) && $inputData[$key]['off_sequence_text_name']){
+					$resultData['sequence_text'] = $inputData[$key]['off_sequence_text_name'];
+				}else{
+					$resultData['sequence_text'] = '';
+				}
+				return $resultData;
+			}
+		}else{
+			return array();
+		}
+    }
+}
+
 if (!function_exists('pr')) {
 	
 	function pr($value)
     {
 		echo '<pre>';
 		print_r($value);
+		echo '</pre>';
+		die;
+    }
+}
+
+
+if (!function_exists('prAr')) {
+	
+	function prAr($value)
+    {
+		echo '<pre>';
+		print_r($value->toArray());
 		echo '</pre>';
 		die;
     }

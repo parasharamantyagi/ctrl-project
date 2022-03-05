@@ -2,25 +2,30 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Illuminate\Auth\Authenticatable as AuthenticableTrait;
-use Jenssegers\Mongodb\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Eloquent implements Authenticatable
-{
-    use Notifiable, AuthenticableTrait, HasApiTokens;
 
+class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+{
+	use Authenticatable, Authorizable, CanResetPassword, Notifiable, HasApiTokens;
+	
     // public function post()
         // {
             // return $this->hasOne('App\Post');
         // }
 		
-		public function role()
-        {
-            return $this->belongsTo('App\Role');
-        }
+	public function role()
+	{
+		return $this->belongsTo('App\Role');
+	}
 
     /**
      * The attributes that are mass assignable.

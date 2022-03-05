@@ -25,7 +25,7 @@ class SettingController extends Controller
 								'asset_folder'=>'','firmware'=>'','front_motor'=>'',
 								'rear_motor'=>'','gearbox_amount_of_gears'=>'','max_speed_per_gears'=>'',
 								'speed_curve'=>'','max_rpm'=>'','idle_rpm'=>'',
-								'upper_gear_shift_value'=>'','lower_gear_shift_value'=>'','cell_value_steer_pad'=>'',
+								'upper_gear_shift_value'=>'','steer_angle_limit_per_100_ms'=>'7.5','shift_value_race'=>'','lower_gear_shift_value'=>'','cell_value_steer_pad'=>'',
 								'gear_retio'=>'','max_steering_angle'=>'','led_configuration'=>'','button_config_for_each_menu'=>'',
 								);
 								

@@ -27,7 +27,8 @@
 					<a href="{{ url(user_role('settings/'.Request::segment(3))) }}" class="btn btn-secondary addvehicle-vehicle_info empty">Settings</a>
 					<a href="{{ url(user_role('create-new-car?vehicle_id='.$userForm->vehicle_id)) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 					<a href="{{ url(user_role('car-button?vehicle_id='.$userForm->vehicle_id)) }}" class="btn btn-secondary">Button config</a>					
-					<a href="{{ url(user_role('multimedia?vehicle_id='.$userForm->vehicle_id)) }}" class="btn btn-secondary">Multimedia</a>					
+					<a href="{{ url(user_role('multimedia?vehicle_id='.$userForm->vehicle_id)) }}" class="btn btn-secondary">Multimedia</a>	
+					<a href="{{ url(user_role('led-motor-config?vehicle_id='.$userForm->vehicle_id)) }}" class="btn btn-secondary">Motor config</a>						
 				</div>
 				<?php }else{ ?>
 				<div class="header-link">
@@ -36,6 +37,7 @@
 					<a href="{{ url(user_role('create-new-car?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 					<a href="{{ url(user_role('car-button?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Button config</a>	
 					<a href="{{ url(user_role('multimedia?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Multimedia</a>	
+					<a href="{{ url(user_role('led-motor-config?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Motor config</a>	
 				</div>
 				<?php } ?>
 			</div>
@@ -102,6 +104,20 @@
 							@endFor
 						</select>
 					</div>
+					
+					<div class="form-group">
+						<label>Micro steps</label>
+						<select class="form-control" name="micro_steps" id="micro_steps">
+							<option value="0">No</option>
+							<option value="1" <?php echo ($userForm->micro_steps == '1') ? 'selected':''; ?>>Yes</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label>Steer rotation limit per 100 ms</label>
+						<input type="text" class="form-control numeric-val" name="steer_angle_limit_per_100_ms" value="{{(int)$userForm->steer_angle_limit_per_100_ms}}" id="steer_angle_limit_per_100_ms">
+					</div>
+
 					<!-- div class="form-group">
 						<label>Steering control point</label>
 						<input type="text" class="form-control" name="steering_control_point" value="{{$userForm->steering_control_point}}" id="steering_control_point">
@@ -174,9 +190,15 @@
 					</div>
 					
 					<div class="form-group">
-						<label>Shift value</label>
+						<label>Shift value normal</label>
 						<input type="text" class="form-control numeric-val" name="upper_gear_shift_value" value="{{(int)$userForm->upper_gear_shift_value}}" id="upper_gear_shift_value">
 					</div>
+					
+					<div class="form-group">
+						<label>Shift value race</label>
+						<input type="text" class="form-control numeric-val" name="shift_value_race" value="{{(int)$userForm->shift_value_race}}" id="shift_value_race">
+					</div>
+					
 					<div class="form-group">
 						<label>Brake threshold value</label>
 						<input type="number" class="form-control numeric-val" min="10" max="50" name="lower_gear_shift_value" value="{{(int)$userForm->lower_gear_shift_value}}" id="lower_gear_shift_value">
@@ -240,7 +262,7 @@
 					<div class="form-group">
 						<label>Brakelights threshold</label>
 						<br/>
-						<img class="img-fluid img-profile mx-auto mb-2 brakelights-threshold" src="{{ url('/public/assets/ctrlImages/imgpsh_fullsize_anim.png') }}" alt="">
+						<img class="img-fluid img-profile mx-auto mb-2 brakelights-threshold" src="{{ url('/assets/ctrlImages/imgpsh_fullsize_anim.png') }}" alt="">
 					</div>
 					<div class="form-group row margin-max-speed">
 							<select class="form-control select-box-1" name="brake_lights_1" id="brake_lights_1">
@@ -297,6 +319,17 @@
 						</select>
 					</div>
 					<div class="form-group">
+						<label>Sound level factor</label>
+						<select class="form-control" name="sound_level_factor" id="sound_level_factor">
+							<?php for($level_factor = 1; $level_factor <= 20; $level_factor++) { 
+							$level_fact = $level_factor * 0.1;
+							$level_fact_2 = number_format((float)$level_fact, 1, '.', '');
+							?>
+							  <option value="{{$level_fact_2}}" <?php echo ($userForm->sound_level_factor == $level_fact_2) ? 'selected':''; ?>>{{$level_fact_2}}</option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="form-group">
 						<label>Zoom factor - Speed</label>
 						<input type="text" class="form-control numeric-val" name="zoom_factor_speed" value="{{$userForm->zoom_factor_speed}}" id="zoom_factor_speed">
 					</div>
@@ -305,11 +338,14 @@
 						<input type="text" class="form-control numeric-val" name="zoom_factor_steer" value="{{$userForm->zoom_factor_steer}}" id="zoom_factor_steer">
 					</div>
 					<div class="form-group">
-						<label>Screen rotation</label>
+						<label>Screen view</label>
 						<select class="form-control" name="screen_rotation_landscape" id="screen_rotation_landscape">
-							  <option value="Car view" selected disabled>Screen rotation landscape</option>
+							  <!--option value="Car view" selected disabled>Screen view landscape</option -->
 							  <option value="Car view" <?php echo ($userForm->screen_rotation_landscape == 'Car view') ? 'selected':''; ?>>Car view</option>
 							  <option value="Train view" <?php echo ($userForm->screen_rotation_landscape == 'Train view') ? 'selected':''; ?>>Train view</option>
+							  <option value="Crane view" <?php echo ($userForm->screen_rotation_landscape == 'Crane view') ? 'selected':''; ?>>Crane view</option>
+							  <option value="Construction view" <?php echo ($userForm->screen_rotation_landscape == 'Construction view') ? 'selected':''; ?>>Construction view</option>
+							  <option value="Turntable view" <?php echo ($userForm->screen_rotation_landscape == 'Turntable view') ? 'selected':''; ?>>Turntable view</option>
 						</select>
 					</div>
 					<div class="form-group">

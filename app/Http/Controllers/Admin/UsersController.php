@@ -23,7 +23,7 @@ class UsersController extends Controller
 								'driver_name'=>'','short_id'=>'',
 								'address'=>'','address_2'=>'','company_name'=>'',
 								'city'=>'','postal_code'=>'','state'=>'','language'=>'',
-								'date_of_birth'=>'','image'=>'/public/assets/userimages/userdefault.png'
+								'date_of_birth'=>'','image'=>'userdefault.png'
 								);
 	}
 	
@@ -55,10 +55,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+		// invalid
         $inputData = $request->all();
 		$countUser = User::where('email', $inputData['email'])->count();
+		$short_idUser = User::where('short_id',$request->input('short_id'))->count();
 		if($countUser) {
 			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
+		}else if($short_idUser){
+			$returnmessage = array('status'=>false,'type'=>'unique_short_idValidation','message'=>'This short id is already exist.');
 		}else{
 			
 			if($inputData['password'] && $inputData['confirm_password'] && $inputData['password'] == $inputData['confirm_password'])
@@ -119,8 +123,11 @@ class UsersController extends Controller
 		$inputData = $request->all();
 		
 		$countUser = User::where('_id',"!=",$request->input('id'))->where('email',$request->input('email'))->count();
+		$short_idUser = User::where('_id',"!=",$request->input('id'))->where('short_id',$request->input('short_id'))->count();
 		if($countUser) {
 			$returnmessage = array('status'=>false,'type'=>'publisherEmailValidation','message'=>'Email already exit');
+		}else if($short_idUser){
+			$returnmessage = array('status'=>false,'type'=>'unique_short_idValidation','message'=>'This short id is already exist.');
 		}else{
 		$name_full = $request->input('first_name').' '.$request->input('last_name');
 		$resultArray = array('name'=>$name_full,'first_name'=>$request->input('first_name'),'last_name'=>$request->input('last_name'),'email'=>$request->input('email'),'phone_no'=>$request->input('phone_no'),'date_of_birth'=>$request->input('date_of_birth'));

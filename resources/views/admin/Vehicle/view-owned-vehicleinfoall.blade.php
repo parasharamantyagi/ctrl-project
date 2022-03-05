@@ -25,7 +25,7 @@ a i.fa {
                     <!-- START ALERT BLOCKS -->
 					<!-- END ALERT BLOCKS -->                    
 	<!--<link href="https://ebookbazaar.com/public/css/bootstrap.min.css" rel="stylesheet">-->
-	<link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="https://ebookbazaar.com/css/bootstrap-select.min.css">
 
 <div class="col-md-12">
         <div class="panel panel-default">

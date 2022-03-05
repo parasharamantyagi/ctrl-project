@@ -35,7 +35,6 @@ class UsersController extends Controller
     {
         $inputData = $request->all();
 		$updateData = $inputData;
-		
 		$returnmessage = array('status'=>true,'email_id'=>Auth::user()->email,'message'=>'User has been update');
 		if($inputData['old_password'] && $inputData['new_password'] && $inputData['confirm_password'])
 		{
@@ -55,10 +54,12 @@ class UsersController extends Controller
 		if ($request->hasFile('userimage')) {  //check the file present or not
 				   $image = $request->file('userimage'); //get the file
 				   $namefile = 'profile-photo-' . rand(1,999999) .time() . '.' . $image->getClientOriginalExtension(); //get the  file extention
+				   // $p_icone_image = $image->getClientOriginalName();
 				   $destinationPath = public_path('/assets/userimages'); //public path folder dir
 				   $image->move($destinationPath, $namefile);  //mve to destination you mentioned 
 				   $updateData['image'] = $namefile;
 			   }
+		unset($updateData['userimage']);
 		$updateData = array_filter($updateData);
 		User::where('_id',Auth::user()->_id)->update($updateData);
 		echo json_encode($returnmessage);

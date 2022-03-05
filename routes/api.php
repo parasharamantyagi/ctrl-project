@@ -23,15 +23,19 @@ Route::group(['prefix' => 'auth','namespace' => 'Api'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
   
-    Route::group(['middleware' => 'auth:api'], function() {
+    // Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
         Route::post('user-short-id', 'AuthController@userShortId');
 		Route::post('vehicle', 'AuthController@vehicle');
 		Route::post('userupdate','AuthController@userUpdate');
 		Route::get('vehicle-setting/{id}','AuthController@vehicleSetting');
+		Route::get('led-motor-config/{id}','AuthController@ledMotorConfig');
 		Route::post('vehicle-setting/{id}','AuthController@vehicleSettingUpdate');
-    });
+		Route::get('vehicle-setting-byId/{id}','AuthController@vehicleSettingbyId');
+		
+		Route::post('my-coordinate', 'AuthController@myCoordinates');
+    // });
 });
 
 
@@ -50,10 +54,11 @@ Route::group(['namespace' => 'Api'], function(){
 	Route::post('mytest','MyApiController@addMyPost');
 });
 
+Route::post('user-setting','Api\ApiController@userSetting');
 
 
 
-// Route::get('my-user-data','Api\ApiController@myuserdata');
+Route::post('password','Api\ApiController@password');
 // Route::get('getroles','Api\ApiController@getRoles');
 // Route::get('vehicle','Api\ApiController@vehicleAll');
 

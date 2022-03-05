@@ -45,7 +45,7 @@
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
 							  <div class="carousel-inner">
 								<div class="carousel-item active" id="image_item_active">
-								  <img class="d-block w-100" src="{{ url('/public/qrcode/qrcode.png') }}" alt="First slide">
+								  <img class="d-block w-100" src="{{ url('/qrcode/qrcode.png') }}" alt="First slide">
 								</div>
 							  </div>
 							</div>
@@ -79,13 +79,15 @@
 						</thead>
 						<tbody>
 						@foreach($all_Vehicle as $all_Vehicle)
-							<tr role="row">
-								<td>{{ implode(str_split($all_Vehicle->_id,4),'-') }}</td>
-								<td>{{ $all_Vehicle->getvehicle->brand }}</td>
-								<td>{{ $all_Vehicle->getvehicle->model }}</td>
-								<td>{{ $all_Vehicle->getvehicle->art_no }}</td>
-								<td><a href="javascript::void(0)" class="qr-code" data-id="{{ $all_Vehicle->_id }}" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a></td>
-							</tr>
+							@if($all_Vehicle->getvehicle)
+								<tr role="row">
+									<td>{{ implode(str_split($all_Vehicle->_id,4),'-') }}</td>
+									<td>{{ $all_Vehicle->getvehicle->brand }}</td>
+									<td>{{ $all_Vehicle->getvehicle->model }}</td>
+									<td>{{ $all_Vehicle->getvehicle->art_no }}</td>
+									<td><a href="javascript::void(0)" class="qr-code" data-id="{{ $all_Vehicle->_id }}" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-qrcode" title="View qr-code"></i></a></td>
+								</tr>
+							@endif
 						@endforeach
 						</tbody>
 					</table>

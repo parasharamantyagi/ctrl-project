@@ -32,6 +32,8 @@ class VehicleSetting extends JsonResource
 					'acceleration_curve' => !empty($this->acceleration_curve) ? $this->acceleration_curve : '',
 					'motor_trim_kit' => (int)$this->motor_trim_kit,
 					'upper_gear_shift_value' => (int)$this->upper_gear_shift_value,
+					'steer_angle_limit_per_100_ms' => !empty($this->steer_angle_limit_per_100_ms) ? floatval($this->steer_angle_limit_per_100_ms) : 7.5,
+					'shift_value_race' => (int)$this->shift_value_race,
 					'lower_gear_shift_value' => (int)$this->lower_gear_shift_value,
 					'gear_shift_a_value' => (int)$this->gear_shift_a_value,
 					'gear_shift_b_value' => (int)$this->gear_shift_b_value,
@@ -48,6 +50,7 @@ class VehicleSetting extends JsonResource
 					'motion_sensor_theft' => !empty($this->motion_sensor_theft) ? $this->motion_sensor_theft : '',
 					'out_of_range' => !empty($this->out_of_range) ? $this->out_of_range : '',
 					'onboard_sound' => !empty($this->onboard_sound) ? $this->onboard_sound : '',
+					'sound_level_factor' => !empty($this->sound_level_factor) ? $this->sound_level_factor : '1.0',
 					'screen_rotation_landscape' => !empty($this->screen_rotation_landscape) ? $this->screen_rotation_landscape : '',
 					'pad_design_2_directional' => !empty($this->pad_design_2_directional) ? $this->pad_design_2_directional : '',
 					'motor_configuration' => !empty($this->motor_configuration) ? $this->motor_configuration : '',
@@ -59,11 +62,15 @@ class VehicleSetting extends JsonResource
 					'setting_use_status' => !empty($this->setting_use_status) ? $this->setting_use_status : '',
 					'speed_motor_ma_limitation' => !empty($this->speed_motor_ma_limitation) ? $this->speed_motor_ma_limitation : '',
 					'steer_motor_ma_limitation' => !empty($this->steer_motor_ma_limitation) ? $this->steer_motor_ma_limitation : '',
+					'micro_steps' => !empty($this->micro_steps) ? $this->micro_steps : 0,
 					'train_view' => !empty($this->train_view) ? $this->train_view : '',
 					'zoom_factor_speed' => !empty($this->zoom_factor_speed) ? $this->zoom_factor_speed : '',
 					'zoom_factor_steer' => !empty($this->zoom_factor_steer) ? $this->zoom_factor_steer : '',
+					'car_short_id' => ($this->car_short_id) ? $this->car_short_id : '',
+					'carId' => rand(111111,999999),
 					'updated_at' => $this->updated_at,
 					'created_at' => $this->created_at,
+					'coordinate' => ($this->coordinate) ? $this->coordinate : (object)array()
 				);
 				
         return $userData;

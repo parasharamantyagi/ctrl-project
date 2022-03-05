@@ -26,12 +26,7 @@
 			
 		  </div>
 		  <div class="modal-body">
-					<select class="model-form-control" name="brand" id="brand" required="">
-						  <option value="" selected disabled>All vehicle</option>
-						  @foreach($all_Vehicle as $all_Vehicle)
-							  <option value="{{$all_Vehicle->_id}}">{{$all_Vehicle->brand.' ('.$all_Vehicle->model.')'}}</option>
-						  @endForeach;
-					</select>
+					<input type="text" class="model-form-control" name="brand" value="" placeholder="Enter art No" id="brand" required="">
 					<div id="select_vehicle_data"></div>
 		  </div>
 		  <div class="modal-footer">
@@ -58,6 +53,8 @@
 						<a href="{{ url(user_role('create-new-car?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 						<a href="{{ url(user_role('car-button?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Button config</a>
 						<a href="{{ url(user_role('multimedia?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Multimedia</a>
+						<a href="{{ url(user_role('led-motor-config?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Motor config</a>
+						<a href="{{ url(user_role('upload-map?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Map</a>
 					<?php }else if($page_info['page_title'] == 'Edit Vehicle') { ?>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-settings save">Save</a>
 						<a href="{{ url(user_role('vehicle-view/'.Request::segment(3))) }}" class="btn btn-secondary addvehicle-settings">Vehicle info</a>
@@ -65,6 +62,8 @@
 						<a href="{{ url(user_role('create-new-car?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 						<a href="{{ url(user_role('car-button?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Button config</a>
 						<a href="{{ url(user_role('multimedia?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Multimedia</a>
+						<a href="{{ url(user_role('led-motor-config?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Motor config</a>
+						<a href="{{ url(user_role('upload-map?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Map</a>
 					<?php }else if($page_info['page_title'] == 'Vehicle information'){ ?>
 							<a href="{{ url(user_role('vehicle/'.Request::segment(3))) }}" class="btn btn-secondary addvehicle-settings">Edit</a>
 							<a href="{{ url(user_role('vehicle-view/'.Request::segment(3))) }}" class="btn btn-secondary addvehicle-settings">Vehicle info</a>
@@ -72,6 +71,8 @@
 							<a href="{{ url(user_role('create-new-car?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 							<a href="{{ url(user_role('car-button?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Button config</a>
 							<a href="{{ url(user_role('multimedia?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Multimedia</a>
+							<a href="{{ url(user_role('led-motor-config?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Motor config</a>
+							<a href="{{ url(user_role('upload-map?vehicle_id='.Request::segment(3))) }}" class="btn btn-secondary">Map</a>
 					<?php }else{ ?>
 						<a href="javascript:void(0)" class="btn btn-secondary clone-vehicle">Clone</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-vehicle_info empty">Vehicle info</a>
@@ -79,6 +80,8 @@
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-led-config empty">LED config</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Button config</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Multimedia</a>
+						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Motor config</a>
+						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Map</a>
 					<?php } ?>
 					
 				</div>
@@ -185,36 +188,36 @@
 					<div class="form-group">
 						<label>Max speed per gear</label>
 					</div>
-					<div class="form-group row margin-max-speed">
+					<div class="form-group row margin-max-speed max-speed">
 					<?php if(count(explode(',',$userForm->max_speed_per_gears)) > 3) { ?>
 					@foreach(explode(',',$userForm->max_speed_per_gears) as $key => $max_speed_per_gear)
-							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="{{$max_speed_per_gear}}" id="max_speed_per_gears{{$key+1}}">
+							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="{{$max_speed_per_gear}}" id="max_speed_per_gears{{$key}}">
 					@endForeach
 					<?php }else{ ?>
+							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="" id="max_speed_per_gears0">
 							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="" id="max_speed_per_gears1">
 							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="" id="max_speed_per_gears2">
 							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="" id="max_speed_per_gears3">
-							<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="" id="max_speed_per_gears4">
 					<?php } ?>
 					</div>
 					
 					<div class="form-group">
 						<label>Transmission ratios</label>
 					</div>
-					<div class="form-group row margin-max-speed">
+					<div class="form-group row margin-max-speed transmission-ratios">
 						<?php if(count(explode(',',$userForm->transmission_ratios)) > 3) { ?>
 						@foreach(explode(',',$userForm->transmission_ratios) as $key => $transmission_ratios)
-							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="{{$transmission_ratios}}" id="transmission_ratios{{$key+1}}">
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="{{$transmission_ratios}}" id="transmission_ratios{{$key}}">
 						@endForeach
 						<?php }else{ ?>
+							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios0">
 							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios1">
 							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios2">
 							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios3">
-							<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="" id="transmission_ratios4">
 						<?php } ?>
 					</div>
 					<div class="form-group">
-						<label>Reverse gear ratio</label>
+						<label>Reverse max speed</label>
 						<input type="text" class="form-control numeric-val" name="reverse_gear_ratio" value="{{(int)$userForm->reverse_gear_ratio}}" id="reverse_gear_ratio">
 					</div>
 					<div class="form-group">
@@ -292,6 +295,10 @@
 						</select>
 					</div>
 					<div class="form-group">
+						<label>Car value</label>
+						<input type="text" class="form-control numeric-val" name="car_value" value="{{$userForm->car_value}}" id="lenght">
+					</div>
+					<div class="form-group">
 						<label>Length, mm</label>
 						<input type="text" class="form-control numeric-val" name="lenght" value="{{$userForm->lenght}}" id="lenght">
 					</div>
@@ -345,7 +352,7 @@
 	<script>
 				$(document).ready(function(){
 					$('#Updateuser').submit(function(event){
-						$('#publisherEmailValidation').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
+						$('#publisherEmailValidation').html('<div class="author_loading"><img src="{{ url('ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
 						var base_url = $('meta[name="_token"]').attr('base_url');
 						 $.ajax({
 						   type:this.method,
@@ -418,16 +425,16 @@
 						$('#myModal').modal("show"); 
 						// || $("input[name='art_no']").val() == ''
 						if($('.selectpickerss').val() == '' || $("input[name='model']").val() == '' || $("input[name='release_year']").val() == '' || $("input[name='art_no']").val() == ''){
-							$("select[class='model-form-control']").hide();
+							$("input[class='model-form-control']").hide();
 							$("#select_vehicle_data").html('<p class="text-danger">Please add mandatory field first</p>');
 						}else{
-							$("select[class='model-form-control']").show();
-							$("#select_vehicle_data").hide();
+							$("input[class='model-form-control']").show();
+							$("#select_vehicle_data").html('');
 						}
 					});
 					
 					$("button[class='btn btn-primary ok-popup']").click(function(){
-						var myVal = $("select[class='model-form-control']").val();
+						var myVal = $("input[class='model-form-control']").val();
 						if(myVal != null){
 							$.ajax({
 								url: "./get-vehicle-id/"+myVal,
@@ -437,39 +444,69 @@
 								{
 									// console.log(response);
 									// <input type="hidden" name="id" value="{{$userForm->id}}" id="id">
-									$("input[name='id']").val(response._id+'-clone');
-									$("input[name='license_plate']").val(response.license_plate);
-									$("select[name='moter_type']").val(response.moter_type);
-									$("input[name='horse_power']").val(response.horse_power);
-									$("input[name='torque']").val(response.torque);
-									$("input[name='km_h_0_100']").val(response.km_h_0_100);
-									$("input[name='km_h_0_160']").val(response.km_h_0_160);
-									$("input[name='deceleration_speed']").val(response.deceleration_speed);
-									$("input[name='distance']").val(response.distance);
-									$("input[name='weight']").val(response.weight);
-									$("input[name='max_weight']").val(response.max_weight);
-									$("input[name='gearbox_amount_of_gears']").val(response.gearbox_amount_of_gears);
+									if(response.status == true) {
+									$("button[class='btn btn-default']").click();	
+									$("input[name='id']").val(response.data._id+'-clone');
+									$("input[name='license_plate']").val(response.data.license_plate);
+									$("select[name='moter_type']").val(response.data.moter_type);
+									$("input[name='horse_power']").val(response.data.horse_power);
+									$("input[name='torque']").val(response.data.torque);
+									$("input[name='km_h_0_100']").val(response.data.km_h_0_100);
+									$("input[name='km_h_0_160']").val(response.data.km_h_0_160);
+									$("input[name='deceleration_speed']").val(response.data.deceleration_speed);
+									$("input[name='distance']").val(response.data.distance);
+									$("input[name='weight']").val(response.data.weight);
+									$("input[name='max_weight']").val(response.data.max_weight);
+									$("input[name='gearbox_amount_of_gears']").val(response.data.gearbox_amount_of_gears);
 									
-									const usingSplit = response.max_speed_per_gears.split(',');
-									for(var i = 1; i <= response.gearbox_amount_of_gears; i++){
-										$("input[id='max_speed_per_gears"+i+"']").val(usingSplit[i+1]);
+									const usingSplit = response.data.max_speed_per_gears.split(',');
+									const transmission_ratios = response.data.transmission_ratios.split(',');
+									$("input[name='max_speed_per_gears[]']").remove();
+									let gearbox_amount_of_gear_s = '';
+									for(var i = 0; i <= response.data.gearbox_amount_of_gears; i++){
+										// $("input[id='max_speed_per_gears"+i+"']").val(usingSplit[i]); gearbox_amount_of_gears
+										// console.log('lllllll = '+usingSplit[i]);
+										if(response.data.gearbox_amount_of_gears > i && usingSplit[i] != null) {
+										gearbox_amount_of_gear_s += '<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" value="'+usingSplit[i]+'" id="max_speed_per_gears'+i+'">';
+										// $("input[id='max_speed_per_gears3']").after(');
+										}
 									}
-									$("input[name='max_rpm']").val(response.max_rpm);
-									$("select[name='manufacturer']").val(response.manufacturer);
-									$("select[name='scale']").val(response.scale);
-									$("select[name='vehicle_type']").val(response.vehicle_type);
-									$("select[name='special_car_specialization']").val(response.special_car_specialization);
-									$("input[name='lenght']").val(response.lenght);
-									$("input[name='length_front_of_car']").val(response.length_front_of_car);
-									$("input[name='wheelbase']").val(response.wheelbase);
-									$("input[name='track_width']").val(response.track_width);
-									$("input[name='width']").val(response.width);
-									$("input[name='wheel_diameter']").val(response.wheel_diameter);
-									$("input[name='height']").val(response.height);
+									$("div[class='form-group row margin-max-speed max-speed']").html(gearbox_amount_of_gear_s);
+									
+									let transmission_ratio_s = '';
+									for(var j = 0; j < transmission_ratios.length; j++){
+										if(response.data.gearbox_amount_of_gears > j) {
+										transmission_ratio_s += '<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" value="'+transmission_ratios[j]+'" id="transmission_ratios'+j+'">';
+										// $("input[id='max_speed_per_gears3']").after(');
+										}
+										// $("input[id='transmission_ratios"+j+"']").val(transmission_ratios[j]);
+									}
+									$("div[class='form-group row margin-max-speed transmission-ratios']").html(transmission_ratio_s);
+									
+									$("input[name='reverse_gear_ratio']").val(response.data.reverse_gear_ratio);
+									$("input[name='top_speed']").val(response.data.top_speed);
+									$("input[name='max_rpm']").val(response.data.max_rpm);
+									$("select[name='manufacturer']").val(response.data.manufacturer);
+									$("select[name='scale']").val(response.data.scale);
+									$("select[name='vehicle_type']").val(response.data.vehicle_type);
+									$("select[name='special_car_specialization']").val(response.data.special_car_specialization);
+									$("input[name='lenght']").val(response.data.lenght);
+									$("input[name='length_front_of_car']").val(response.data.length_front_of_car);
+									$("input[name='wheelbase']").val(response.data.wheelbase);
+									$("input[name='track_width']").val(response.data.track_width);
+									$("input[name='width']").val(response.data.width);
+									$("input[name='wheel_diameter']").val(response.data.wheel_diameter);
+									$("input[name='height']").val(response.data.height);
+									}else{
+										// $("#select_vehicle_data").show();
+										// 
+										// 
+										$("#select_vehicle_data").html('<p class="text-danger">'+response.message+'</p>');
+									}
 								}
 							});
 						}
-						$("button[class='btn btn-default']").click();
+						// $("button[class='btn btn-default']").click();
 					});
 					
 				});

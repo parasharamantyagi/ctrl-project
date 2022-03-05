@@ -51,7 +51,7 @@
 					
 					<div class="form-group">
 						<input type="file" accept="image/*" onchange="loadFile(event)" id="upload_image_button" name="userimage" style="display: none;">
-						<img src="{{ url('public/assets/userimages/'.$userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
+						<img src="{{ url('assets/userimages/'.$userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
 					<p>Click on image for change this</p>
 					</div>
 					<div id="ctrlscrolbar"></div>
@@ -116,7 +116,7 @@
 								return false;
 							}
 						 }
-						 $('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('public/ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
+						 $('#ctrlscrolbar').html('<div class="author_loading"><img src="{{ url('ctrl-icon/loder.gif') }}" height="150" width="150"></div>');
 						 $.ajax({
 						   type:this.method,
 						   url: this.action,

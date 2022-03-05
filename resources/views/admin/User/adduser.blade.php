@@ -71,7 +71,7 @@
 					</div>
 					<div class="form-group">
 						<label>Company name</label>
-						<input type="text" class="form-control" name="company_name" value="{{$userForm->company_name}}" id="company_name" required="">
+						<input type="text" class="form-control" name="company_name" value="{{$userForm->company_name}}" id="company_name">
 					</div>
 					<div class="form-group">
 						<label>Address</label>
@@ -79,7 +79,7 @@
 					</div>
 					<div class="form-group">
 						<label>Address 2</label>
-						<input type="text" class="form-control" name="address_2" value="{{$userForm->address_2}}" id="address_2" required="">
+						<input type="text" class="form-control" name="address_2" value="{{$userForm->address_2}}" id="address_2">
 					</div>
 					<div class="form-group">
 						<label>City</label>
@@ -91,14 +91,14 @@
 					</div>
 					<div class="form-group">
 						<label>State</label>
-						<input type="text" class="form-control" name="state" value="{{$userForm->state}}" id="state" required="">
+						<input type="text" class="form-control" name="state" value="{{$userForm->state}}" id="state">
 					</div>
 					<div class="form-group">
 						<label>Country</label><br>
 						<select class="form-control selectpickerss" data-size="5" data-live-search="true" name="country" id="country" required="">
 								<option value="" disabled>Country</option>
 								@foreach(get_country() as $country => $country_val)
-									<option value="{{strtolower($country)}}" <?php echo (array_key_exists('country',$userForm) && strtolower($userForm->country) == strtolower($country)) ? 'selected':''; ?> data-image="images/msdropdown/icons/blank.gif" data-imagecss="flag {{strtolower($country)}}" data-title="{{$country_val}}">{{$country_val}}</option>
+									<option value="{{strtolower($country)}}" <?php echo (strtolower($userForm->country) == strtolower($country)) ? 'selected':''; ?> data-image="images/msdropdown/icons/blank.gif" data-imagecss="flag {{strtolower($country)}}" data-title="{{$country_val}}">{{$country_val}}</option>
 								@endForeach
 						</select>
 					</div>
@@ -114,7 +114,7 @@
 					<div id="ctrlscrolbar"></div>
 					<div class="form-group">
 						<input type="file" accept="image/*" onchange="loadFile(event)" id="upload_image_button" name="userimage" style="display: none;">
-						<img src="{{ url($userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
+						<img src="{{ url('assets/userimages/'.$userForm->image) }}" id="output" class="img-circle" alt="Cinque Terre" width="100" height="100">
 					<p>Click on image for change this</p>
 					</div>
 					<?php if(user_role() === 'admin') { ?>

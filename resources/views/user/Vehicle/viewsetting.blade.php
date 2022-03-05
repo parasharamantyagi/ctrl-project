@@ -11,7 +11,7 @@
 			<input type="hidden" name="id" value="{{$userForm->_id}}" id="id">
 			<div class="modal-header">
 				<h5 id="Subscription"><div id="subscription_label">{{ $page_info['page_title'] }}</div></h5>
-				<a href="vehicle-setting/all" class="btn btn-primary">View settings</a>
+				<a href="vehicle-setting/all" class="btn btn-primary">All settings</a>
 			</div>
 			
 			<div class="modal-body">

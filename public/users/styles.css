@@ -1,0 +1,8 @@
+#fig1, #fig2 {
+    float: left;
+    width: 220px;
+    height: 220px;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid blue;
+}

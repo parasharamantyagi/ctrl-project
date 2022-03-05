@@ -16,16 +16,16 @@
 		table.dataTable thead th {
 			padding: 3px 45px 3px 3px;
 		}
+		td.text_align a {
+			color: #fff;
+		}
 </style>
-
-
 	<div class="page-content-wrap viewvehicleinfoall">
                     <!-- START ALERT BLOCKS -->
 
 
-
 <!-- END ALERT BLOCKS -->                    <!--<link href="https://ebookbazaar.com/public/css/bootstrap.min.css" rel="stylesheet">-->
-<link rel="stylesheet" href="https://ebookbazaar.com/public/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://ebookbazaar.com/css/bootstrap-select.min.css">
 
 <style>
 	th {
@@ -49,7 +49,7 @@
 							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel2">
 							  <div class="carousel-inner">
 								<div class="carousel-item active">
-								  <img class="d-block w-100" src="{{ url('/public/qrcode/qrcodepng') }}" alt="First slide">
+								  <img class="d-block w-100" src="{{ url('/qrcode/qrcodepng') }}" alt="First slide">
 								</div>
 							  </div>
 							</div>

@@ -1,7 +1,7 @@
 <html>
 	<head>
-	<link rel="stylesheet" href="{{ url('/public/excel/jexcel.css') }}" type="text/css" />
-	<link rel="stylesheet" href="{{ url('/public/excel/jsuites.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ url('/excel/jexcel.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ url('/excel/jsuites.css') }}" type="text/css" />
 	<style>
 			.btn-primary { color: #fff; background-color: #337ab7; border-color: #2e6da4; }
 			.btn { display: inline-block; margin-bottom: 0; font-weight: 400; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; border-radius: 4px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
@@ -130,7 +130,7 @@
 
 				table.car {
 					background-color: #D3D3D3;
-					background: url("http://18.212.23.117/public/assets/ctrlImages/LED-config-tool.png") no-repeat;
+					background: url("http://52.21.91.157/assets/ctrlImages/LED-config-tool.png") no-repeat;
 					background-size: 87%;
 					background-position: 50% 0%;
 				}
@@ -178,6 +178,7 @@
 		<a href="{{ url(user_role('create-new-car?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-primary">LED config</a>
 		<a href="{{ url(user_role('car-button?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-primary">Button config</a>
 		<a href="{{ url(user_role('multimedia?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-primary">Multimedia</a>
+		<a href="{{ url(user_role('led-external-board-id?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-primary">LED EXTERNAL BOARD ID</a>
 
 
 		<!-- button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button>
@@ -623,10 +624,10 @@
 		</div>
 		</div>
 		
-	<script src="{{ url('/public/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
+	<script src="{{ url('/newbootstrap/vendor/jquery/jquery.min.js') }}"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script src="{{ url('/public/excel/jexcel.js') }}"></script>
-	<script src="{{ url('/public/excel/jsuites.js') }}"></script>
+	<script src="{{ url('/excel/jexcel.js') }}"></script>
+	<script src="{{ url('/excel/jsuites.js') }}"></script>
 	<script>
 			$(document).ready(function(){
 				
@@ -826,9 +827,13 @@
 	
 	<script>
 	var resultDatas = "{{ json_encode($data_leds) }}";
+	var vehicle_excel_sheet = "{{ $vehicle_excel_sheet }}";
 	
 	var excel_leds_data = "{{ $excel_leds }}";
 	var result_excel_leds_data = JSON.parse(excel_leds_data.replace(/&quot;/g,'"'));
+	
+	var result_vehicle_excel_sheet = JSON.parse(vehicle_excel_sheet.replace(/&quot;/g,'"'));
+	// console.log(result_vehicle_excel_sheet);
 	// var resultDatas = '{{ $page_info["inputData"] }}';
 	
 	var resultData = JSON.parse(resultDatas.replace(/&quot;/g,'"'));
@@ -889,17 +894,73 @@
 	// var bitVal = allBitVal.map(function(data) {
 			// return data.bit.toString();
 	// });
+	
+	
+	// let pinData = new Array();
+	// for(i=100;i<225;i++)
+	// {
+	  // pinData.push(i.toString());
+	// }
+	
+	// console.log(pinData);
+	
 	var pinDatas = resultData.map(function(data) {
 			return data.pin;
 	});
 	var pinData = pinDatas.sort((a,b)=>a-b);
-	
+	// console.log('wwwwwwwwwwwwwww');
 	// console.log(pinData);
 	// console.log(resultData);
 	
 	function getKeyByValue(object, value) {
 	  return Object.keys(object).find(key => object[key] === value);
 	}
+	
+	// console.log(result_vehicle_excel_sheet.length);
+	// console.log(result_vehicle_excel_sheet);
+	let vehicle_excel_sheet_demo = [{'id':"0",'mode':0},{'id':"1",'mode':1},{'id':"-1",'mode':0},{'id':"-1",'mode':0},{'id':"-1",'mode':0},{'id':"-1",'mode':0},{'id':"-1",'mode':0},{'id':"-1",'mode':0}];
+	let console_result_vehicle_excel_sheet = result_vehicle_excel_sheet.map(function(currentValue, index, arr){
+			let set_id = "1";
+			let set_mode = 0;
+				if(currentValue[2]){
+					set_id = set_id+currentValue[2];
+				}
+				if(currentValue[3]){
+					set_id = set_id+currentValue[3];
+				}
+				if(currentValue[4]){
+					set_id = set_id+currentValue[4];
+				}
+				if(currentValue[5]){
+					if(currentValue[5] == 'Angle control'){
+						set_mode = 0;
+					}else{
+						set_mode = 1;
+					}
+				}
+				return 	{
+					'id':set_id,
+					'mode':set_mode
+				};
+		});
+	
+	let console_result_vehicle_excel_sheet_s = vehicle_excel_sheet_demo.map(function(currentValue, index, arr){
+			let set_id = "1";
+			let set_mode = 0;
+			if(console_result_vehicle_excel_sheet[index]){
+				set_id = console_result_vehicle_excel_sheet[index].id;
+				set_mode = console_result_vehicle_excel_sheet[index].mode;
+			}else{
+				set_id = currentValue.id;
+				set_mode = currentValue.mode;
+			}
+			return 	{
+					'id':set_id,
+					'mode':set_mode
+				};
+	});
+	
+	// console.log(console_result_vehicle_excel_sheet_s);
 	
 	// var bit_position = { "X-Light": 12, "DayLight": 6, "Low beam": 7, "High beam": 8, "Blinkers left": 9, "Blinkers right": 10, "Rear Light": 11};
 	// var bit_position = { "X-Light": 10, "DayLight": 2, "Low beam": 4, "High beam": 5, "Blinkers left": 6, "Blinkers right": 7, "Rear Light": 8};
@@ -1144,6 +1205,12 @@
 			// var result = a.map(function (x) { 
 			  // return parseInt(x, 10); 
 			// });
+			if(console_result_vehicle_excel_sheet.length > 0){
+				myJSON_option_option.motor = console_result_vehicle_excel_sheet_s;
+			}
+			// else{
+				// myJSON_option_option.motor = [];
+			// }
 			
 			if($('input[name="blinkers_override"]:checked').val()){
 				myJSON_option_option.blinkers_override_l = $('input[name="blinkers_override_l"]').val().split(',').map(function (x) { return parseInt(x, 10); });
@@ -1152,6 +1219,8 @@
 				myJSON_option_option.blinkers_override_l = [];
 				myJSON_option_option.blinkers_override_r = [];
 			}
+			
+			
 			
 			// console.log(myJSON_option_option.blinkers_override_l);
 			var myJSON = JSON.stringify({sequences:final_array,options:myJSON_option_option});

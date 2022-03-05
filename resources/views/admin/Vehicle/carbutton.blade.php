@@ -31,12 +31,14 @@
 						<a href="{{ url(user_role('create-new-car?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 						<a href="{{ url(user_role('car-button?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Button config</a>
 						<a href="{{ url(user_role('multimedia?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Multimedia</a>
+						<a href="{{ url(user_role('led-motor-config?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Motor config</a>
 					<?php }else{ ?>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-vehicle_info empty">Vehicle info</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-settings empty">Settings</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-led-config empty">LED config</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Button config</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Multimedia</a>
+						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Motor config</a>
 					<?php } ?>
 				</div>
 			</div>
@@ -49,19 +51,19 @@
 						<thead><tr><td colspan="3"><center><b>Default</b></center></td></tr></thead>
 						<tbody>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/left_search_led@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/lights@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/right_search_led@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/left_search_led@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/lights@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/right_search_led@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/left_arrow@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/full_beam@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/right_arrow@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/left_arrow@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/full_beam@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/right_arrow@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
 						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="default" <?php echo (in_array('default',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
@@ -73,19 +75,19 @@
 						<thead><tr><td colspan="3"><center><b>Bluelight</b></center></td></tr></thead>
 						<tbody>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/police_led@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/lights@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/Sound_led@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/police_led@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/lights@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/Sound_led@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/left_arrow@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/full_beam@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/right_arrow@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/left_arrow@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/full_beam@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/right_arrow@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
 						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="bluelight" <?php echo (in_array('bluelight',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
@@ -97,19 +99,19 @@
 						<thead><tr><td colspan="3"><center><b>Race</b></center></td></tr></thead>
 						<tbody>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/Race_car@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/lights@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/Race_car@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/Race_car@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/lights@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/Race_car@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/Race_left_car@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/race_penalty_car@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/Race_left_car@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/Race_left_car@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/race_penalty_car@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/Race_left_car@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/horn@2x.png')}}"></td>
 							</tr>
 						</tbody>
 						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="car_button[]" value="race" <?php echo (in_array('race',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
@@ -121,19 +123,19 @@
 						<thead><tr><td colspan="3"><center><b>Trailer connect</b></center></td></tr></thead>
 						<tbody>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/left_search_led@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/trailer_connect_up@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/right_search_led@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/left_search_led@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/trailer_connect_up@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/right_search_led@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/trailer_connect_left@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/trailer_connect_centre@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/trailer_connect_right@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/trailer_connect_left@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/trailer_connect_centre@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/trailer_connect_right@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
 							</tr>
 						</tbody>
 						<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="trailer connect" <?php echo (in_array('trailer connect',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
@@ -145,19 +147,19 @@
 					<thead><tr><td colspan="3"><center><b>Motor contoller</b></center></td></tr></thead>
 					<tbody>
 						<tr>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_right_turn@2x.png')}}"></td>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_down_beam@2x.png')}}"></td>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_right_turn@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/motor_right_turn@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/motor_down_beam@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/motor_right_turn@2x.png')}}"></td>
 						</tr>
 						<tr>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_left_turn@2x.png')}}"></td>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_down_beam@2x.png')}}"></td>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/motor_left_turn@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/motor_left_turn@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/motor_down_beam@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/motor_left_turn@2x.png')}}"></td>
 						</tr>
 						<tr>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-							<td><img src="{{url('public/assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/gray_revearse@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+							<td><img src="{{url('assets/ctrlImages/car-button/red_police@2x.png')}}"></td>
 						</tr>
 					</tbody>	
 					<tfoot><tr><td colspan="3"><center><input type="checkbox"  name="car_button[]" value="motor contoller" <?php echo (in_array('motor contoller',$car_button)) ? 'checked':''; ?>></center></td></tr></tfoot>
@@ -173,19 +175,19 @@
 						<thead><tr><td colspan="3"><center><b>Default</b></center></td></tr></thead>
 						<tbody>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/railSound@2px.jpeg')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/lights@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/zoom_speed@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/railSound@2px.jpeg')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/lights@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/zoom_speed@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/Sound@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/full_beam@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/edit_speed@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/Sound@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/full_beam@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/edit_speed@2x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/straight_reverse@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/horn@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/straight_reverse@2x.png')}}"></td>
 								
 							</tr>
 						</tbody>
@@ -199,19 +201,19 @@
 						<thead><tr><td colspan="3"><center><b>Shunting</b></center></td></tr></thead>
 						<tbody>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/empty1@x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/empty1@x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/empty1@x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/empty1@x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/empty1@x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/empty1@x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/empty1@x.png')}}"></td>
 							</tr>
 							<tr>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/horn@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/menu@2x.png')}}"></td>
-								<td><img src="{{url('public/assets/ctrlImages/car-button/straight_reverse@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/horn@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/menu@2x.png')}}"></td>
+								<td><img src="{{url('assets/ctrlImages/car-button/straight_reverse@2x.png')}}"></td>
 							</tr>
 						</tbody>
 						<tfoot><tr><td colspan="3"><center><input type="checkbox" name="train_button[]" value="shunting" <?php echo (in_array('shunting',$train_button)) ? 'checked':''; ?>></center></td></tr></tfoot>

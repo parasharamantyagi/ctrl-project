@@ -72,7 +72,7 @@
 							return (phone_no) ? phone_no : '';
 					}},
 					{"data": "image", "searchable": false, "orderable": false, "render": function(data_image,type,full,meta){
-							return '<img src="../public/assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
+							return '<img src="../assets/userimages/'+data_image+'" class="user_img img-circle" alt="Cinque Terre">';
 					}},
 					{"data": "status","sClass":"text_align" , "searchable": false, "orderable": false, "render": function(data,type,full,meta){
 						let user_status = (full.status == "1") ? 'active' : '';
@@ -121,6 +121,43 @@
                         });
 			});
 			
+		$(document).on('click', '.vehicle_map_data .delete-user', function(){
+					var delete_id = $(this).data('id');
+					var tabe_tr = $(this).parents('tr');
+					var token = $(this).data("token");
+                        $.confirm({
+                            icon: 'fa fa-frown-o',
+							content: 'Are you sure to delete this data ..?',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'blue',
+							 buttons: {
+                                'confirm': {
+                                    text: 'Delete',
+                                    btnClass: 'btn btn-primary',
+                                    action: function(){
+										tabe_tr.remove();
+										 $.ajax({
+											url: "upload-map/"+delete_id,
+											type: 'delete',
+											dataType: "JSON",
+											headers : {
+												'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+											},
+											success: function (response)
+											{
+												$.toaster({ priority : 'success', title : 'Success', message : response.message });
+											}
+										});
+                                    }
+                                },
+                                cancel: function(){
+                                },
+                            }
+                        });
+			});
+			
 		$(document).on('click', '.viewuser-parent .btn-secondary.btn-toggle', function(){
 					$.ajax({
 							url: "user-status",
@@ -145,7 +182,7 @@
 		});
 		
 		$('.adduser-parent #Updateuser').submit(function(event){
-			$('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/public/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
+			$('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
 				var val_return = true;
 				if($('input[name="phone_no"]').val() != "" && $('input[name="phone_no"]').val().length < 10)
 				{
@@ -174,10 +211,10 @@
 					$('#passwordcanformValidation').html('');
 				}
 				
-				if($('input[name="unique_short_id"]').val().length < 4)
+				if($('input[name="short_id"]').val().length < 1)
 				{
 					$('#ctrlscrolbar').html('');
-					$('#unique_short_idValidation').html('<font color="red">Min 4 characters are required.</font>');
+					$('#unique_short_idValidation').html('<font color="red">Min 1 character are required.</font>');
 					val_return = false;
 				}else{
 					$('#unique_short_idValidation').html('');
@@ -206,7 +243,7 @@
 						}
 					}
 				});
-					event.preventDefault();
+				event.preventDefault();
 		});
 		
 		
@@ -221,7 +258,7 @@
       "serverSide": true,
       "bInfo" : false,
       "pageLength": 50,
-	  "aaSorting": [[4, 'asc']],
+	  "aaSorting": [[0, 'asc']],
       "fnDrawCallback":function(){
           if ($('#exampleViewVehicleInfoAll tr').length < 50) {
             $('.dataTables_paginate').hide();
@@ -246,16 +283,16 @@
         // }},
 		
 		{"data": "brand","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data) ? data : '';
+            return (data) ? '<a href="vehicle-view/'+full._id+'">'+data+'</a>' : '';
         }},
         {"data": "model","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data) ? data : '';
+            return (data) ? '<a href="vehicle-view/'+full._id+'">'+data+'</a>' : '';
         }},
 		{"data": "model_spec","sClass":"text_align", "render": function(data,type,full,meta){
-            return (data) ? data : '';
+            return (data) ? '<a href="vehicle-view/'+full._id+'">'+data+'</a>' : '';
         }},
 		{"data": "release_year","sClass":"text_align release_year_text_align", "render": function(data,type,full,meta){
-            return (data) ? data : '';
+            return (data) ? '<a href="vehicle-view/'+full._id+'">'+data+'</a>' : '';
         }},
 		{"data": "art_no","sClass":"text_align", "render": function(data,type,full,meta){
             return (data) ? data : '';
@@ -473,7 +510,7 @@
 	
 	
 	$('.viewtable #Updateuser').submit(function(event){
-		$('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/public/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
+		$('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
 		 $.ajax({
 		   type:this.method,
 		   url: this.action,
@@ -504,7 +541,7 @@
 								return false;
 							}
 						 }
-						 $('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/public/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
+						 $('#ctrlscrolbar').html('<div class="author_loading"><img src="'+$('meta[name="_token"]').attr('base_url')+'/ctrl-icon/loder.gif'+'" height="150" width="150"></div>');
 						 $.ajax({
 						   type:this.method,
 						   url: this.action,
@@ -587,27 +624,27 @@
 				if(my_value && my_value >= 4 && my_value <=8){
 					var length_input = $('input[name="max_speed_per_gears[]"]').length;
 					if(my_value < 8){
-						$('input[id="max_speed_per_gears8"]').remove();
-						$('input[id="transmission_ratios8"]').remove();
-					}
-					if(my_value < 7){
 						$('input[id="max_speed_per_gears7"]').remove();
 						$('input[id="transmission_ratios7"]').remove();
 					}
-					if(my_value < 6){
+					if(my_value < 7){
 						$('input[id="max_speed_per_gears6"]').remove();
 						$('input[id="transmission_ratios6"]').remove();
 					}
-					if(my_value < 5){
+					if(my_value < 6){
 						$('input[id="max_speed_per_gears5"]').remove();
 						$('input[id="transmission_ratios5"]').remove();
+					}
+					if(my_value < 5){
+						$('input[id="max_speed_per_gears4"]').remove();
+						$('input[id="transmission_ratios4"]').remove();
 					}
 					
 					if(my_value > length_input)
 					{
 						for(var i = length_input+1; i <= my_value; i++) {
-							$('input[id="max_speed_per_gears4"]').after('<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" id="max_speed_per_gears'+i+'">');
-							$('input[id="transmission_ratios4"]').after('<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" id="transmission_ratios'+i+'">');
+							$('input[id="max_speed_per_gears3"]').after('<input type="text" class="form-control numeric-val box-1" name="max_speed_per_gears[]" id="max_speed_per_gears'+i+'">');
+							$('input[id="transmission_ratios3"]').after('<input type="text" class="form-control numeric-val box-1" name="transmission_ratios[]" id="transmission_ratios'+i+'">');
 						}
 					}
 					

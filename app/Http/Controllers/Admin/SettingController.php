@@ -17,15 +17,15 @@ class SettingController extends Controller
 	public function __construct(){
 		$this->vechile_setting = (object)array(
 								'_id'=>'','vehicle_id'=>'','background_color'=>'#181921','pad_line_color'=>'#ffffff','pad_background_color'=>'#000000',
-								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'off','speed_motor_ma_limitation'=>'25 %','steer_motor_ma_limitation'=>'25 %','brake_lights_1'=>'0','brake_lights_2'=>'0',
+								'button_style'=>'','daylight_auto_on'=>'','reverse_speed_motor'=>'off','speed_motor_ma_limitation'=>'25 %','steer_motor_ma_limitation'=>'25 %','micro_steps'=>0,'brake_lights_1'=>'0','brake_lights_2'=>'0',
 								'motion_sensor_level_1'=>'0','motion_sensor_level_2'=>'0','motion_sensor_theft'=>'0','out_of_range'=>'0 sec',
 								'reverse_steer_motor'=>'off','motor_off'=>'off','steering_control_point'=>'0','front_motor_off_ms'=>0,'rear_motor_off_ms'=>0,
 								'asset_folder'=>'','firmware'=>'1.0','front_motor'=>'','front_motor_resistor_value'=>80,'rear_motor_resistor_value'=>80,
 								'rear_motor'=>'','gear_shift_a_value'=>200,'gear_shift_b_value'=>400,
 								'acceleration_curve'=>'','motor_trim_kit'=>0,'gear_shift_a_rpm_value'=>200,
-								'upper_gear_shift_value'=>3000,'lower_gear_shift_value'=>1800,'cell_value_steer_pad'=>'0.25','sound_file_folder'=>'','hall_sensor_frequency'=>'10',
+								'upper_gear_shift_value'=>3000,'steer_angle_limit_per_100_ms'=>7.5,'shift_value_race'=>3000,'lower_gear_shift_value'=>1800,'cell_value_steer_pad'=>'0.25','sound_file_folder'=>'','hall_sensor_frequency'=>'10',
 								'gear_retio'=>'','max_steering_angle'=>'','led_configuration'=>'','button_config_for_each_menu'=>'','motor_steps_for_max_steering'=>'','onboard_sound'=>'off',
-								'zoom_factor_speed'=>'','zoom_factor_steer'=>'','train_view'=>'',
+								'zoom_factor_speed'=>'','zoom_factor_steer'=>'','train_view'=>'','sound_level_factor'=>'1.0',
 								'screen_rotation_landscape'=>'','pad_design_2_directional'=>'on','motor_configuration'=>'','electric_motor_re_built'=>'off'
 								);
 	}
@@ -38,7 +38,15 @@ class SettingController extends Controller
 				$vichle_name =  Vehicle::select('_id','brand','model')->get();
 			else
 				$vichle_name =  Vehicle::select('_id','brand','model')->where('from_id',Auth::user()->id)->get();
+			
 		$userForm = $this->vechile_setting;
+		if(isset($_GET['vehicle_id'])){
+			$userForm_s = VehicleSetting::where('vehicle_id',$_GET['vehicle_id'])->first();
+			if($userForm_s){
+				$userForm = $userForm_s;
+			}
+		}
+		
 		$page_info['page_title'] = 'Settings';
 		return view('admin/Setting/viewsetting')->with('userForm', $userForm)->with('vichle_name',$vichle_name)->with('page_info', $page_info)->with('formaction','/admin/settings');
     }

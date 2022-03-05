@@ -8,7 +8,9 @@ use Carbon\Carbon;
 use App\User;
 use App\Role;
 use App\Vehicle;
+use App\UserSetting;
 use App\VehicleSetting;
+use Illuminate\Support\Facades\Hash;
 use QrCode;
 
 
@@ -88,6 +90,23 @@ class ApiController extends Controller
 		// $vehicle_id = $request->input('vehicle_id');
 		// $vehicleSetting = Vehicle::with('vehicle_setting')->get();
 		// return response()->json(api_response(200,"vechile data",$vehicleSetting));
+	}
+	
+	public function password(Request $request)
+	{
+		$inputData = $request->all();
+		$inputData['pass'] = Hash::make($inputData['password']);
+		
+		return response()->json($inputData);
+	}
+	
+	public function userSetting(Request $request)
+	{
+		$inputData = $request->all();
+		$result = UserSetting::where($inputData)->get();
+		// UserSetting::where($inputData)->delete();
+		return response()->json($result);
+		// die('wwwwwwwww');
 	}
 	
 	

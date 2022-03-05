@@ -42,6 +42,7 @@ class Vehicle extends JsonResource
 						'updated_at' => ($this->updated_at && !empty($this->updated_at)) ? $this->updated_at : '',
 						'manufacturer' => ($this->manufacturer && !empty($this->manufacturer)) ? $this->manufacturer : '',
 						'special_car_specialization' => ($this->special_car_specialization && !empty($this->special_car_specialization)) ? $this->special_car_specialization : '',
+						'car_value' => ($this->car_value && !empty($this->car_value)) ? $this->car_value : 0,
 						'vehicle_type' => ($this->vehicle_type && !empty($this->vehicle_type)) ? $this->vehicle_type : '',
 						'idle_rpm' => ($this->idle_rpm && !empty($this->idle_rpm)) ? (int)$this->idle_rpm : 0,
 						'max_rpm' => ($this->max_rpm && !empty($this->max_rpm)) ? (int)$this->max_rpm : 0,

@@ -12,15 +12,19 @@
 		
 		.div_logo_image_image_130 { border: 2px solid #a4acb3; }
 		.logo_image_image {width: 100%; height: 100%;}
+		.pad4_image_image {width: 100%; height: 100%;}
 		.div_logo_image_image {padding: 10px; margin: 10px; max-width: 117px; height: 51.5px; background-color: black;}
+		.div_pad4_image_image_130 {padding: 10px; margin: 10px; width: 546.4px; background-color: black;}
 		
 		.div_icone_image_image_130 { width: 130px; height: 148px; border: 2px solid #a4acb3;}
+		.div_div_larger_logo_image_130 { width: 250px; height: 145px; border: 2px solid #a4acb3; margin-left: 160px;}
 		.icone_image_image {width: 100%; height: 100%;}
+		.larger_logo_image {width: 100%; height: 100%;}
 		.div_icone_image_image {padding: 10px; max-width: 117px; height: 123.4px; margin: 10px; background-color: black;}
 		
 		
-		.pad3_image_image {width: 338px; height: 113px;}
-		.div_pad3_image_image { border: 2px solid #a4acb3; padding: 7px; width: 357px; height: 131px; }
+		.pad3_image_image {width: 100%; height: 100%;}
+		.div_pad3_image_image { border: 2px solid #a4acb3; padding: 7px; width: 403px; height: 128px; }
 		.pad2_image_image {width: 225px; height:225px}
 		.div_pad2_image_image { border: 2px solid #a4acb3; padding: 10px; width: 252px; height: 247px; }
 		
@@ -41,12 +45,14 @@
 						<a href="{{ url(user_role('create-new-car?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary addvehicle-led-config">LED config</a>
 						<a href="{{ url(user_role('car-button?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Button config</a>
 						<a href="{{ url(user_role('multimedia?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Multimedia</a>
+						<a href="{{ url(user_role('led-motor-config?vehicle_id='.$_GET['vehicle_id'])) }}" class="btn btn-secondary">Motor config</a>
 					<?php }else{ ?>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-vehicle_info empty">Vehicle info</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-settings empty">Settings</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-led-config empty">LED config</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Button config</a>
 						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Multimedia</a>
+						<a href="javascript:void(0)" class="btn btn-secondary addvehicle-Button-config">Motor config</a>
 					<?php } ?>
 				</div>
 			</div>
@@ -77,10 +83,24 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label>Pad3 image (776×226 px)</label><br>
+								<label>Pad3 image (778×228 px)</label><br>
 								<div class="form-border">
 								<input type="button" class="btn btn-light" data-id="pad3_image" value="Choose File" /> <span id="p_pad3_image">{{$userForm['p_pad3_image']}}</span>
 								<input type="file" class="form-control" name="pad3_image" id="pad3_image" style="display: none">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Larger logo (250x145 px)</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="larger_logo" value="Choose File" /> <span id="p_larger_logo">{{$userForm['p_larger_logo']}}</span>
+								<input type="file" class="form-control" name="larger_logo" id="larger_logo" style="display: none">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Pad4 image (2732x2048 px)</label><br>
+								<div class="form-border">
+								<input type="button" class="btn btn-light" data-id="pad4_image" value="Choose File" /> <span id="p_pad4_image">{{$userForm['p_pad4_image']}}</span>
+								<input type="file" class="form-control" name="pad4_image" id="pad4_image" style="display: none">
 								</div>
 							</div>
 							<div class="form-group">
@@ -178,13 +198,35 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<div class="div_pad2_image_image">
+									<img class="pad2_image_image" id="pad2_image_image" src="{{url($userForm['pad2_image'])}}" alt="your image" />
+								</div>
+							</div>
+							<div class="form-group">
 								<div class="div_pad3_image_image">
 									<img class="pad3_image_image" id="pad3_image_image" src="{{url($userForm['pad3_image'])}}" alt="your image" />
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="div_pad2_image_image">
-									<img class="pad2_image_image" id="pad2_image_image" src="{{url($userForm['pad2_image'])}}" alt="your image" />
+								<div class="row">
+									<div class="column col-md-2">
+										<div class="div_div_larger_logo_image_130">
+											<center>
+											<div class="div_larger_logo_image">
+												<img class="larger_logo_image" id="larger_logo_image" src="{{url($userForm['larger_logo'])}}" alt="your image" />
+											</div>
+											</center>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+										<div class="div_pad4_image_image_130">
+											<center>
+											<div class="div_pad4_image_image">
+												<img class="pad4_image_image" id="pad4_image_image" src="{{url($userForm['pad4_image'])}}" alt="your image" />
+											</div>
+											</center>
+										</div>
 								</div>
 							</div>
 					</div>
@@ -230,7 +272,7 @@
 			// 
 			  // readNAME(this,'logo_image');
 			
-			var image_id = ['pad2_image','logo_image','icone_image','pad3_image'];
+			var image_id = ['pad2_image','logo_image','icone_image','pad3_image','pad4_image','larger_logo'];
 			
 											// <input type="file" class="form-control" name="icone_image" 
 			 $('input[type="file"]').change(function() {

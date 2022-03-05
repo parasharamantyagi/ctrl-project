@@ -3,13 +3,8 @@
 @section('content')
 
 <style>
-table.dataTable thead th {
-    padding: 3px 28px 7px 2px;
-}
-a i.fa {
-    font-size: 18px;
-    padding: 14px 1px;
-}
+
+
 </style>
 
 	<div class="page-content-wrap">
@@ -31,19 +26,29 @@ a i.fa {
 					<table id="example" class="table table-hover table-striped">
 						<thead>
 							<tr role="row">
-								<!-- th>Sr No.</th -->
-								<th>Qr code</th>
+								<th>Brand name</th>
 								<th>Model</th>
+								<th>Model specification</th>
 								<th>Release year</th>
-								<th>Daylight auto on</th>
-								<th>Front motor</th>
-								<th>Product status</th>
+								<th>Art No</th>
 								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-						  
+						@foreach($vehicles as $vehicle)
+							<tr>
+								<th>{{$vehicle->vehicle_info->brand}}</th>
+								<th>{{$vehicle->vehicle_info->model}}</th>
+								<th>{{$vehicle->vehicle_info->model_spec}}</th>
+								<th>{{$vehicle->vehicle_info->release_year}}</th>
+								<th>{{$vehicle->vehicle_info->art_no}}</th>
+								<th>
+									<button type="button" class="btn btn-sm btn-secondary btn-toggle active" data-toggle="button" aria-pressed="true" autocomplete="off" disabled><div class="handle"></div></button>
+								</th>
+								<th><a href="{{'settings/'.$vehicle->_id}}" class="edit-user"><i class="fa fa-eye" title="View"></i></a></th>
+							</tr>
+						@endforeach 
 						</tbody>
 					</table>
 					
@@ -62,65 +67,63 @@ a i.fa {
 		jQuery(document).ready(function () {
 			
 			$('#example').DataTable({
-				dom: 'lifrtp',
-				"scrollX": true,
-				// language: {
-					// "infoFiltered": "",
-					// processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-				// },
-				"processing": true,
-				"serverSide": true,
 				"bInfo" : false,
 				"pageLength": 50,
 				"fnDrawCallback":function(){
 						if ($('#example tr').length < 50) {
 							$('.dataTables_paginate').hide();
 						}
-				},
-				lengthMenu: [
-					[50, 100, 250, 500, 999999],
-					['50', '100', '250', '500', 'Show all']
-				],
-				"ajax": {
-					"url": "{{ url('/user/vehicle') }}",
-					"dataType": "json",
-					"type": "POST",
-					"data": function(data) {
-						data._token = "{{ csrf_token() }}"
-					}
-				},
-				"columns": [
-					{"data": "_id","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
-					}},
-					{"data": "pad_background_color","sClass":"text_align", "render": function(data,type,full,meta){
-							return full.getvehicle.model;
-					}},
-					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
-							return full.getvehicle.release_year;
-					}},
-					{"data": "daylight_auto_on","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
-					}},
-					{"data": "front_motor","sClass":"text_align", "render": function(data,type,full,meta){
-							return data;
-					}},
-					{"data": "setting_use_status","sClass":"text_align", "render": function(data,type,full,meta){
-							return (data === '1') ? '<p class="setting_use_status btn-danger">USED</p>' : '<p class="setting_use_status btn-success">AVAILABLE</p>';
-					}},
-					{"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
-							// if(data == "1")
-								// var vechile_setting_status = 'active';
-							// else
-								// var vechile_setting_status = '';
-							// return '<button type="button" class="btn btn-sm btn-secondary btn-toggle '+vechile_setting_status+'" data-id="'+full._id+'" data-token="{{ csrf_token() }}" data-toggle="button" aria-pressed="true" autocomplete="off"><div class="handle"></div></button>';
-							return '<p class="setting_use_status btn-success">ACTIVE</p>';
-					}},
-					{"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
-							return '<a href="settings/'+data+'" class="edit-user" data-id="'+full.getvehicle._id+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
-					}},
-				]
+				}
 			});
+				
+			// $('#example').DataTable({
+				// dom: 'lifrtp',
+				// "scrollX": true,
+				// "processing": true,
+				// "serverSide": true,
+				// "bInfo" : false,
+				// "pageLength": 50,
+				// "fnDrawCallback":function(){
+						// if ($('#example tr').length < 50) {
+							// $('.dataTables_paginate').hide();
+						// }
+				// },
+				// lengthMenu: [
+					// [50, 100, 250, 500, 999999],
+					// ['50', '100', '250', '500', 'Show all']
+				// ],
+				// "ajax": {
+					// "url": "{{ url('/user/vehicle') }}",
+					// "dataType": "json",
+					// "type": "POST",
+					// "data": function(data) {
+						// data._token = "{{ csrf_token() }}"
+					// }
+				// },
+				// "columns": [
+					// {"data": "vehicle_info","sClass":"text_align", "render": function(data,type,full,meta){
+							// return data.brand;
+					// }},
+					// {"data": "vehicle_info","sClass":"text_align", "render": function(data,type,full,meta){
+							// return data.model;
+					// }},
+					// {"data": "vehicle_info","sClass":"text_align", "render": function(data,type,full,meta){
+							// return data.model_spec;
+					// }},
+					// {"data": "vehicle_info","sClass":"text_align", "render": function(data,type,full,meta){
+							// return data.release_year;
+					// }},
+					// {"data": "vehicle_info","sClass":"text_align", "render": function(data,type,full,meta){
+						// return data.art_no;
+					// }},
+					// {"data": "setting_status","sClass":"text_align", "render": function(data,type,full,meta){
+							// return '<p class="setting_use_status btn-success">ACTIVE</p>';
+					// }},
+					// {"data": "_id", "searchable": false, "orderable": false, "render": function(data,type,full,meta){
+							// return '<a href="settings/'+data+'" class="edit-user" data-id="'+full.vehicle_info._id+'"><i class="fa fa-wrench" title="Vehicle setting"></i></a>';
+					// }},
+				// ]
+			// });
 		});			
 	</script>		
 	@if(session()->has('flash-message'))

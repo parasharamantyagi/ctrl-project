@@ -15,6 +15,7 @@
 
 Route::namespace('Admin')->prefix('admin')->group(function () {
 	Route::resource('/', 'LoginController');
+	Route::get('/logout', 'LoginController@logout');
 	
 	Route::group(['middleware' => 'auth'], function () {
 		Route::resource('/dashboard', 'DashboardController');
@@ -49,13 +50,22 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
 		Route::get('owned','VehicleController@viewOwnedVehicleAll');
 		Route::get('get-vehicle-id/{id}','VehicleController@getVehicleId');
+		Route::get('upload-map','VehicleController@uploadMap');
+		Route::post('upload-map','VehicleController@uploadMap');
+		Route::delete('upload-map/{id}','VehicleController@deleteUploadMap');
 		Route::get('multimedia','VehicleController@multimediaAction');
 		Route::post('multimedia','VehicleController@multimediaActionPost');
 		Route::get('car-button','VehicleController@carButton');
 		Route::post('car-button','VehicleController@carButtonPost');
+		Route::get('led-motor-config', 'VehicleController@ledMotorConfig');
+		Route::get('led-motor-excel-sheet', 'VehicleController@ledMotorExcelSheet');
+		Route::get('led-sequence-config', 'VehicleController@ledSequenceConfig');
+		Route::post('led-motor-excel-sheet', 'VehicleController@ledMotorExcelSheetPOst');
+		Route::post('entrance-west-building-clone', 'VehicleController@entranceWestBuildingClone');
 		
 		Route::resource('edit-tables', 'EditTableController');
 		
+		Route::get('led-external-board-id', 'CreateNewCarController@ledExternalBoardId');
 		Route::resource('create-new-car', 'CreateNewCarController');
 		Route::get('create-excel-sheet', 'CreateNewCarController@createExcelSheet');
 		Route::post('create-excel-sheet','CreateNewCarController@createExcelSheetPost');
@@ -117,6 +127,12 @@ Route::namespace('User')->prefix('user')->group(function () {
 		
 		Route::resource('vehicle', 'VehicleController');
 		
+		Route::get('led-motor-config', 'VehicleController@ledMotorConfig');
+		Route::get('led-motor-config-undo', 'VehicleController@ledMotorConfigUndo');
+		Route::get('entrance-west-building', 'VehicleController@entranceWestBuilding');
+		Route::post('entrance-west-building', 'VehicleController@entranceWestBuildingPost');
+		Route::post('entrance-west-building-clone', 'VehicleController@entranceWestBuildingClone');
+		
 		Route::get('test', 'VehicleController@test');
 		Route::post('settings-update', 'VehicleController@settingsUpdate');
 		Route::get('setting/{id}','VehicleController@settingId');
@@ -124,14 +140,17 @@ Route::namespace('User')->prefix('user')->group(function () {
 		Route::get('get-vehicle-qrcode/{id}','VehicleController@getVehicleQrcode');
 		Route::post('vehicle-setting-status', 'VehicleController@vehicleSettingStatus');
 		Route::get('redirectsetting/{id}','VehicleController@redirectUrl');
+		Route::get('multimedia/{id}','VehicleController@multimediaId');
+		Route::post('multimedia/{id}','VehicleController@multimediaIdPost');
 		
 		Route::resource('create-new-car', 'CreateNewCarController');
 		Route::get('create-excel-sheet', 'CreateNewCarController@createExcelSheet');
 		Route::post('create-excel-sheet','CreateNewCarController@createExcelSheetPost');
+		
+		Route::get('led-motor-excel-sheet', 'CreateNewCarController@ledMotorExcelSheet');
+		Route::get('led-external-board-id', 'CreateNewCarController@ledExternalBoardId');
 		// Route::get('view-vehicle','VehicleController@viewVehicleAll');
 		// Route::post('vehicle-table', 'VehicleController@vehicleTable');
-		
-		
 	});
 });
 
